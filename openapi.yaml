@@ -1,0 +1,84 @@
+openapi: 3.0.3
+info:
+  contact:
+    email: info@autoscout24.ch
+    name: AutoScout24 Engineering Team
+    url: https://dev.autoscout24.ch
+  description: The AutoScout24 REST API.
+  title: AutoScout24 API
+  version: 1.0.1
+
+servers:
+  - url: 'https://api.autoscout24.ch'
+
+security:
+  - BearerAuth: [ ]
+
+tags:
+  - name: Make
+
+paths:
+  /v1/makes:
+    get:
+      operationId: GetMakes
+      description: Returns a list of makes sorted alphabetically.
+      tags:
+        - Make
+      parameters:
+        - $ref: "#/components/parameters/pageQueryParam"
+        - $ref: "#/components/parameters/sizeQueryParam"
+      responses:
+        '200':
+          description: Makes returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Make"
+
+components:
+  parameters:
+    pageQueryParam:
+      in: query
+      name: page
+      description: Page number to retrieve.
+      required: false
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+        maximum: 999999
+        default: 0
+      example: 0
+    sizeQueryParam:
+      in: query
+      name: size
+      description: Number of records per page.
+      required: false
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 2000
+        default: 25
+      example: 15
+  schemas:
+    Make:
+      description: Represents the data for the Make entity.
+      properties:
+        key:
+          description: Unique key of the make.
+          type: string
+          example: audi
+        name:
+          description: Display name of the make.
+          type: string
+          example: Audi
+
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: auth-scheme
+      description: 'Bearer HTTP authentication (Authorization: Bearer <access_token>)'
+      scheme: bearer
+      type: http

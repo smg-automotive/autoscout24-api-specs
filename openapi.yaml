@@ -3,8 +3,8 @@ info:
   contact:
     email: info@autoscout24.ch
     name: AutoScout24 Engineering Team
-    url: https://dev.autoscout24.ch
-  description: The AutoScout24 REST API.
+    url: https://developers.autoscout24.ch
+  description: Explore the versatile AutoScout24 REST API for seamless integration.
   title: AutoScout24 API
   version: 1.0.1
 
@@ -15,34 +15,34 @@ security:
   - BearerAuth: [ ]
 
 tags:
-  - name: Make
+  - name: Listing Search
 
 paths:
-  /v1/makes:
-    get:
-      operationId: GetMakes
-      description: Returns a list of makes sorted alphabetically.
+  /public/v1/listings/facets:
+    post:
       tags:
-        - Make
-      parameters:
-        - $ref: "#/components/parameters/pageQueryParam"
-        - $ref: "#/components/parameters/sizeQueryParam"
+        - Listing Search
+      description: Retrieve facets based on specified query parameters.
+      operationId: GetFacets
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListingFacetsDto'
+        required: true
       responses:
-        '200':
-          description: Makes returned.
+        "200":
+          description: Facets successfully returned.
           content:
-            application/json:
+            '*/*':
               schema:
-                type: array
-                items:
-                  "$ref": "#/components/schemas/Make"
-
+                $ref: '#/components/schemas/FacetsDto'
 components:
   parameters:
     pageQueryParam:
       in: query
       name: page
-      description: Page number to retrieve.
+      description: Specify the page number for data retrieval (defaults to 0).
       required: false
       schema:
         type: integer
@@ -54,7 +54,7 @@ components:
     sizeQueryParam:
       in: query
       name: size
-      description: Number of records per page.
+      description: Number of records per page (defaults to 25, maximum 2000).
       required: false
       schema:
         type: integer
@@ -64,17 +64,100 @@ components:
         default: 25
       example: 15
   schemas:
-    Make:
-      description: Represents the data for the Make entity.
+    ListingFacetsDto:
+      description: Represents the request structure for listing facets.
+      required:
+        - facets
+      type: object
       properties:
-        key:
-          description: Unique key of the make.
+        query:
+          $ref: '#/components/schemas/ListingQueryDto'
+        facets:
+          description: Facets to retrieve.
+          type: array
+          items:
+            $ref: '#/components/schemas/ListingFacet'
+    ListingQueryDto:
+      description: Represents the query parameters for filtering listings.
+      type: object
+      properties:
+        fuelTypes:
+          description: Filter listings by fuel types.
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            enum:
+              - cng-petrol
+              - diesel
+              - electric
+              - ethanol-petrol
+              - hev-diesel
+              - hev-petrol
+              - hydrogen
+              - lpg-petrol
+              - mhev-diesel
+              - mhev-petrol
+              - petrol
+              - phev-diesel
+              - phev-petrol
+              - two-stroke-mixture
+        makeModelVersions:
+          description: Filter listings by make and model combinations.
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ListingQueryDto$MakeModelVersion'
+        vehicleCategories:
+          description: Filter listings by vehicle categories.
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            enum:
+              - car
+              - utility
+              - motorcycle
+              - truck
+              - camper
+              - trailer
+    ListingQueryDto$MakeModelVersion:
+      description: Represents the make and model version for querying.
+      type: object
+      properties:
+        makeKey:
           type: string
-          example: audi
+        modelGroupKey:
+          type: string
+        modelKey:
+          type: string
+        versionFullName:
+          type: string
+    ListingFacet:
+      description: Definition of facet to retrieve.
+      type: object
+      properties:
         name:
-          description: Display name of the make.
+          description: The name of the facet.
           type: string
-          example: Audi
+          enum:
+            - makeKeys
+            - modelGroupKeys
+            - modelKeys
+    FacetsDto:
+      description: Retrieved facets.
+      type: object
+      properties:
+        facets:
+          description: Retrieved facets.
+          type: object
+          additionalProperties:
+            description: Facet name.
+            type: object
+            additionalProperties:
+              description: Facet value.
+              type: integer
+              format: int64
 
   securitySchemes:
     BearerAuth:

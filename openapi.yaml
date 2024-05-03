@@ -37,6 +37,77 @@ paths:
             '*/*':
               schema:
                 $ref: '#/components/schemas/FacetsDto'
+  /public/v1/makes:
+    get:
+      tags:
+        - Catalogue Search
+      description: Retrieve all makes for a vehicle category
+      operationId: getMakes
+      parameters:
+        - name: vehicleCategory
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/VehicleCategory'
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 20
+      responses:
+        "200":
+          description: All makes for a vehicle category returned
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/MakeResponse'
+  /public/v1/makes/key/{makeKey}/models:
+    get:
+      tags:
+        - Catalogue Search
+      description: Retrieve models by makeKey and vehicleCategory
+      operationId: getModels
+      parameters:
+        - name: makeKey
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: vehicleCategory
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/VehicleCategory'
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 20
+      responses:
+        "200":
+          description: All models for a vehicle category returned
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ModelResponse'
 components:
   parameters:
     pageQueryParam:
@@ -158,7 +229,94 @@ components:
               description: Facet value.
               type: integer
               format: int64
-
+    Make:
+      type: object
+      properties:
+        key:
+          type: string
+        name:
+          type: string
+    MakeResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/Make'
+        empty:
+          type: boolean
+        numberOfElements:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        first:
+          type: boolean
+        last:
+          type: boolean
+        number:
+          type: integer
+          format: int32
+        totalPages:
+          type: integer
+          format: int32
+    Model:
+      type: object
+      properties:
+        key:
+          type: string
+        name:
+          type: string
+        group:
+          $ref: '#/components/schemas/Model$Group'
+    Model$Group:
+      type: object
+      properties:
+        key:
+          type: string
+        name:
+          type: string
+    ModelResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/Model'
+        empty:
+          type: boolean
+        numberOfElements:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        first:
+          type: boolean
+        last:
+          type: boolean
+        number:
+          type: integer
+          format: int32
+        totalPages:
+          type: integer
+          format: int32
+    VehicleCategory:
+      type: string
+      enum:
+        - car
+        - utility
+        - motorcycle
+        - truck
+        - camper
+        - trailer
   securitySchemes:
     BearerAuth:
       bearerFormat: auth-scheme

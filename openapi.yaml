@@ -3,117 +3,73 @@ info:
   contact:
     email: info@autoscout24.ch
     name: AutoScout24 Engineering Team
-    url: https://developers.autoscout24.ch
-  description: Explore the versatile AutoScout24 REST API for seamless integration.
+    url: https://dev.autoscout24.ch
+  description: The AutoScout24 REST API.
   title: AutoScout24 API
   version: 1.0.1
 
 servers:
-  - url: 'https://api.autoscout24.ch'
+  - url: "https://api.autoscout24.ch"
 
 security:
   - BearerAuth: [ ]
 
 tags:
-  - name: Listing Search
-
+  - name: Make
+  - name: Model
 paths:
-  /public/v1/listings/facets:
-    post:
-      tags:
-        - Listing Search
-      description: Retrieve facets based on specified query parameters.
-      operationId: GetFacets
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ListingFacetsDto'
-        required: true
-      responses:
-        "200":
-          description: Facets successfully returned.
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/FacetsDto'
   /public/v1/makes:
     get:
+      operationId: GetMakes
+      description: Returns a sorted list of makes for a vehicle category
       tags:
-        - Catalogue Search
-      description: Retrieve all makes for a vehicle category
-      operationId: getMakes
+        - Make
       parameters:
-        - name: vehicleCategory
-          in: query
-          required: true
-          schema:
-            $ref: '#/components/schemas/VehicleCategory'
-        - name: page
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-            default: 0
-        - name: size
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-            default: 20
+        - $ref: "#/components/parameters/vehicleCategoryQueryParam"
+        - $ref: "#/components/parameters/pageQueryParam"
+        - $ref: "#/components/parameters/sizeQueryParam"
       responses:
         "200":
-          description: All makes for a vehicle category returned
+          description: Makes for a vehicle category returned.
           content:
-            '*/*':
+            application/json:
               schema:
-                $ref: '#/components/schemas/MakeResponse'
+                $ref: "#/components/schemas/MakeResponse"
   /public/v1/makes/key/{makeKey}/models:
     get:
       tags:
-        - Catalogue Search
-      description: Retrieve models by makeKey and vehicleCategory
-      operationId: getModels
+        - Model
+      description: Returns a sorted list of models by makeKey and vehicleCategory
+      operationId: GetModels
       parameters:
         - name: makeKey
           in: path
           required: true
           schema:
             type: string
-        - name: vehicleCategory
-          in: query
-          required: true
-          schema:
-            $ref: '#/components/schemas/VehicleCategory'
-        - name: page
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-            default: 0
-        - name: size
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-            default: 20
+        - $ref: "#/components/parameters/vehicleCategoryQueryParam"
+        - $ref: "#/components/parameters/pageQueryParam"
+        - $ref: "#/components/parameters/sizeQueryParam"
       responses:
         "200":
-          description: All models for a vehicle category returned
+          description: Models for a makeKey and vehicle category returned
           content:
-            '*/*':
+            application/json:
               schema:
-                $ref: '#/components/schemas/ModelResponse'
+                $ref: "#/components/schemas/ModelResponse"
 components:
   parameters:
+    vehicleCategoryQueryParam:
+      in: query
+      name: vehicleCategory
+      description: Vehicle category to retrieve.
+      required: true
+      schema:
+        $ref: "#/components/schemas/VehicleCategory"
     pageQueryParam:
       in: query
       name: page
-      description: Specify the page number for data retrieval (defaults to 0).
+      description: Page number to retrieve.
       required: false
       schema:
         type: integer
@@ -125,189 +81,108 @@ components:
     sizeQueryParam:
       in: query
       name: size
-      description: Number of records per page (defaults to 25, maximum 2000).
+      description: Number of records per page.
       required: false
       schema:
         type: integer
         format: int32
         minimum: 1
         maximum: 2000
-        default: 25
+        default: 20
       example: 15
   schemas:
-    ListingFacetsDto:
-      description: Represents the request structure for listing facets.
-      required:
-        - facets
-      type: object
-      properties:
-        query:
-          $ref: '#/components/schemas/ListingQueryDto'
-        facets:
-          description: Facets to retrieve.
-          type: array
-          items:
-            $ref: '#/components/schemas/ListingFacet'
-    ListingQueryDto:
-      description: Represents the query parameters for filtering listings.
-      type: object
-      properties:
-        fuelTypes:
-          description: Filter listings by fuel types.
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-            enum:
-              - cng-petrol
-              - diesel
-              - electric
-              - ethanol-petrol
-              - hev-diesel
-              - hev-petrol
-              - hydrogen
-              - lpg-petrol
-              - mhev-diesel
-              - mhev-petrol
-              - petrol
-              - phev-diesel
-              - phev-petrol
-              - two-stroke-mixture
-        makeModelVersions:
-          description: Filter listings by make and model combinations.
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/ListingQueryDto$MakeModelVersion'
-        vehicleCategories:
-          description: Filter listings by vehicle categories.
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-            enum:
-              - car
-              - utility
-              - motorcycle
-              - truck
-              - camper
-              - trailer
-    ListingQueryDto$MakeModelVersion:
-      description: Represents the make and model version for querying.
-      type: object
-      properties:
-        makeKey:
-          type: string
-        modelGroupKey:
-          type: string
-        modelKey:
-          type: string
-        versionFullName:
-          type: string
-    ListingFacet:
-      description: Definition of facet to retrieve.
-      type: object
-      properties:
-        name:
-          description: The name of the facet.
-          type: string
-          enum:
-            - makeKeys
-            - modelGroupKeys
-            - modelKeys
-    FacetsDto:
-      description: Retrieved facets.
-      type: object
-      properties:
-        facets:
-          description: Retrieved facets.
-          type: object
-          additionalProperties:
-            description: Facet name.
-            type: object
-            additionalProperties:
-              description: Facet value.
-              type: integer
-              format: int64
     Make:
+      description: Represents the data for the Make entity.
       type: object
       properties:
         key:
+          description: Unique key of the make.
           type: string
+          example: "audi"
         name:
+          description: Display name of the make.
           type: string
+          example: "Audi"
     MakeResponse:
-      type: object
-      properties:
-        content:
-          type: array
-          items:
-            $ref: '#/components/schemas/Make'
-        empty:
-          type: boolean
-        numberOfElements:
-          type: integer
-          format: int32
-        size:
-          type: integer
-          format: int32
-        totalElements:
-          type: integer
-          format: int64
-        first:
-          type: boolean
-        last:
-          type: boolean
-        number:
-          type: integer
-          format: int32
-        totalPages:
-          type: integer
-          format: int32
+      allOf:
+        - $ref: "#/components/schemas/PageResponseMetadata"
+        - type: object
+          properties:
+            content:
+              type: array
+              items:
+                $ref: "#/components/schemas/Make"
     Model:
+      description: Represents the data for the Model entity.
       type: object
       properties:
         key:
+          description: Unique key of the model.
           type: string
+          example: "a4-allroad"
         name:
+          description: Display name of the model
           type: string
+          example: "A4 ALLROAD"
         group:
-          $ref: '#/components/schemas/Model$Group'
-    Model$Group:
+          $ref: "#/components/schemas/ModelGroup"
+    ModelGroup:
       type: object
       properties:
         key:
           type: string
+          example: "a-series"
         name:
           type: string
+          example: "A Series"
     ModelResponse:
+      allOf:
+        - $ref: "#/components/schemas/PageResponseMetadata"
+        - type: object
+          properties:
+            content:
+              type: array
+              items:
+                $ref: "#/components/schemas/Model"
+    PageResponseMetadata:
       type: object
       properties:
-        content:
-          type: array
-          items:
-            $ref: '#/components/schemas/Model'
         empty:
           type: boolean
+          example: false
         numberOfElements:
+          description: Actual number of elements in a page
           type: integer
           format: int32
+          example: 18
         size:
+          description: Size of a page
           type: integer
           format: int32
+          example: 20
         totalElements:
+          description: Total number of elements
           type: integer
           format: int64
+          example: 138
         first:
+          description: Is first page
           type: boolean
+          example: false
         last:
+          description: Is last page
           type: boolean
+          example: true
         number:
+          description: Page number
           type: integer
           format: int32
+          example: 6
         totalPages:
+          description: Total number of pages
           type: integer
           format: int32
+          example: 7
     VehicleCategory:
       type: string
       enum:
@@ -320,6 +195,6 @@ components:
   securitySchemes:
     BearerAuth:
       bearerFormat: auth-scheme
-      description: 'Bearer HTTP authentication (Authorization: Bearer <access_token>)'
+      description: "Bearer HTTP authentication (Authorization: Bearer <access_token>)"
       scheme: bearer
       type: http

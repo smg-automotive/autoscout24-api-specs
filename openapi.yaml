@@ -105,13 +105,22 @@ components:
           example: "Audi"
     MakeResponse:
       allOf:
-        - $ref: "#/components/schemas/PageResponseMetadata"
+        - $ref: "#/components/schemas/Page"
         - type: object
           properties:
             content:
               type: array
               items:
                 $ref: "#/components/schemas/Make"
+    ModelGroup:
+      type: object
+      properties:
+        key:
+          type: string
+          example: "a-series"
+        name:
+          type: string
+          example: "A Series"
     Model:
       description: Represents the data for the Model entity.
       type: object
@@ -126,25 +135,16 @@ components:
           example: "A4 ALLROAD"
         group:
           $ref: "#/components/schemas/ModelGroup"
-    ModelGroup:
-      type: object
-      properties:
-        key:
-          type: string
-          example: "a-series"
-        name:
-          type: string
-          example: "A Series"
     ModelResponse:
       allOf:
-        - $ref: "#/components/schemas/PageResponseMetadata"
+        - $ref: "#/components/schemas/Page"
         - type: object
           properties:
             content:
               type: array
               items:
                 $ref: "#/components/schemas/Model"
-    PageResponseMetadata:
+    Page:
       type: object
       properties:
         empty:

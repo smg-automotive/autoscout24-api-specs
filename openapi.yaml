@@ -21,7 +21,7 @@ paths:
   /public/v1/makes:
     get:
       operationId: GetMakes
-      description: Returns a sorted list of makes for a vehicle category
+      description: Returns a sorted list of makes for a vehicle category.
       tags:
         - Make
       parameters:
@@ -39,7 +39,7 @@ paths:
     get:
       tags:
         - Model
-      description: Returns a sorted list of models by makeKey and vehicleCategory
+      description: Returns a sorted list of models by makeKey and vehicleCategory.
       operationId: GetModels
       parameters:
         - name: makeKey
@@ -52,7 +52,7 @@ paths:
         - $ref: "#/components/parameters/sizeQueryParam"
       responses:
         "200":
-          description: Models for a makeKey and vehicle category returned
+          description: Models for a makeKey and vehicle category returned.
           content:
             application/json:
               schema:
@@ -121,7 +121,7 @@ components:
           type: string
           example: "a4-allroad"
         name:
-          description: Display name of the model
+          description: Display name of the model.
           type: string
           example: "A4 ALLROAD"
         group:
@@ -151,35 +151,35 @@ components:
           type: boolean
           example: false
         numberOfElements:
-          description: Actual number of elements in a page
+          description: Actual number of elements in a page.
           type: integer
           format: int32
           example: 18
         size:
-          description: Size of a page
+          description: Size of a page.
           type: integer
           format: int32
           example: 20
         totalElements:
-          description: Total number of elements
+          description: Total number of elements.
           type: integer
           format: int64
           example: 138
         first:
-          description: Is first page
+          description: Is first page.
           type: boolean
           example: false
         last:
-          description: Is last page
+          description: Is last page.
           type: boolean
           example: true
         number:
-          description: Page number
+          description: Page number.
           type: integer
           format: int32
           example: 6
         totalPages:
-          description: Total number of pages
+          description: Total number of pages.
           type: integer
           format: int32
           example: 7

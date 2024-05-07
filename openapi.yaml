@@ -34,7 +34,7 @@ paths:
         "200":
           description: Facets successfully returned.
           content:
-            '*/*':
+            application/json:
               schema:
                 $ref: '#/components/schemas/FacetsDto'
 components:
@@ -102,12 +102,14 @@ components:
               - phev-diesel
               - phev-petrol
               - two-stroke-mixture
+          example: [ "electric", "petrol" ]
         makeModelVersions:
           description: Filter listings by make and model combinations.
           uniqueItems: true
           type: array
           items:
             $ref: '#/components/schemas/ListingQueryDto$MakeModelVersion'
+          example: [ { "makeKey": "bmw", "modelGroupKey": "3-series", "modelKey": "320d" } ]
         vehicleCategories:
           description: Filter listings by vehicle categories.
           uniqueItems: true
@@ -121,18 +123,20 @@ components:
               - truck
               - camper
               - trailer
+          example: [ "car", "utility" ]
     ListingQueryDto$MakeModelVersion:
       description: Represents the make and model version for querying.
       type: object
       properties:
         makeKey:
           type: string
+          example: "bmw"
         modelGroupKey:
           type: string
+          example: "3-series"
         modelKey:
           type: string
-        versionFullName:
-          type: string
+          example: "320d"
     ListingFacet:
       description: Definition of facet to retrieve.
       type: object
@@ -144,6 +148,7 @@ components:
             - makeKeys
             - modelGroupKeys
             - modelKeys
+      example: { "name": "makeKeys" }
     FacetsDto:
       description: Retrieved facets.
       type: object
@@ -158,7 +163,7 @@ components:
               description: Facet value.
               type: integer
               format: int64
-
+      example: { "makeKeys": { "audi": 100, "bmw": 200 }, "modelKeys": { "3-series": 50, "5-series": 100 } }
   securitySchemes:
     BearerAuth:
       bearerFormat: auth-scheme

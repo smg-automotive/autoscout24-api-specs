@@ -77,7 +77,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ListingFacet'
-      example: [ { "name": "makeKeys" } ]
     ListingQueryDto:
       description: Represents the query parameters for filtering listings.
       type: object

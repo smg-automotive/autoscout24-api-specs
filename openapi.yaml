@@ -9,14 +9,15 @@ info:
   version: 1.0.1
 
 servers:
-  - url: 'https://api.autoscout24.ch'
+  - url: "https://api.autoscout24.ch"
 
 security:
   - BearerAuth: [ ]
 
 tags:
   - name: Listing Search
-
+  - name: Make
+  - name: Model
 paths:
   /public/v1/listings/facets:
     post:
@@ -28,7 +29,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ListingFacetsDto'
+              $ref: "#/components/schemas/ListingFacets"
         required: true
       responses:
         "200":
@@ -36,9 +37,55 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FacetsDto'
+                $ref: "#/components/schemas/FacetsResponse"
+  /public/v1/makes:
+    get:
+      operationId: GetMakes
+      description: Returns a sorted list of makes for a vehicle category.
+      tags:
+        - Make
+      parameters:
+        - $ref: "#/components/parameters/vehicleCategoryQueryParam"
+        - $ref: "#/components/parameters/pageQueryParam"
+        - $ref: "#/components/parameters/sizeQueryParam"
+      responses:
+        "200":
+          description: Makes for a vehicle category returned.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MakeResponse"
+  /public/v1/makes/key/{makeKey}/models:
+    get:
+      tags:
+        - Model
+      description: Returns a sorted list of models by makeKey and vehicleCategory.
+      operationId: GetModels
+      parameters:
+        - name: makeKey
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: "#/components/parameters/vehicleCategoryQueryParam"
+        - $ref: "#/components/parameters/pageQueryParam"
+        - $ref: "#/components/parameters/sizeQueryParam"
+      responses:
+        "200":
+          description: Models for a makeKey and vehicle category returned.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ModelResponse"
 components:
   parameters:
+    vehicleCategoryQueryParam:
+      in: query
+      name: vehicleCategory
+      description: Vehicle category to retrieve.
+      required: true
+      schema:
+        $ref: "#/components/schemas/VehicleCategory"
     pageQueryParam:
       in: query
       name: page
@@ -54,30 +101,30 @@ components:
     sizeQueryParam:
       in: query
       name: size
-      description: Number of records per page (defaults to 25, maximum 2000).
+      description: Number of records per page (defaults to 20, maximum 2000).
       required: false
       schema:
         type: integer
         format: int32
         minimum: 1
         maximum: 2000
-        default: 25
-      example: 15
+        default: 20
+      example: 20
   schemas:
-    ListingFacetsDto:
+    ListingFacets:
       description: Represents the request structure for listing facets.
       required:
         - facets
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/ListingQueryDto'
+          $ref: '#/components/schemas/ListingQuery'
         facets:
           description: Facets to retrieve.
           type: array
           items:
             $ref: '#/components/schemas/ListingFacet'
-    ListingQueryDto:
+    ListingQuery:
       description: Represents the query parameters for filtering listings.
       type: object
       properties:
@@ -86,45 +133,23 @@ components:
           uniqueItems: true
           type: array
           items:
-            type: string
-            enum:
-              - cng-petrol
-              - diesel
-              - electric
-              - ethanol-petrol
-              - hev-diesel
-              - hev-petrol
-              - hydrogen
-              - lpg-petrol
-              - mhev-diesel
-              - mhev-petrol
-              - petrol
-              - phev-diesel
-              - phev-petrol
-              - two-stroke-mixture
+            $ref: '#/components/schemas/FuelType'
           example: [ "electric", "petrol" ]
         makeModelVersions:
           description: Filter listings by make and model combinations.
           uniqueItems: true
           type: array
           items:
-            $ref: '#/components/schemas/ListingQueryDto$MakeModelVersion'
+            $ref: '#/components/schemas/ListingQuery_MakeModelVersion'
           example: [ { "makeKey": "bmw", "modelGroupKey": "3-series", "modelKey": "320d" } ]
         vehicleCategories:
           description: Filter listings by vehicle categories.
           uniqueItems: true
           type: array
           items:
-            type: string
-            enum:
-              - car
-              - utility
-              - motorcycle
-              - truck
-              - camper
-              - trailer
+            $ref: "#/components/schemas/VehicleCategory"
           example: [ "car", "utility" ]
-    ListingQueryDto$MakeModelVersion:
+    ListingQuery_MakeModelVersion:
       description: Represents the make and model version for querying.
       type: object
       properties:
@@ -142,14 +167,9 @@ components:
       type: object
       properties:
         name:
-          description: The name of the facet.
-          type: string
-          enum:
-            - makeKeys
-            - modelGroupKeys
-            - modelKeys
+          $ref: "#/components/schemas/Facet"
       example: { "name": "makeKeys" }
-    FacetsDto:
+    FacetsResponse:
       description: Retrieved facets.
       type: object
       properties:
@@ -164,9 +184,133 @@ components:
               type: integer
               format: int64
       example: { "makeKeys": { "audi": 100, "bmw": 200 } }
+    MakeResponse:
+      allOf:
+        - $ref: "#/components/schemas/Page"
+        - type: object
+          properties:
+            content:
+              type: array
+              items:
+                $ref: "#/components/schemas/Make"
+    Make:
+      description: Represents the data for the Make entity.
+      type: object
+      properties:
+        key:
+          description: Unique key of the make.
+          type: string
+          example: "audi"
+        name:
+          description: Display name of the make.
+          type: string
+          example: "Audi"
+    ModelResponse:
+      allOf:
+        - $ref: "#/components/schemas/Page"
+        - type: object
+          properties:
+            content:
+              type: array
+              items:
+                $ref: "#/components/schemas/Model"
+    Model:
+      description: Represents the data for the Model entity.
+      type: object
+      properties:
+        key:
+          description: Unique key of the model.
+          type: string
+          example: "a4-allroad"
+        name:
+          description: Display name of the model.
+          type: string
+          example: "A4 ALLROAD"
+        group:
+          $ref: "#/components/schemas/Model_ModelGroup"
+    Model_ModelGroup:
+      type: object
+      properties:
+        key:
+          type: string
+          example: "a-series"
+        name:
+          type: string
+          example: "A Series"
+    Page:
+      type: object
+      properties:
+        empty:
+          type: boolean
+          example: false
+        numberOfElements:
+          description: Actual number of elements in a page.
+          type: integer
+          format: int32
+          example: 18
+        size:
+          description: Size of a page.
+          type: integer
+          format: int32
+          example: 20
+        totalElements:
+          description: Total number of elements.
+          type: integer
+          format: int64
+          example: 138
+        first:
+          description: Is first page.
+          type: boolean
+          example: false
+        last:
+          description: Is last page.
+          type: boolean
+          example: true
+        number:
+          description: Page number.
+          type: integer
+          format: int32
+          example: 6
+        totalPages:
+          description: Total number of pages.
+          type: integer
+          format: int32
+          example: 7
+    Facet:
+      type: string
+      enum:
+        - makeKeys
+        - modelGroupKeys
+        - modelKeys
+    FuelType:
+      type: string
+      enum:
+        - cng-petrol
+        - diesel
+        - electric
+        - ethanol-petrol
+        - hev-diesel
+        - hev-petrol
+        - hydrogen
+        - lpg-petrol
+        - mhev-diesel
+        - mhev-petrol
+        - petrol
+        - phev-diesel
+        - phev-petrol
+        - two-stroke-mixture
+    VehicleCategory:
+      type: string
+      enum:
+        - car
+        - utility
+        - motorcycle
+        - truck
+        - camper
+        - trailer
   securitySchemes:
     BearerAuth:
       bearerFormat: auth-scheme
-      description: 'Bearer HTTP authentication (Authorization: Bearer <access_token>)'
+      description: "Bearer HTTP authentication (Authorization: Bearer <access_token>)"
       scheme: bearer
       type: http

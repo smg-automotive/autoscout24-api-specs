@@ -3,8 +3,8 @@ info:
   contact:
     email: info@autoscout24.ch
     name: AutoScout24 Engineering Team
-    url: https://dev.autoscout24.ch
-  description: The AutoScout24 REST API.
+    url: https://developers.autoscout24.ch
+  description: Explore the versatile AutoScout24 REST API for seamless integration.
   title: AutoScout24 API
   version: 1.0.1
 
@@ -15,9 +15,29 @@ security:
   - BearerAuth: [ ]
 
 tags:
+  - name: Listing Search
   - name: Make
   - name: Model
 paths:
+  /public/v1/listings/facets:
+    post:
+      tags:
+        - Listing Search
+      description: Retrieve facets based on specified query parameters.
+      operationId: GetFacets
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ListingFacets"
+        required: true
+      responses:
+        "200":
+          description: Facets successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FacetsResponse"
   /public/v1/makes:
     get:
       operationId: GetMakes
@@ -69,7 +89,7 @@ components:
     pageQueryParam:
       in: query
       name: page
-      description: Page number to retrieve.
+      description: Specify the page number for data retrieval (defaults to 0).
       required: false
       schema:
         type: integer
@@ -81,7 +101,7 @@ components:
     sizeQueryParam:
       in: query
       name: size
-      description: Number of records per page.
+      description: Number of records per page (defaults to 20, maximum 2000).
       required: false
       schema:
         type: integer
@@ -89,8 +109,90 @@ components:
         minimum: 1
         maximum: 2000
         default: 20
-      example: 15
+      example: 20
   schemas:
+    ListingFacets:
+      description: Represents the request structure for listing facets.
+      required:
+        - facets
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/ListingQuery'
+        facets:
+          description: Facets to retrieve.
+          type: array
+          items:
+            $ref: '#/components/schemas/ListingFacet'
+    ListingQuery:
+      description: Represents the query parameters for filtering listings.
+      type: object
+      properties:
+        fuelTypes:
+          description: Filter listings by fuel types.
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/FuelType'
+          example: [ "electric", "petrol" ]
+        makeModelVersions:
+          description: Filter listings by make and model combinations.
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ListingQuery_MakeModelVersion'
+          example: [ { "makeKey": "bmw", "modelGroupKey": "3-series", "modelKey": "320d" } ]
+        vehicleCategories:
+          description: Filter listings by vehicle categories.
+          uniqueItems: true
+          type: array
+          items:
+            $ref: "#/components/schemas/VehicleCategory"
+          example: [ "car", "utility" ]
+    ListingQuery_MakeModelVersion:
+      description: Represents the make and model version for querying.
+      type: object
+      properties:
+        makeKey:
+          type: string
+          example: "bmw"
+        modelGroupKey:
+          type: string
+          example: "3-series"
+        modelKey:
+          type: string
+          example: "320d"
+    ListingFacet:
+      description: Definition of facet to retrieve.
+      type: object
+      properties:
+        name:
+          $ref: "#/components/schemas/Facet"
+      example: { "name": "makeKeys" }
+    FacetsResponse:
+      description: Retrieved facets.
+      type: object
+      properties:
+        facets:
+          description: Retrieved facets.
+          type: object
+          additionalProperties:
+            description: Facet name.
+            type: object
+            additionalProperties:
+              description: Facet value.
+              type: integer
+              format: int64
+      example: { "makeKeys": { "audi": 100, "bmw": 200 } }
+    MakeResponse:
+      allOf:
+        - $ref: "#/components/schemas/Page"
+        - type: object
+          properties:
+            content:
+              type: array
+              items:
+                $ref: "#/components/schemas/Make"
     Make:
       description: Represents the data for the Make entity.
       type: object
@@ -103,7 +205,7 @@ components:
           description: Display name of the make.
           type: string
           example: "Audi"
-    MakeResponse:
+    ModelResponse:
       allOf:
         - $ref: "#/components/schemas/Page"
         - type: object
@@ -111,16 +213,7 @@ components:
             content:
               type: array
               items:
-                $ref: "#/components/schemas/Make"
-    ModelGroup:
-      type: object
-      properties:
-        key:
-          type: string
-          example: "a-series"
-        name:
-          type: string
-          example: "A Series"
+                $ref: "#/components/schemas/Model"
     Model:
       description: Represents the data for the Model entity.
       type: object
@@ -134,16 +227,16 @@ components:
           type: string
           example: "A4 ALLROAD"
         group:
-          $ref: "#/components/schemas/ModelGroup"
-    ModelResponse:
-      allOf:
-        - $ref: "#/components/schemas/Page"
-        - type: object
-          properties:
-            content:
-              type: array
-              items:
-                $ref: "#/components/schemas/Model"
+          $ref: "#/components/schemas/Model_ModelGroup"
+    Model_ModelGroup:
+      type: object
+      properties:
+        key:
+          type: string
+          example: "a-series"
+        name:
+          type: string
+          example: "A Series"
     Page:
       type: object
       properties:
@@ -183,6 +276,29 @@ components:
           type: integer
           format: int32
           example: 7
+    Facet:
+      type: string
+      enum:
+        - makeKeys
+        - modelGroupKeys
+        - modelKeys
+    FuelType:
+      type: string
+      enum:
+        - cng-petrol
+        - diesel
+        - electric
+        - ethanol-petrol
+        - hev-diesel
+        - hev-petrol
+        - hydrogen
+        - lpg-petrol
+        - mhev-diesel
+        - mhev-petrol
+        - petrol
+        - phev-diesel
+        - phev-petrol
+        - two-stroke-mixture
     VehicleCategory:
       type: string
       enum:

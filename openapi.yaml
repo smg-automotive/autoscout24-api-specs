@@ -77,6 +77,35 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ModelResponse"
+  /public/v1/quali-logos:
+    get:
+      tags:
+        - QualiLogo
+      description: Returns all quali logos
+      operationId: getAll
+      parameters:
+        - name: brand
+          in: query
+          required: false
+          schema:
+            $ref: "#/components/schemas/Brand"
+        - name: vehicleCategory
+          in: query
+          required: false
+          schema:
+            $ref: "#/components/schemas/VehicleCategory"
+        - name: language
+          in: query
+          required: false
+          schema:
+            $ref: "#/components/schemas/Language"
+      responses:
+        "200":
+          description: Qualilogos for a brand, vehicle category, language returned
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QualiLogoResponse"
 components:
   parameters:
     vehicleCategoryQueryParam:
@@ -276,6 +305,33 @@ components:
           type: integer
           format: int32
           example: 7
+    QualiLogoResponse:
+      description: Retrieved qualilogos.
+      type: array
+      items:
+        $ref: "#/components/schemas/QualiLogo"
+    QualiLogo:
+      description: Represents data for the QualiLogo entity.
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 12
+        imageKey:
+          type: string
+          example: "/qualilogos/12.svg"
+        name:
+          type: string
+          example: "Renault"
+        url:
+          type: string
+          example: "https://de.renault.ch/renault-selection.html"
+    Brand:
+      type: string
+      enum:
+        - autoscout24
+        - motoscout24
     Facet:
       type: string
       enum:
@@ -299,6 +355,13 @@ components:
         - phev-diesel
         - phev-petrol
         - two-stroke-mixture
+    Language:
+      type: string
+      enum:
+        - de
+        - fr
+        - it
+        - en
     VehicleCategory:
       type: string
       enum:

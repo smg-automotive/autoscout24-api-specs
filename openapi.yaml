@@ -371,9 +371,6 @@ components:
             nullable: true
           example:
             "xenon-headlights": "headlights"
-            "leather-seats": "seat-covers"
-            "detachable-towbar": "towbar"
-            "heated-seats": null
         fuelTypes:
           description: Vehicle fuel types.
           type: array

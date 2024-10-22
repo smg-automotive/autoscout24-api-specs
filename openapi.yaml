@@ -92,7 +92,7 @@ paths:
             $ref: "#/components/schemas/VehicleCategory"
       responses:
         "200":
-          description: Reference data returned.
+          description: Reference data successfully returned.
           content:
             application/json:
               schema:

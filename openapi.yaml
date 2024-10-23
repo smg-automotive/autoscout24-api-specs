@@ -97,6 +97,19 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ReferenceDataResponse"
+  /public/v1/vehicle-categories:
+    get:
+      tags:
+        - Reference data
+      description: Returns vehicle categories.
+      operationId: GetVehicleCategories
+      responses:
+        "200":
+          description: Vehicle categories successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VehicleCategoriesResponse"
 
 components:
   parameters:
@@ -330,7 +343,7 @@ components:
         - camper
         - trailer
     ReferenceDataResponse:
-      description: Represents the public reference data.
+      description: Represents the reference data.
       type: object
       properties:
         bodyTypes:
@@ -381,11 +394,6 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/TransmissionType"
-        vehicleCategories:
-          description: Vehicle categories.
-          type: array
-          items:
-            $ref: "#/components/schemas/VehicleCategory"
     TransmissionType:
       type: string
       enum:
@@ -590,6 +598,14 @@ components:
         - navigation-system
         - seat-covers
         - towbar
+    VehicleCategoriesResponse:
+      type: object
+      properties:
+        vehicleCategories:
+          description: Retrieved vehicle categories.
+          type: array
+          items:
+            $ref: '#/components/schemas/VehicleCategory'
   securitySchemes:
     BearerAuth:
       bearerFormat: auth-scheme

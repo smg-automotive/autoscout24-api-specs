@@ -52,6 +52,7 @@ paths:
           required: true
           schema:
             type: integer
+            format: int64
         - $ref: "#/components/parameters/languageParam"
       responses:
         "200":

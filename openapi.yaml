@@ -114,7 +114,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ListingPage"
+                "$ref": "#/components/schemas/SellerListingPage"
   /public/v1/sellers/{sellerId}/listings/{listingId}:
     parameters:
       - $ref: '#/components/parameters/sellerIdPathParam'
@@ -130,7 +130,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/SellerListingShared"
+                "$ref": "#/components/schemas/SellerListing"
   /public/v1/vehicle-categories:
     get:
       tags:
@@ -278,17 +278,17 @@ components:
         name:
           $ref: "#/components/schemas/Facet"
       example: { "name": "makeKeys" }
-    ListingPage:
+    SellerListingPage:
       description: Represents a page of Listing entities.
       allOf:
-        - $ref: "#/components/schemas/PageShared"
+        - $ref: "#/components/schemas/Page"
         - type: object
           properties:
             content:
               description: List of listing entries on the current page.
               type: array
               items:
-                $ref: "#/components/schemas/SellerListingShared"
+                $ref: "#/components/schemas/SellerListing"
     FacetsResponse:
       description: Retrieved facets.
       type: object
@@ -436,42 +436,6 @@ components:
         - truck
         - camper
         - trailer
-    PageShared:
-      description: Represents a page of entities.
-      properties:
-        first:
-          description: Flag indicating if the current page is the first one.
-          type: boolean
-          example: true
-        last:
-          description: Flag indicating if the current page is the last one.
-          type: boolean
-          example: false
-        numberOfElements:
-          description: Number of elements on the current page.
-          type: integer
-          format: int32
-          example: 15
-        number:
-          description: Current page number.
-          type: integer
-          format: int32
-          example: 0
-        size:
-          description: Size of the page.
-          type: integer
-          format: int32
-          example: 15
-        totalElements:
-          description: Total number of elements.
-          type: integer
-          format: int32
-          example: 27
-        totalPages:
-          description: Total number of pages.
-          type: integer
-          format: int32
-          example: 2
     ReferenceDataResponse:
       description: Represents the reference data.
       type: object
@@ -524,8 +488,8 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/TransmissionType"
-    SellerListingShared:
-      description: Represents a shared set of fields for different Seller's Listing objects.
+    SellerListing:
+      description: Represents a set of fields for Seller's Listing objects.
       properties:
         availableForLeasing:
           description: Flag indicating if the listing is available for leasing.

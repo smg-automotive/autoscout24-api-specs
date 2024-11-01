@@ -15,6 +15,7 @@ security:
   - BearerAuth: [ ]
 
 tags:
+  - name: Listing
   - name: Listing Search
   - name: Make
   - name: Model

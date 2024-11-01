@@ -551,11 +551,6 @@ components:
           allOf:
             - $ref: "#/components/schemas/FuelType"
           example: petrol
-        transmissionType:
-          description: Transmission type of the vehicle.
-          allOf:
-            - $ref: "#/components/schemas/TransmissionType"
-          example: automatic
         id:
           description: Listing's ID.
           type: integer
@@ -617,6 +612,11 @@ components:
           minimum: 1
           maximum: 199
           example: 5
+        transmissionType:
+          description: Transmission type of the vehicle.
+          allOf:
+            - $ref: "#/components/schemas/TransmissionType"
+          example: automatic
         tuned:
           description: Flag indicating if the vehicle was altered to make it nicer or faster.
           type: boolean

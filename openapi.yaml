@@ -109,7 +109,7 @@ paths:
         - $ref: "#/components/parameters/pageQueryParam"
         - $ref: "#/components/parameters/sizeQueryParam"
       responses:
-        '200':
+        "200":
           description: Listings returned.
           content:
             application/json:
@@ -125,7 +125,7 @@ paths:
       tags:
         - Listing
       responses:
-        '200':
+        "200":
           description: Listing returned.
           content:
             application/json:
@@ -153,7 +153,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/versionIdPathParam'
       responses:
-        '200':
+        "200":
           description: Version returned.
           content:
             application/json:
@@ -499,7 +499,7 @@ components:
           description: Shape of the vehicle body.
           allOf:
             - $ref: "#/components/schemas/BodyType"
-          example: suv
+          example: estate
         certificationNumber:
           description: Registration document number; in Swiss market known as Typenscheinnummer.
           type: string
@@ -573,7 +573,7 @@ components:
           type: number
           format: double
           minimum: 1.0
-          maximum: 9999999
+          maximum: 9999999.0
           example: 65400
         live:
           description: Flag indicating if a listing is live.
@@ -603,7 +603,7 @@ components:
           type: number
           format: double
           minimum: 1.0
-          maximum: 9999999
+          maximum: 9999999.0
           example: 47000
         seats:
           description: Number of seats of the vehicle.
@@ -863,7 +863,7 @@ components:
             in the origin system.
           type: string
           maxLength: 64
-          example: 100200401
+          example: "100200401"
     VersionSource:
       type: string
       enum:

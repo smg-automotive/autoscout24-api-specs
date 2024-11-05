@@ -15,11 +15,13 @@ security:
   - BearerAuth: [ ]
 
 tags:
+  - name: Listing
   - name: Listing Equipment
   - name: Listing Search
   - name: Make
   - name: Model
   - name: Reference Data
+  - name: Version
 paths:
   /public/v1/listings/facets:
     post:
@@ -120,6 +122,39 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ReferenceDataResponse"
+  /public/v1/sellers/{sellerId}/listings:
+    get:
+      operationId: GetSellersSellerIdListings
+      description: Returns a page of listings for the specified seller ID.
+      tags:
+        - Listing
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: "#/components/parameters/pageQueryParam"
+        - $ref: "#/components/parameters/sizeQueryParam"
+      responses:
+        "200":
+          description: Listings returned.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/SellerListingPage"
+  /public/v1/sellers/{sellerId}/listings/{listingId}:
+    parameters:
+      - $ref: '#/components/parameters/sellerIdPathParam'
+      - $ref: '#/components/parameters/listingIdPathParam'
+    get:
+      operationId: GetSellersSellerIdListingsListingId
+      description: Returns a listing for the specified seller ID and listing ID.
+      tags:
+        - Listing
+      responses:
+        "200":
+          description: Listing returned.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/SellerListing"
   /public/v1/vehicle-categories:
     get:
       tags:
@@ -133,6 +168,21 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/VehicleCategoriesResponse"
+  /public/v1/versions/{versionId}:
+    get:
+      operationId: GetVersionsVersionId
+      description: Returns a version for the specified version ID.
+      tags:
+        - Version
+      parameters:
+        - $ref: '#/components/parameters/versionIdPathParam'
+      responses:
+        "200":
+          description: Version returned.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/VersionShared"
 components:
   parameters:
     languageParam:
@@ -142,6 +192,15 @@ components:
       required: false
       schema:
         $ref: '#/components/schemas/Language'
+    listingIdPathParam:
+      in: path
+      name: listingId
+      description: Listing ID.
+      required: true
+      schema:
+        type: integer
+        format: int64
+      example: 1620023
     pageQueryParam:
       in: query
       name: page
@@ -154,6 +213,15 @@ components:
         maximum: 999999
         default: 0
       example: 0
+    sellerIdPathParam:
+      in: path
+      name: sellerId
+      description: Seller ID.
+      required: true
+      schema:
+        type: integer
+        format: int64
+      example: 1923
     sizeQueryParam:
       in: query
       name: size
@@ -173,6 +241,15 @@ components:
       required: true
       schema:
         $ref: "#/components/schemas/VehicleCategory"
+    versionIdPathParam:
+      in: path
+      name: versionId
+      description: Version ID.
+      required: true
+      schema:
+        type: integer
+        format: int64
+      example: 1923
   schemas:
     ListingFacets:
       description: Represents the request structure for listing facets.
@@ -232,6 +309,17 @@ components:
         name:
           $ref: "#/components/schemas/Facet"
       example: { "name": "makeKeys" }
+    SellerListingPage:
+      description: Represents a page of Listing entities.
+      allOf:
+        - $ref: "#/components/schemas/Page"
+        - type: object
+          properties:
+            content:
+              description: List of listing entries on the current page.
+              type: array
+              items:
+                $ref: "#/components/schemas/SellerListing"
     FacetsResponse:
       description: Retrieved facets.
       type: object
@@ -362,6 +450,14 @@ components:
         - phev-diesel
         - phev-petrol
         - two-stroke-mixture
+    Image:
+      description: Represents the data for the Image entity.
+      properties:
+        url:
+          description: URL of the image.
+          type: string
+          format: uri
+          example: https://images.autoscout24.ch/853/11878853/0.jpg
     VehicleCategory:
       type: string
       enum:
@@ -453,6 +549,155 @@ components:
           description: Search attributes.
           items:
             $ref: '#/components/schemas/EquipmentSearchAttribute'
+    SellerListing:
+      description: Represents a set of fields for Seller's Listing objects.
+      properties:
+        availableForLeasing:
+          description: Flag indicating if the listing is available for leasing.
+          type: boolean
+          example: false
+        bodyType:
+          description: Shape of the vehicle body.
+          allOf:
+            - $ref: "#/components/schemas/BodyType"
+          example: estate
+        certificationNumber:
+          description: Registration document number; in Swiss market known as Typenscheinnummer.
+          type: string
+          minLength: 6
+          maxLength: 6
+          pattern: '^\w{6}$'
+          example:
+            1AE899
+        cubicCapacity:
+          description: Volume of the engines cylinders in cubic centimeters.
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 29999
+          example: 2995
+        cylinders:
+          description: Number of cylinders of the engine.
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 99
+          example: 6
+        doors:
+          description: Number of doors of the vehicle.
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 9
+          example: 5
+        driveType:
+          description: Drive type of the vehicle.
+          allOf:
+            - $ref: "#/components/schemas/DriveType"
+          example: all
+        firstRegistrationDate:
+          description: First registration date of the vehicle.
+          type: string
+          format: date
+          example: '2020-12-15'
+        firstRegistrationYear:
+          description: Year when the vehicle was first registered.
+          type: integer
+          format: int32
+          minimum: 1800
+          maximum: 9999
+          example: 2020
+        fuelType:
+          description: Fuel type of the vehicle.
+          allOf:
+            - $ref: "#/components/schemas/FuelType"
+          example: petrol
+        id:
+          description: Listing's ID.
+          type: integer
+          format: int64
+          example: 1620023
+        images:
+          description: Listing images.
+          type: array
+          items:
+            $ref: "#/components/schemas/Image"
+        kiloWatts:
+          description: Power the engine produces in kW.
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 9999
+          example: 250
+        listPrice:
+          description: List price of the vehicle.
+          type: number
+          format: double
+          minimum: 1.0
+          maximum: 9999999.0
+          example: 65400
+        live:
+          description: Flag indicating if a listing is live.
+          type: boolean
+          example: true
+        makeKey:
+          description: Unique key of the make.
+          type: string
+          minLength: 1
+          maxLength: 64
+          example: audi
+        mileage:
+          description: Distance in km that the vehicle has run.
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 99999999
+          example: 17500
+        modelKey:
+          description: Key of the model (unique on the make level).
+          type: string
+          minLength: 1
+          maxLength: 64
+          example: a6
+        price:
+          description: Price of the vehicle.
+          type: number
+          format: double
+          minimum: 1.0
+          maximum: 9999999.0
+          example: 47000
+        seats:
+          description: Number of seats of the vehicle.
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 199
+          example: 5
+        transmissionType:
+          description: Transmission type of the vehicle.
+          allOf:
+            - $ref: "#/components/schemas/TransmissionType"
+          example: automatic
+        tuned:
+          description: Flag indicating if the vehicle was altered to make it nicer or faster.
+          type: boolean
+          example: false
+        vehicleCategory:
+          description: Category of the vehicle.
+          allOf:
+            - $ref: "#/components/schemas/VehicleCategory"
+          example: car
+        versionFullName:
+          description: Full version name of the vehicle.
+          type: string
+          maxLength: 128
+          example: A6 3.0 55 TFSI quattro S-Tronic
+        versionId:
+          description: Version ID of a listing.
+          type: integer
+          format: int64
+          example: 100201
+
     TransmissionType:
       type: string
       enum:
@@ -684,7 +929,26 @@ components:
           type: string
           description: Name of the equipment item.
           example: Adaptive Cruise Control
-
+    VersionShared:
+      description: Represents a shared set of fields for different Version objects.
+      properties:
+        source:
+          description: Version source.
+          allOf:
+            - $ref: "#/components/schemas/VersionSource"
+          example: eurotax
+        externalId:
+          description: |
+            Version's external ID, usually provided and used by a data provider as the version's key/identificator
+            in the origin system.
+          type: string
+          maxLength: 64
+          example: "100200401"
+    VersionSource:
+      type: string
+      enum:
+        - eurotax
+        - auto-i
   securitySchemes:
     BearerAuth:
       bearerFormat: auth-scheme

@@ -19,6 +19,7 @@ tags:
   - name: Listing Search
   - name: Make
   - name: Model
+  - name: Seller
   - name: Version
 paths:
   /public/v1/listings/facets:
@@ -99,6 +100,21 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ReferenceDataResponse"
+  /public/v1/sellers/{sellerId}:
+    parameters:
+      - $ref: '#/components/parameters/sellerIdPathParam'
+    get:
+      operationId: GetSellersSellerId
+      description: Returns a seller for the specified seller ID.
+      tags:
+        - Seller
+      responses:
+        "200":
+          description: Seller returned.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Seller"
   /public/v1/sellers/{sellerId}/listings:
     get:
       operationId: GetSellersSellerIdListings
@@ -428,6 +444,34 @@ components:
           type: string
           format: uri
           example: https://images.autoscout24.ch/853/11878853/0.jpg
+    Phone:
+      description: Represents the data for the Phone entity.
+      type: object
+      properties:
+        number:
+          description: Phone number.
+          type: string
+          example: "+41761234567"
+        type:
+          description: Phone type.
+          allOf:
+            - $ref: "#/components/schemas/PhoneType"
+          example: business
+    PhoneType:
+      type: string
+      enum:
+        - business
+        - car
+        - fax
+        - mobile
+        - new-car
+        - private
+        - sales
+        - showroom
+        - twenty-four-hours-hotline
+        - used-car
+        - utility-vehicles
+        - whats-app
     VehicleCategory:
       type: string
       enum:
@@ -489,6 +533,39 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/TransmissionType"
+    Seller:
+      description: Represents a set of fields for Seller object.
+      properties:
+        address:
+          description: Seller's address.
+          type: string
+          example: "Bahnhofstrasse 123b"
+        city:
+          description: Seller's city.
+          type: string
+          example: "Zurich"
+        id:
+          description: Seller's ID.
+          type: integer
+          format: int64
+          example: 1923
+        name:
+          description: Seller's name.
+          type: string
+          example: "John Seller LLC"
+        phone:
+          description: Seller's phone number.
+          type: string
+          example: "+41761234567"
+        phones:
+          description: All seller's phone numbers.
+          type: array
+          items:
+            $ref: "#/components/schemas/Phone"
+        zip:
+          description: Seller's zip code.
+          type: string
+          example: "8080"
     SellerListing:
       description: Represents a set of fields for Seller's Listing objects.
       properties:
@@ -637,7 +714,6 @@ components:
           type: integer
           format: int64
           example: 100201
-
     TransmissionType:
       type: string
       enum:

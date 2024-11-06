@@ -16,9 +16,11 @@ security:
 
 tags:
   - name: Listing
+  - name: Listing Equipment
   - name: Listing Search
   - name: Make
   - name: Model
+  - name: Reference Data
   - name: Version
 paths:
   /public/v1/listings/facets:
@@ -40,6 +42,27 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FacetsResponse"
+  /public/v1/listings/{listingId}/equipment:
+    get:
+      tags:
+        - Listing Equipment
+      description: Returns localized listing equipment.
+      operationId: GetListingEquipment
+      parameters:
+        - name: listingId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - $ref: "#/components/parameters/languageParam"
+      responses:
+        "200":
+          description: Listing equipment successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListingEquipmentResponse'
   /public/v1/makes:
     get:
       operationId: GetMakes
@@ -82,7 +105,7 @@ paths:
   /public/v1/reference-data:
     get:
       tags:
-        - Reference data
+        - Reference Data
       description: Returns reference data.
       operationId: GetReferenceData
       parameters:
@@ -135,7 +158,7 @@ paths:
   /public/v1/vehicle-categories:
     get:
       tags:
-        - Reference data
+        - Reference Data
       description: Returns vehicle categories.
       operationId: GetVehicleCategories
       responses:
@@ -162,13 +185,13 @@ paths:
                 "$ref": "#/components/schemas/VersionShared"
 components:
   parameters:
-    vehicleCategoryQueryParam:
+    languageParam:
       in: query
-      name: vehicleCategory
-      description: Vehicle category to retrieve.
-      required: true
+      name: language
+      description: Specify the language (defaults to German).
+      required: false
       schema:
-        $ref: "#/components/schemas/VehicleCategory"
+        $ref: '#/components/schemas/Language'
     listingIdPathParam:
       in: path
       name: listingId
@@ -211,6 +234,13 @@ components:
         maximum: 2000
         default: 20
       example: 20
+    vehicleCategoryQueryParam:
+      in: query
+      name: vehicleCategory
+      description: Vehicle category to retrieve.
+      required: true
+      schema:
+        $ref: "#/components/schemas/VehicleCategory"
     versionIdPathParam:
       in: path
       name: versionId
@@ -437,6 +467,12 @@ components:
         - truck
         - camper
         - trailer
+    Language:
+      type: string
+      enum:
+        - de
+        - fr
+        - it
     ReferenceDataResponse:
       description: Represents the reference data.
       type: object
@@ -489,6 +525,30 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/TransmissionType"
+    ListingEquipmentResponse:
+      type: object
+      properties:
+        standard:
+          type: array
+          description: Standard equipment.
+          items:
+            $ref: '#/components/schemas/Equipment'
+          example:
+            name: "ABS"
+        optional:
+          type: array
+          description: Optional equipment.
+          items:
+            $ref: '#/components/schemas/Equipment'
+          example:
+            name: "Assistance Package"
+            packageItems:
+              - name: "Adaptive Cruise Control"
+        searchAttributes:
+          type: array
+          description: Search attributes.
+          items:
+            $ref: '#/components/schemas/EquipmentSearchAttribute'
     SellerListing:
       description: Represents a set of fields for Seller's Listing objects.
       properties:
@@ -850,6 +910,25 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/VehicleCategory'
+    Equipment:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the equipment item or package.
+        packageItems:
+          type: array
+          description: Equipment items included in the package.
+          items:
+            $ref: '#/components/schemas/PackageItem'
+          nullable: true
+    PackageItem:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the equipment item.
+          example: Adaptive Cruise Control
     VersionShared:
       description: Represents a shared set of fields for different Version objects.
       properties:

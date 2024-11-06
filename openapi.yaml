@@ -114,7 +114,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/Seller"
+                "$ref": "#/components/schemas/SellerResponse"
   /public/v1/sellers/{sellerId}/listings:
     get:
       operationId: GetSellersSellerIdListings
@@ -533,7 +533,7 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/TransmissionType"
-    Seller:
+    SellerResponse:
       description: Represents a set of fields for Seller object.
       properties:
         address:

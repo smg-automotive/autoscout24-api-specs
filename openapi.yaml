@@ -251,6 +251,298 @@ components:
         format: int64
       example: 1923
   schemas:
+    BodyType:
+      type: string
+      enum:
+        - alcove
+        - atv-quad
+        - boat-trailer
+        - box
+        - box-double-cab
+        - box-glazed
+        - bridge
+        - bridge-double-cab
+        - bus
+        - cab-over
+        - cabin
+        - cabriolet
+        - car
+        - caravan
+        - car-trailer
+        - car-transporter
+        - chassis-cab
+        - chopper
+        - construction-trailer
+        - coupe
+        - custom-bike
+        - e-bike
+        - estate
+        - horse-trailer
+        - integrated
+        - livestock-trailer
+        - low-bed-trailer
+        - minivan
+        - moped
+        - motocross-bike
+        - motorcycle-trailer
+        - motorhome
+        - naked-bike
+        - off-road-bike
+        - other
+        - pickup
+        - platform
+        - reefer
+        - sales-trailer
+        - saloon
+        - sanitary-trailer
+        - scooter
+        - semi-integrated
+        - semi-trailer
+        - sidecar
+        - small-car
+        - snowmobile
+        - special-vehicles-trailer
+        - street-bike
+        - suitcase
+        - supermoto
+        - suv
+        - tank-body
+        - tipper
+        - touring
+        - trailer
+        - trike
+        - uploader
+        - wood-transporter
+    Color:
+      type: string
+      enum:
+        - anthracite
+        - beige
+        - black
+        - blue
+        - bordeaux
+        - brown
+        - gray
+        - gold
+        - green
+        - multicolored
+        - orange
+        - pink
+        - red
+        - silver
+        - turquoise
+        - violet
+        - white
+        - yellow
+        - other
+    ConditionType:
+      type: string
+      enum:
+        - new
+        - used
+        - demonstration
+        - oldtimer
+        - pre-registered
+    DriveType:
+      type: string
+      enum:
+        - rear
+        - front
+        - all
+    Equipment:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the equipment item or package.
+        packageItems:
+          type: array
+          description: Equipment items included in the package.
+          items:
+            $ref: '#/components/schemas/PackageItem'
+          nullable: true
+    EquipmentSearchAttribute:
+      type: string
+      enum:
+        - abs
+        - active-brake-assistant
+        - adaptive-cruise-control
+        - adaptive-headlights
+        - additional-instrumentation
+        - air-condition
+        - air-suspension
+        - alarm-system
+        - alcantara
+        - alloy-wheels
+        - android-auto
+        - anti-theft-device
+        - apple-carplay
+        - assisted-parking
+        - audio-system
+        - automatic-air-condition
+        - auxiliary-heating
+        - backrest
+        - blind-spot-system
+        - bluetooth-interface
+        - 360-camera
+        - catalytic-converter
+        - chrome-parts
+        - cloth-seats
+        - cover
+        - crash-bar
+        - cruise-control
+        - custom-exhaust
+        - custom-handlebar
+        - dab-radio
+        - detachable-towbar
+        - differential-locking
+        - double-disc-brake
+        - double-seat
+        - electric-seat
+        - electric-tailgate
+        - esp
+        - fast-charging
+        - floorboard
+        - full-partial-casing
+        - hands-free-set
+        - hardtop
+        - head-up-display
+        - heated-grips
+        - heated-seats
+        - hydraulic-system
+        - isofix
+        - keyless
+        - kitchen
+        - lane-assistant
+        - laser-headlights
+        - leather-seats
+        - led
+        - liftgate
+        - luggage-rack
+        - navigation
+        - panorama-roof
+        - parking-sensor-front
+        - parking-sensor-rear
+        - partial-leather-seats
+        - portable-navigation-system
+        - rear-camera
+        - reinforced-suspension
+        - retarder-intarder
+        - retractable-towbar
+        - saddlebag
+        - shower
+        - sliding-door
+        - solo-seat
+        - speaker
+        - special-paint
+        - spoked-wheels
+        - sport-seats
+        - start-stop-system
+        - suitcase
+        - sunroof
+        - tank-bag
+        - toilet
+        - top-case
+        - towbar
+        - traction-control
+        - tv
+        - twin-headlights
+        - ventilated-seats
+        - windshield
+        - wing-doors
+        - xenon-headlights
+        - electric-windows
+    EquipmentSearchAttributeGroup:
+      type: string
+      enum:
+        - air-condition
+        - headlights
+        - navigation-system
+        - seat-covers
+        - towbar
+    Facet:
+      type: string
+      enum:
+        - makeKeys
+        - modelGroupKeys
+        - modelKeys
+    FacetsResponse:
+      description: Retrieved facets.
+      type: object
+      properties:
+        facets:
+          description: Retrieved facets.
+          type: object
+          additionalProperties:
+            description: Facet name.
+            type: object
+            additionalProperties:
+              description: Facet value.
+              type: integer
+              format: int64
+      example: { "makeKeys": { "audi": 100, "bmw": 200 } }
+    FuelType:
+      type: string
+      enum:
+        - cng-petrol
+        - diesel
+        - electric
+        - ethanol-petrol
+        - hev-diesel
+        - hev-petrol
+        - hydrogen
+        - lpg-petrol
+        - mhev-diesel
+        - mhev-petrol
+        - petrol
+        - phev-diesel
+        - phev-petrol
+        - two-stroke-mixture
+    Image:
+      description: Represents the data for the Image entity.
+      properties:
+        url:
+          description: URL of the image.
+          type: string
+          format: uri
+          example: https://images.autoscout24.ch/853/11878853/0.jpg
+    Language:
+      type: string
+      enum:
+        - de
+        - fr
+        - it
+    ListingEquipmentResponse:
+      type: object
+      properties:
+        standard:
+          type: array
+          description: Standard equipment.
+          items:
+            $ref: '#/components/schemas/Equipment'
+          example:
+            name: "ABS"
+        optional:
+          type: array
+          description: Optional equipment.
+          items:
+            $ref: '#/components/schemas/Equipment'
+          example:
+            name: "Assistance Package"
+            packageItems:
+              - name: "Adaptive Cruise Control"
+        searchAttributes:
+          type: array
+          description: Search attributes.
+          items:
+            $ref: '#/components/schemas/EquipmentSearchAttribute'
+    ListingFacet:
+      description: Definition of facet to retrieve.
+      type: object
+      properties:
+        name:
+          $ref: "#/components/schemas/Facet"
+      example: { "name": "makeKeys" }
     ListingFacets:
       description: Represents the request structure for listing facets.
       required:
@@ -302,48 +594,6 @@ components:
         modelKey:
           type: string
           example: "320d"
-    ListingFacet:
-      description: Definition of facet to retrieve.
-      type: object
-      properties:
-        name:
-          $ref: "#/components/schemas/Facet"
-      example: { "name": "makeKeys" }
-    SellerListingPage:
-      description: Represents a page of Listing entities.
-      allOf:
-        - $ref: "#/components/schemas/Page"
-        - type: object
-          properties:
-            content:
-              description: List of listing entries on the current page.
-              type: array
-              items:
-                $ref: "#/components/schemas/SellerListing"
-    FacetsResponse:
-      description: Retrieved facets.
-      type: object
-      properties:
-        facets:
-          description: Retrieved facets.
-          type: object
-          additionalProperties:
-            description: Facet name.
-            type: object
-            additionalProperties:
-              description: Facet value.
-              type: integer
-              format: int64
-      example: { "makeKeys": { "audi": 100, "bmw": 200 } }
-    MakeResponse:
-      allOf:
-        - $ref: "#/components/schemas/Page"
-        - type: object
-          properties:
-            content:
-              type: array
-              items:
-                $ref: "#/components/schemas/Make"
     Make:
       description: Represents the data for the Make entity.
       type: object
@@ -356,7 +606,7 @@ components:
           description: Display name of the make.
           type: string
           example: "Audi"
-    ModelResponse:
+    MakeResponse:
       allOf:
         - $ref: "#/components/schemas/Page"
         - type: object
@@ -364,7 +614,7 @@ components:
             content:
               type: array
               items:
-                $ref: "#/components/schemas/Model"
+                $ref: "#/components/schemas/Make"
     Model:
       description: Represents the data for the Model entity.
       type: object
@@ -379,6 +629,15 @@ components:
           example: "A4 ALLROAD"
         group:
           $ref: "#/components/schemas/Model_ModelGroup"
+    ModelResponse:
+      allOf:
+        - $ref: "#/components/schemas/Page"
+        - type: object
+          properties:
+            content:
+              type: array
+              items:
+                $ref: "#/components/schemas/Model"
     Model_ModelGroup:
       type: object
       properties:
@@ -388,6 +647,13 @@ components:
         name:
           type: string
           example: "A Series"
+    PackageItem:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the equipment item.
+          example: Adaptive Cruise Control
     Page:
       type: object
       properties:
@@ -427,52 +693,6 @@ components:
           type: integer
           format: int32
           example: 7
-    Facet:
-      type: string
-      enum:
-        - makeKeys
-        - modelGroupKeys
-        - modelKeys
-    FuelType:
-      type: string
-      enum:
-        - cng-petrol
-        - diesel
-        - electric
-        - ethanol-petrol
-        - hev-diesel
-        - hev-petrol
-        - hydrogen
-        - lpg-petrol
-        - mhev-diesel
-        - mhev-petrol
-        - petrol
-        - phev-diesel
-        - phev-petrol
-        - two-stroke-mixture
-    Image:
-      description: Represents the data for the Image entity.
-      properties:
-        url:
-          description: URL of the image.
-          type: string
-          format: uri
-          example: https://images.autoscout24.ch/853/11878853/0.jpg
-    VehicleCategory:
-      type: string
-      enum:
-        - car
-        - utility
-        - motorcycle
-        - truck
-        - camper
-        - trailer
-    Language:
-      type: string
-      enum:
-        - de
-        - fr
-        - it
     ReferenceDataResponse:
       description: Represents the reference data.
       type: object
@@ -525,30 +745,6 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/TransmissionType"
-    ListingEquipmentResponse:
-      type: object
-      properties:
-        standard:
-          type: array
-          description: Standard equipment.
-          items:
-            $ref: '#/components/schemas/Equipment'
-          example:
-            name: "ABS"
-        optional:
-          type: array
-          description: Optional equipment.
-          items:
-            $ref: '#/components/schemas/Equipment'
-          example:
-            name: "Assistance Package"
-            packageItems:
-              - name: "Adaptive Cruise Control"
-        searchAttributes:
-          type: array
-          description: Search attributes.
-          items:
-            $ref: '#/components/schemas/EquipmentSearchAttribute'
     SellerListing:
       description: Represents a set of fields for Seller's Listing objects.
       properties:
@@ -697,7 +893,17 @@ components:
           type: integer
           format: int64
           example: 100201
-
+    SellerListingPage:
+      description: Represents a page of Listing entities.
+      allOf:
+        - $ref: "#/components/schemas/Page"
+        - type: object
+          properties:
+            content:
+              description: List of listing entries on the current page.
+              type: array
+              items:
+                $ref: "#/components/schemas/SellerListing"
     TransmissionType:
       type: string
       enum:
@@ -705,203 +911,6 @@ components:
         - automatic-stepless
         - semi-automatic
         - manual
-    BodyType:
-      type: string
-      enum:
-        - alcove
-        - atv-quad
-        - boat-trailer
-        - box
-        - box-double-cab
-        - box-glazed
-        - bridge
-        - bridge-double-cab
-        - bus
-        - cab-over
-        - cabin
-        - cabriolet
-        - car
-        - caravan
-        - car-trailer
-        - car-transporter
-        - chassis-cab
-        - chopper
-        - construction-trailer
-        - coupe
-        - custom-bike
-        - e-bike
-        - estate
-        - horse-trailer
-        - integrated
-        - livestock-trailer
-        - low-bed-trailer
-        - minivan
-        - moped
-        - motocross-bike
-        - motorcycle-trailer
-        - motorhome
-        - naked-bike
-        - off-road-bike
-        - other
-        - pickup
-        - platform
-        - reefer
-        - sales-trailer
-        - saloon
-        - sanitary-trailer
-        - scooter
-        - semi-integrated
-        - semi-trailer
-        - sidecar
-        - small-car
-        - snowmobile
-        - special-vehicles-trailer
-        - street-bike
-        - suitcase
-        - supermoto
-        - suv
-        - tank-body
-        - tipper
-        - touring
-        - trailer
-        - trike
-        - uploader
-        - wood-transporter
-    ConditionType:
-      type: string
-      enum:
-        - new
-        - used
-        - demonstration
-        - oldtimer
-        - pre-registered
-    Color:
-      type: string
-      enum:
-        - anthracite
-        - beige
-        - black
-        - blue
-        - bordeaux
-        - brown
-        - gray
-        - gold
-        - green
-        - multicolored
-        - orange
-        - pink
-        - red
-        - silver
-        - turquoise
-        - violet
-        - white
-        - yellow
-        - other
-    DriveType:
-      type: string
-      enum:
-        - rear
-        - front
-        - all
-    EquipmentSearchAttribute:
-      type: string
-      enum:
-        - abs
-        - active-brake-assistant
-        - adaptive-cruise-control
-        - adaptive-headlights
-        - additional-instrumentation
-        - air-condition
-        - air-suspension
-        - alarm-system
-        - alcantara
-        - alloy-wheels
-        - android-auto
-        - anti-theft-device
-        - apple-carplay
-        - assisted-parking
-        - audio-system
-        - automatic-air-condition
-        - auxiliary-heating
-        - backrest
-        - blind-spot-system
-        - bluetooth-interface
-        - 360-camera
-        - catalytic-converter
-        - chrome-parts
-        - cloth-seats
-        - cover
-        - crash-bar
-        - cruise-control
-        - custom-exhaust
-        - custom-handlebar
-        - dab-radio
-        - detachable-towbar
-        - differential-locking
-        - double-disc-brake
-        - double-seat
-        - electric-seat
-        - electric-tailgate
-        - esp
-        - fast-charging
-        - floorboard
-        - full-partial-casing
-        - hands-free-set
-        - hardtop
-        - head-up-display
-        - heated-grips
-        - heated-seats
-        - hydraulic-system
-        - isofix
-        - keyless
-        - kitchen
-        - lane-assistant
-        - laser-headlights
-        - leather-seats
-        - led
-        - liftgate
-        - luggage-rack
-        - navigation
-        - panorama-roof
-        - parking-sensor-front
-        - parking-sensor-rear
-        - partial-leather-seats
-        - portable-navigation-system
-        - rear-camera
-        - reinforced-suspension
-        - retarder-intarder
-        - retractable-towbar
-        - saddlebag
-        - shower
-        - sliding-door
-        - solo-seat
-        - speaker
-        - special-paint
-        - spoked-wheels
-        - sport-seats
-        - start-stop-system
-        - suitcase
-        - sunroof
-        - tank-bag
-        - toilet
-        - top-case
-        - towbar
-        - traction-control
-        - tv
-        - twin-headlights
-        - ventilated-seats
-        - windshield
-        - wing-doors
-        - xenon-headlights
-        - electric-windows
-    EquipmentSearchAttributeGroup:
-      type: string
-      enum:
-        - air-condition
-        - headlights
-        - navigation-system
-        - seat-covers
-        - towbar
     VehicleCategoriesResponse:
       type: object
       properties:
@@ -910,25 +919,15 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/VehicleCategory'
-    Equipment:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of the equipment item or package.
-        packageItems:
-          type: array
-          description: Equipment items included in the package.
-          items:
-            $ref: '#/components/schemas/PackageItem'
-          nullable: true
-    PackageItem:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of the equipment item.
-          example: Adaptive Cruise Control
+    VehicleCategory:
+      type: string
+      enum:
+        - car
+        - utility
+        - motorcycle
+        - truck
+        - camper
+        - trailer
     VersionShared:
       description: Represents a shared set of fields for different Version objects.
       properties:

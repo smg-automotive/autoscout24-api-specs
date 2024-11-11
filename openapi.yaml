@@ -106,7 +106,7 @@ paths:
   /public/v1/quali-logos/{qualiLogoId}:
     get:
       tags:
-        - QualiLogo
+        - Quali Logo
       description: Returns Quali Logo.
       operationId: GetQualiLogo
       parameters:

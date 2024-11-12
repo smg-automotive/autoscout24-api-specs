@@ -21,6 +21,7 @@ tags:
   - name: Make
   - name: Model
   - name: Reference Data
+  - name: Seller
   - name: Version
 paths:
   /public/v1/listings/facets:
@@ -122,6 +123,21 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ReferenceDataResponse"
+  /public/v1/sellers/{sellerId}:
+    parameters:
+      - $ref: '#/components/parameters/sellerIdPathParam'
+    get:
+      operationId: GetSellersSellerId
+      description: Returns a seller for the specified seller ID.
+      tags:
+        - Seller
+      responses:
+        "200":
+          description: Seller returned.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/SellerResponse"
   /public/v1/sellers/{sellerId}/listings:
     get:
       operationId: GetSellersSellerIdListings
@@ -458,6 +474,34 @@ components:
           type: string
           format: uri
           example: https://images.autoscout24.ch/853/11878853/0.jpg
+    Phone:
+      description: Represents the data for the Phone entity.
+      type: object
+      properties:
+        number:
+          description: Number.
+          type: string
+          example: "+41761234567"
+        type:
+          description: Type.
+          allOf:
+            - $ref: "#/components/schemas/PhoneType"
+          example: business
+    PhoneType:
+      type: string
+      enum:
+        - business
+        - car
+        - fax
+        - mobile
+        - new-car
+        - private
+        - sales
+        - showroom
+        - twenty-four-hours-hotline
+        - used-car
+        - utility-vehicles
+        - whats-app
     VehicleCategory:
       type: string
       enum:
@@ -525,6 +569,39 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/TransmissionType"
+    SellerResponse:
+      description: Represents a set of fields for Seller object.
+      properties:
+        address:
+          description: Address.
+          type: string
+          example: "Bahnhofstrasse 123b"
+        city:
+          description: City.
+          type: string
+          example: "Zurich"
+        id:
+          description: ID.
+          type: integer
+          format: int64
+          example: 1923
+        name:
+          description: Name.
+          type: string
+          example: "John Seller LLC"
+        phone:
+          description: Primary phone number.
+          type: string
+          example: "+41761234567"
+        phones:
+          description: All phones.
+          type: array
+          items:
+            $ref: "#/components/schemas/Phone"
+        zip:
+          description: Zip code.
+          type: string
+          example: "8080"
     ListingEquipmentResponse:
       type: object
       properties:
@@ -697,7 +774,6 @@ components:
           type: integer
           format: int64
           example: 100201
-
     TransmissionType:
       type: string
       enum:

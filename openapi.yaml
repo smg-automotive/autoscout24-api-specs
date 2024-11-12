@@ -479,11 +479,11 @@ components:
       type: object
       properties:
         number:
-          description: Phone number.
+          description: Number.
           type: string
           example: "+41761234567"
         type:
-          description: Phone type.
+          description: Type.
           allOf:
             - $ref: "#/components/schemas/PhoneType"
           example: business
@@ -573,33 +573,33 @@ components:
       description: Represents a set of fields for Seller object.
       properties:
         address:
-          description: Seller's address.
+          description: Address.
           type: string
           example: "Bahnhofstrasse 123b"
         city:
-          description: Seller's city.
+          description: City.
           type: string
           example: "Zurich"
         id:
-          description: Seller's ID.
+          description: ID.
           type: integer
           format: int64
           example: 1923
         name:
-          description: Seller's name.
+          description: Name.
           type: string
           example: "John Seller LLC"
         phone:
-          description: Seller's phone number.
+          description: Primary phone number.
           type: string
           example: "+41761234567"
         phones:
-          description: All seller's phone numbers.
+          description: All phones.
           type: array
           items:
             $ref: "#/components/schemas/Phone"
         zip:
-          description: Seller's zip code.
+          description: Zip code.
           type: string
           example: "8080"
     ListingEquipmentResponse:

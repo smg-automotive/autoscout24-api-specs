@@ -20,7 +20,9 @@ tags:
   - name: Listing Search
   - name: Make
   - name: Model
+  - name: Quali Logo
   - name: Reference Data
+  - name: Seller
   - name: Version
 paths:
   /public/v1/listings/facets:
@@ -102,6 +104,27 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ModelResponse"
+  /public/v1/quali-logos/{qualiLogoId}:
+    get:
+      tags:
+        - Quali Logo
+      description: Returns Quali Logo.
+      operationId: GetQualiLogo
+      parameters:
+        - name: qualiLogoId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - $ref: "#/components/parameters/languageParam"
+      responses:
+        "200":
+          description: Quali Logo successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QualiLogoResponse"
   /public/v1/reference-data:
     get:
       tags:
@@ -122,6 +145,21 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ReferenceDataResponse"
+  /public/v1/sellers/{sellerId}:
+    parameters:
+      - $ref: '#/components/parameters/sellerIdPathParam'
+    get:
+      operationId: GetSellersSellerId
+      description: Returns a seller for the specified seller ID.
+      tags:
+        - Seller
+      responses:
+        "200":
+          description: Seller returned.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/SellerResponse"
   /public/v1/sellers/{sellerId}/listings:
     get:
       operationId: GetSellersSellerIdListings
@@ -693,6 +731,55 @@ components:
           type: integer
           format: int32
           example: 7
+    Phone:
+      description: Represents the data for the Phone entity.
+      type: object
+      properties:
+        number:
+          description: Number.
+          type: string
+          example: "+41761234567"
+        type:
+          description: Type.
+          allOf:
+            - $ref: "#/components/schemas/PhoneType"
+          example: business
+    PhoneType:
+      type: string
+      enum:
+        - business
+        - car
+        - fax
+        - mobile
+        - new-car
+        - private
+        - sales
+        - showroom
+        - twenty-four-hours-hotline
+        - used-car
+        - utility-vehicles
+        - whats-app
+    QualiLogoResponse:
+      description: Represents Quali Logo.
+      type: object
+      properties:
+        id:
+          description: Quali Logo's ID.
+          type: integer
+          format: int64
+          example: 12
+        imageKey:
+          description: Image relative URL.
+          type: string
+          example: "/qualilogos/12.svg"
+        name:
+          description: Localized name.
+          type: string
+          example: "AutoScout verified"
+        url:
+          description: Localized URL.
+          type: string
+          example: "https://www.autoscout24.ch/de/s"
     ReferenceDataResponse:
       description: Represents the reference data.
       type: object
@@ -745,6 +832,39 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/TransmissionType"
+    SellerResponse:
+      description: Represents a set of fields for Seller object.
+      properties:
+        address:
+          description: Address.
+          type: string
+          example: "Bahnhofstrasse 123b"
+        city:
+          description: City.
+          type: string
+          example: "Zurich"
+        id:
+          description: ID.
+          type: integer
+          format: int64
+          example: 1923
+        name:
+          description: Name.
+          type: string
+          example: "John Seller LLC"
+        phone:
+          description: Primary phone number.
+          type: string
+          example: "+41761234567"
+        phones:
+          description: All phones.
+          type: array
+          items:
+            $ref: "#/components/schemas/Phone"
+        zip:
+          description: Zip code.
+          type: string
+          example: "8080"
     SellerListing:
       description: Represents a set of fields for Seller's Listing objects.
       properties:

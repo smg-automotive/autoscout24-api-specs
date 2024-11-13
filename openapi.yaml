@@ -146,13 +146,13 @@ paths:
               schema:
                 $ref: "#/components/schemas/ReferenceDataResponse"
   /public/v1/sellers/{sellerId}:
-    parameters:
-      - $ref: '#/components/parameters/sellerIdPathParam'
     get:
       operationId: GetSellersSellerId
       description: Returns a seller for the specified seller ID.
       tags:
         - Seller
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
       responses:
         "200":
           description: Seller returned.
@@ -178,14 +178,14 @@ paths:
               schema:
                 "$ref": "#/components/schemas/SellerListingPage"
   /public/v1/sellers/{sellerId}/listings/{listingId}:
-    parameters:
-      - $ref: '#/components/parameters/sellerIdPathParam'
-      - $ref: '#/components/parameters/listingIdPathParam'
     get:
       operationId: GetSellersSellerIdListingsListingId
       description: Returns a listing for the specified seller ID and listing ID.
       tags:
         - Listing
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/listingIdPathParam'
       responses:
         "200":
           description: Listing returned.

@@ -20,6 +20,7 @@ tags:
   - name: Listing Search
   - name: Make
   - name: Model
+  - name: Quali Logo
   - name: Reference Data
   - name: Seller
   - name: Version
@@ -103,6 +104,27 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ModelResponse"
+  /public/v1/quali-logos/{qualiLogoId}:
+    get:
+      tags:
+        - Quali Logo
+      description: Returns Quali Logo.
+      operationId: GetQualiLogo
+      parameters:
+        - name: qualiLogoId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - $ref: "#/components/parameters/languageParam"
+      responses:
+        "200":
+          description: Quali Logo successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QualiLogoResponse"
   /public/v1/reference-data:
     get:
       tags:
@@ -517,6 +539,27 @@ components:
         - de
         - fr
         - it
+    QualiLogoResponse:
+      description: Represents Quali Logo.
+      type: object
+      properties:
+        id:
+          description: Quali Logo's ID.
+          type: integer
+          format: int64
+          example: 12
+        imageKey:
+          description: Image relative URL.
+          type: string
+          example: "/qualilogos/12.svg"
+        name:
+          description: Localized name.
+          type: string
+          example: "AutoScout verified"
+        url:
+          description: Localized URL.
+          type: string
+          example: "https://www.autoscout24.ch/de/s"
     ReferenceDataResponse:
       description: Represents the reference data.
       type: object

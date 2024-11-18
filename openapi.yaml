@@ -967,7 +967,7 @@ components:
             - $ref: "#/components/schemas/LicenseCategory"
           example: c
         listPrice:
-          description: List price of the vehicle.
+          description: Price of the vehicle when it was new.
           type: number
           format: double
           minimum: 1.0

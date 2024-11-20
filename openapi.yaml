@@ -25,6 +25,21 @@ tags:
   - name: Seller
   - name: Version
 paths:
+  /fs24/v1/listings/{listingId}:
+    get:
+      operationId: GetFinanceScout24ListingsListingId
+      description: Returns a FinanceScout24 listing for the specified listing ID.
+      tags:
+        - Listing
+      parameters:
+        - $ref: '#/components/parameters/listingIdPathParam'
+      responses:
+        "200":
+          description: Listing returned.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/FinanceScout24Listing"
   /public/v1/listings/{listingId}:
     get:
       tags:
@@ -600,6 +615,159 @@ components:
         - ccs-2
         - chademo
         - supercharger
+    FinanceScout24Listing:
+      description: Represents a set of fields for FinanceScout24's Listing objects.
+      properties:
+        availableForLeasing:
+          description: Flag indicating if the listing is available for leasing.
+          type: boolean
+          example: false
+        bodyType:
+          description: Shape of the vehicle body.
+          allOf:
+            - $ref: "#/components/schemas/BodyType"
+          example: estate
+        certificationNumber:
+          description: Registration document number; in Swiss market known as Typenscheinnummer.
+          type: string
+          minLength: 6
+          maxLength: 6
+          pattern: '^\w{6}$'
+          example:
+            1AE899
+        cubicCapacity:
+          description: Volume of the engines cylinders in cubic centimeters.
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 29999
+          example: 2995
+        cylinders:
+          description: Number of cylinders of the engine.
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 99
+          example: 6
+        doors:
+          description: Number of doors of the vehicle.
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 9
+          example: 5
+        driveType:
+          description: Drive type of the vehicle.
+          allOf:
+            - $ref: "#/components/schemas/DriveType"
+          example: all
+        firstRegistrationDate:
+          description: First registration date of the vehicle.
+          type: string
+          format: date
+          example: '2020-12-15'
+        firstRegistrationYear:
+          description: Year when the vehicle was first registered.
+          type: integer
+          format: int32
+          minimum: 1800
+          maximum: 9999
+          example: 2020
+        fuelType:
+          description: Fuel type of the vehicle.
+          allOf:
+            - $ref: "#/components/schemas/FuelType"
+          example: petrol
+        id:
+          description: Listing's ID.
+          type: integer
+          format: int64
+          example: 1620023
+        images:
+          description: Listing images.
+          type: array
+          items:
+            $ref: "#/components/schemas/Image"
+        kiloWatts:
+          description: Power the engine produces in kW.
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 9999
+          example: 250
+        listPrice:
+          description: List price of the vehicle.
+          type: number
+          format: double
+          minimum: 1.0
+          maximum: 9999999.0
+          example: 65400
+        live:
+          description: Flag indicating if a listing is live.
+          type: boolean
+          example: true
+        makeKey:
+          description: Unique key of the make.
+          type: string
+          minLength: 1
+          maxLength: 64
+          example: audi
+        mileage:
+          description: Distance in km that the vehicle has run.
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 99999999
+          example: 17500
+        modelKey:
+          description: Key of the model (unique on the make level).
+          type: string
+          minLength: 1
+          maxLength: 64
+          example: a6
+        price:
+          description: Price of the vehicle.
+          type: number
+          format: double
+          minimum: 1.0
+          maximum: 9999999.0
+          example: 47000
+        seats:
+          description: Number of seats of the vehicle.
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 199
+          example: 5
+        sellerId:
+          description: Seller's ID.
+          type: integer
+          format: int64
+          example: 1620023
+        transmissionType:
+          description: Transmission type of the vehicle.
+          allOf:
+            - $ref: "#/components/schemas/TransmissionType"
+          example: automatic
+        tuned:
+          description: Flag indicating if the vehicle was altered to make it nicer or faster.
+          type: boolean
+          example: false
+        vehicleCategory:
+          description: Category of the vehicle.
+          allOf:
+            - $ref: "#/components/schemas/VehicleCategory"
+          example: car
+        versionFullName:
+          description: Full version name of the vehicle.
+          type: string
+          maxLength: 128
+          example: A6 3.0 55 TFSI quattro S-Tronic
+        versionId:
+          description: Version ID of a listing.
+          type: integer
+          format: int64
+          example: 100201
     FuelType:
       type: string
       enum:
@@ -1590,6 +1758,11 @@ components:
           minimum: 1
           maximum: 199
           example: 5
+        sellerId:
+          description: Seller's ID.
+          type: integer
+          format: int64
+          example: 1620023
         transmissionType:
           description: Transmission type of the vehicle.
           allOf:

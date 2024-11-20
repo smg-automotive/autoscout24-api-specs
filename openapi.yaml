@@ -647,7 +647,7 @@ components:
       type: object
       properties:
         axis:
-          description: Number of axis of the vehicle.
+          description: Number of axles of the vehicle.
           type: integer
           format: int32
           minimum: 1

@@ -295,7 +295,7 @@ components:
       schema:
         type: integer
         format: int64
-      example: 1923
+      example: 601
     sizeQueryParam:
       in: query
       name: size
@@ -743,7 +743,7 @@ components:
           description: Seller's ID.
           type: integer
           format: int64
-          example: 1620023
+          example: 1923
         transmissionType:
           description: Transmission type of the vehicle.
           allOf:
@@ -1762,7 +1762,7 @@ components:
           description: Seller's ID.
           type: integer
           format: int64
-          example: 1620023
+          example: 601
         transmissionType:
           description: Transmission type of the vehicle.
           allOf:

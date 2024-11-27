@@ -590,9 +590,35 @@ components:
     Facet:
       type: string
       enum:
+        - bodyColors
+        - bodyTypes
+        - conditionTypes
+        - driveSystems
+        - driveTypes
+        - equipmentSearchAttributes
+        - equipmentSearchAttributeGroups
+        - fuelTypes
+        - hadNoAccidentOnly
+        - handicappedAccessibleOnly
+        - hasAdditionalSetOfTiresOnly
+        - hasCraneOnly
+        - hasNewTiresOnly
+        - hasRestrictorKit25KwOnly
+        - hasRestrictorKit35KwOnly
+        - hasTailLiftOnly
+        - hasTarpaulinOnly
+        - hasWarrantyOnly
+        - hasWinchOnly
+        - inspectedOnly
+        - interiorColors
         - makeKeys
         - modelGroupKeys
         - modelKeys
+        - racingVehicleOnly
+        - transmissionTypeGroups
+        - transmissionTypes
+        - tunedOnly
+        - vehicleCategories
     FacetsResponse:
       description: Retrieved facets.
       type: object

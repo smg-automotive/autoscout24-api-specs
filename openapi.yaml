@@ -1393,6 +1393,55 @@ components:
       description: Represents the query parameters for filtering listings.
       type: object
       properties:
+        bodyColors:
+          description: Filter listings by body colors.
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Color'
+          example: [ "blue", "white" ]
+        bodyTypes:
+          description: Filter listings by body types.
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/BodyType'
+          example: [ "coupe", "suv" ]
+        conditionTypes:
+          description: Filter listings by condition types.
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ConditionType'
+          example: [ "new", "used" ]
+        driveSystems:
+          description: Filter listings by drive systems.
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/DriveSystem'
+          example: [ "belt", "chain" ]
+        driveTypes:
+          description: Filter listings by drive types.
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/DriveType'
+          example: [ "rear", "all" ]
+        equipmentSearchAttributes:
+          description: Filter listings by equipment search attributes.
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/EquipmentSearchAttribute'
+          example: [ "abs", "air-condition", "adaptive-cruise-control" ]
+        equipmentSearchAttributeGroups:
+          description: Filter listings by equipment search attribute groups.
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/EquipmentSearchAttribute'
+          example: [ "air-condition" ]
         fuelTypes:
           description: Filter listings by fuel types.
           uniqueItems: true
@@ -1400,6 +1449,61 @@ components:
           items:
             $ref: '#/components/schemas/FuelType'
           example: [ "electric", "petrol" ]
+        hadNoAccidentOnly:
+          description: Flag indicating if the listing had no accident.
+          type: boolean
+          example: false
+        handicappedAccessibleOnly:
+          description: Flag indicating if the listing is accessible to handicapped people.
+          type: boolean
+          example: true
+        hasAdditionalSetOfTiresOnly:
+          description: Flag indicating if the listing has an additional set of tires.
+          type: boolean
+          example: true
+        hasCraneOnly:
+          description: Flag indicating if the listing has a crane.
+          type: boolean
+          example: true
+        hasNewTiresOnly:
+          description: Flag indicating if the listing has new tires.
+          type: boolean
+          example: true
+        hasRestrictorKit25KwOnly:
+          description: Flag indicating if the listing has a restrictor kit of 25 kW.
+          type: boolean
+          example: true
+        hasRestrictorKit35KwOnly:
+          description: Flag indicating if the listing has a restrictor kit of 35 kW.
+          type: boolean
+          example: true
+        hasTailLiftOnly:
+          description: Flag indicating if the listing has a tail lift.
+          type: boolean
+          example: true
+        hasTarpaulinOnly:
+          description: Flag indicating if the listing has a tarpaulin.
+          type: boolean
+          example: true
+        hasWarrantyOnly:
+          description: Flag indicating if the listing has a warranty.
+          type: boolean
+          example: true
+        hasWinchOnly:
+          description: Flag indicating if the listing has a winch.
+          type: boolean
+          example: true
+        inspectedOnly:
+          description: Flag indicating if the listing was inspected.
+          type: boolean
+          example: true
+        interiorColors:
+          description: Filter listings by interior colors.
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Color'
+          example: [ "red", "white" ]
         makeModelVersions:
           description: Filter listings by make and model combinations.
           uniqueItems: true
@@ -1407,6 +1511,28 @@ components:
           items:
             $ref: '#/components/schemas/ListingQuery_MakeModelVersion'
           example: [ { "makeKey": "bmw", "modelGroupKey": "3-series", "modelKey": "320d" } ]
+        racingVehicleOnly:
+          description: Flag indicating if the listing is a racing vehicle.
+          type: boolean
+          example: true
+        transmissionTypeGroups:
+          description: Filter listings by transmission type groups.
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/TransmissionTypeGroup'
+          example: [ "red", "white" ]
+        transmissionTypes:
+          description: Filter listings by transmission types.
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/TransmissionType'
+          example: [ "manual", "automatic-stepless" ]
+        tunedOnly:
+          description: Flag indicating if the listing was tuned.
+          type: boolean
+          example: true
         vehicleCategories:
           description: Filter listings by vehicle categories.
           uniqueItems: true

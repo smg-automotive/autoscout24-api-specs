@@ -1521,7 +1521,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TransmissionTypeGroup'
-          example: [ "red", "white" ]
+          example: [ "automatic" ]
         transmissionTypes:
           description: Filter listings by transmission types.
           uniqueItems: true
@@ -1782,7 +1782,7 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Phone"
-        zip:
+        zipCode:
           description: Zip code.
           type: string
           example: "8080"

@@ -1517,9 +1517,12 @@ components:
           example: true
         sellerIds:
           description: Filter listings by seller IDs.
-          type: integer
-          format: int64
-          example: 601
+          uniqueItems: true
+          type: array
+          items:
+            type: integer
+            format: int64
+          example: [ 601 ]
         transmissionTypeGroups:
           description: Filter listings by transmission type groups.
           uniqueItems: true

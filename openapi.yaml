@@ -80,6 +80,25 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FacetsResponse"
+  /public/v1/listings/search:
+    post:
+      tags:
+        - Listing Search
+      description: Retrieve listings based on specified query parameters.
+      operationId: Search
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ListingSearch"
+        required: true
+      responses:
+        "200":
+          description: Listings successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListingSearchResponse"
   /public/v1/listings/{listingId}/equipment:
     get:
       tags:
@@ -422,6 +441,14 @@ components:
         - demonstration
         - oldtimer
         - pre-registered
+    Consumption:
+      description: Represents consumption of the vehicle.
+      type: object
+      properties:
+        combined:
+          description: Combined fuel consumption in l/100km.
+          type: number
+          example: 8.55
     CylinderArrangement:
       type: string
       enum:
@@ -641,6 +668,10 @@ components:
         - ccs-2
         - chademo
         - supercharger
+    Feature:
+      type: string
+      enum:
+        - top-list
     FinanceScout24Listing:
       description: Represents a set of fields for FinanceScout24's Listing objects.
       properties:
@@ -837,6 +868,118 @@ components:
         - c1
         - f
         - m
+    ListingBaseResponse:
+      description: Represents the base data for the Listing entity.
+      type: object
+      properties:
+        conditionType:
+          description: Condition type of the vehicle.
+          allOf:
+            - $ref: "#/components/schemas/ConditionType"
+          example: demonstration
+        consumption:
+          $ref: "#/components/schemas/Consumption"
+        features:
+          description: Listing features.
+          type: array
+          items:
+            $ref: "#/components/schemas/ListingFeature"
+        firstRegistrationDate:
+          description: First registration date of the vehicle.
+          type: string
+          format: date
+          example: '2020-12-15'
+        firstRegistrationYear:
+          description: Year when the vehicle was first registered.
+          type: integer
+          format: int32
+          example: 2020
+        fuelType:
+          description: Fuel type of the vehicle.
+          allOf:
+            - $ref: "#/components/schemas/FuelType"
+          example: hev-diesel
+        horsePower:
+          description: Horse power of the vehicle.
+          type: integer
+          format: int32
+          example: 199
+        id:
+          description: Listing's ID.
+          type: integer
+          format: int64
+          example: 1620023
+        images:
+          description: Listing images.
+          type: array
+          items:
+            $ref: "#/components/schemas/Image"
+        kiloWatts:
+          description: Power the engine produces in kW.
+          type: integer
+          format: int32
+          example: 250
+        make:
+          $ref: "#/components/schemas/Make"
+        mileage:
+          description: Distance in km that the vehicle has run.
+          type: integer
+          format: int32
+          example: 17500
+        model:
+          $ref: "#/components/schemas/Model"
+        previousPrice:
+          description: Previous price of the vehicle.
+          type: number
+          example: 47000
+        price:
+          description: Price of the vehicle.
+          type: number
+          example: 45000
+        qualiLogo:
+          $ref: "#/components/schemas/QualiLogo"
+        range:
+          description: Range of the electric vehicle in km.
+          type: integer
+          format: int32
+          example: 500
+        seller:
+          $ref: "#/components/schemas/ListingBaseResponse_Seller"
+        teaser:
+          description: Short description of the listing.
+          type: string
+          example: Awesome car!
+        transmissionType:
+          description: Transmission type of the vehicle.
+          allOf:
+            - $ref: "#/components/schemas/TransmissionType"
+          example: automatic
+        vehicleCategory:
+          description: Category of the vehicle.
+          allOf:
+            - $ref: "#/components/schemas/VehicleCategory"
+          example: car
+        versionFullName:
+          description: Full version name of the vehicle.
+          type: string
+          example: A6 3.0 55 TFSI quattro S-Tronic
+    ListingBaseResponse_Seller:
+      description: Represents the data for the Seller entity.
+      type: object
+      properties:
+        id:
+          description: Seller's ID.
+          type: integer
+          format: int64
+          example: 1923
+    ListingFeature:
+      type: object
+      properties:
+        feature:
+          description: Feature of the listing.
+          allOf:
+            - $ref: "#/components/schemas/Feature"
+          example: top-listing
     ListingResponse:
       type: object
       properties:
@@ -1389,6 +1532,87 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ListingFacet'
+    ListingSearch:
+      description: Represents the request structure for listing search.
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/ListingQuery'
+        pagination:
+          $ref: "#/components/schemas/Pageable"
+        sort:
+          description: Sort request for listing search.
+          type: array
+          items:
+            $ref: "#/components/schemas/ListingSort"`
+    ListingSearchResponse:
+      description: Represents the response structure for listing search.
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: "#/components/schemas/ListingBaseResponse"
+        empty:
+          description: Flag indicating if the search result is empty.
+          type: boolean
+          example: false
+        numberOfElements:
+          description: Number of elements in the search result.
+          type: integer
+          format: int32
+          example: 15
+        size:
+          description: Number of elements requested.
+          type: integer
+          format: int32
+          example: 20
+        totalElements:
+          description: Total number of elements matched by provided search criteria.
+          type: integer
+          format: int64
+          example: 15
+        first:
+          description: Flag indicating if the search result is the first page.
+          type: boolean
+          example: true
+        last:
+          description: Flag indicating if the search result is the last page.
+          type: boolean
+          example: true
+        number:
+          description: Number of the current page.
+          type: integer
+          format: int32
+          example: 0
+        totalPages:
+          description: Total number of pages for provided search criteria.
+          type: integer
+          format: int32
+          example: 1
+    ListingSort:
+      description: Represents the sort request for listing search.
+      required:
+        - order
+        - type
+      type: object
+      properties:
+        type:
+          description: Sort type.
+          type: string
+          enum:
+            - PRICE
+            - MILEAGE
+            - FIRST_REGISTRATION_DATE
+            - MAKE_MODEL_A_Z
+            - HORSE_POWER
+            - CREATED_DATE
+        order:
+          description: Sort order.
+          type: string
+          enum:
+            - ASC
+            - DESC
     ListingQuery:
       description: Represents the query parameters for filtering listings.
       type: object
@@ -1660,6 +1884,20 @@ components:
           type: integer
           format: int32
           example: 7
+    Pageable:
+      description: Represents the pageable request.
+      type: object
+      properties:
+        size:
+          description: Number of elements in a page.
+          type: integer
+          format: int32
+          example: 20
+        page:
+          description: Page number.
+          type: integer
+          format: int32
+          example: 0
     Phone:
       description: Represents the data for the Phone entity.
       type: object
@@ -1688,6 +1926,19 @@ components:
         - used-car
         - utility-vehicles
         - whats-app
+    QualiLogo:
+      description: Represents the data for the Quali Logo entity.
+      type: object
+      properties:
+        id:
+          description: Quali Logo's ID.
+          type: integer
+          format: int64
+          example: 12
+        imageKey:
+          description: Image relative URL.
+          type: string
+          example: "/qualilogos/12.svg"
     QualiLogoResponse:
       description: Represents Quali Logo.
       type: object

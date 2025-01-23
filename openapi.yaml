@@ -19,6 +19,7 @@ tags:
   - name: Listing Equipment
   - name: Listing Search
   - name: Make
+  - name: Message Lead
   - name: Model
   - name: Quali Logo
   - name: Reference Data
@@ -159,6 +160,36 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ModelResponse"
+  /public/v1/listings/{listingId}/message-leads:
+    post:
+      tags:
+        - Message Lead
+      description: Creates a message lead for the specified listing ID.
+      operationId: CreateMessageLead
+      parameters:
+        - $ref: '#/components/parameters/listingIdPathParam'
+        - name: X-AS24-Source
+          description: Source of the message lead.
+          in: header
+          required: true
+          schema:
+            type: string
+            enum:
+              - hci
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MessageLead"
+        required: true
+      responses:
+        "201":
+          description: Message lead successfully created.
+          headers:
+            Location:
+              description: Relative path to the newly created resource.
+              schema:
+                type: string
   /public/v1/quali-logos/{qualiLogoId}:
     get:
       tags:
@@ -851,11 +882,13 @@ components:
           format: uri
           example: https://images.autoscout24.ch/853/11878853/0.jpg
     Language:
+      description: Language of the user.
       type: string
       enum:
         - de
         - fr
         - it
+      example: de
     LicenseCategory:
       type: string
       enum:
@@ -1544,7 +1577,7 @@ components:
           description: Sort request for listing search.
           type: array
           items:
-            $ref: "#/components/schemas/ListingSort"`
+            $ref: "#/components/schemas/ListingSort"
     ListingSearchResponse:
       description: Represents the response structure for listing search.
       type: object
@@ -1806,6 +1839,48 @@ components:
               type: array
               items:
                 $ref: "#/components/schemas/Make"
+    MessageLead:
+      description: Represents the request structure for a message lead.
+      required:
+        - email
+        - firstName
+        - lastName
+        - message
+        - phone
+      type: object
+      properties:
+        email:
+          description: Email address.
+          maxLength: 255
+          minLength: 0
+          type: string
+          example: info@autoscout24.ch
+        firstName:
+          description: First name.
+          maxLength: 255
+          minLength: 0
+          type: string
+          example: John
+        lastName:
+          description: Last name.
+          maxLength: 255
+          minLength: 0
+          type: string
+          example: Doe
+        language:
+          $ref: '#/components/schemas/Language'
+        message:
+          description: Message.
+          maxLength: 5000
+          minLength: 0
+          type: string
+          example: I am interested in your car.
+        phone:
+          description: Phone number.
+          maxLength: 32
+          minLength: 0
+          type: string
+          example: +41761234567
     Model:
       description: Represents the data for the Model entity.
       type: object

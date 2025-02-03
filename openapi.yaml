@@ -570,7 +570,7 @@ components:
       example:
         name: "ABS"
         packageItems:
-          - { "itemName": "ABS Module", "quantity": 1 }
+          - { "name": "ABS Module"}
     EquipmentSearchAttribute:
       type: string
       description: Represents specific equipment features that can be searched for in a vehicle.
@@ -1150,6 +1150,7 @@ components:
             - $ref: "#/components/schemas/ConditionType"
           example: demonstration
         consumption:
+          description: Fuel consumption data for the vehicle.
           type: object
           properties:
             combined:
@@ -1168,7 +1169,7 @@ components:
               format: double
               example: 10.55
         cubicCapacity:
-          description: Volume of the engines cylinders in cubic centimeters.
+          description: Volume of the engine's cylinders in cubic centimeters.
           type: integer
           format: int32
           minimum: 1
@@ -1463,87 +1464,87 @@ components:
           maximum: 9
           example: 1
         teaser:
-          description: Teaser of the listing.
+          description: Teaser or highlight of the listing to capture interest.
           type: string
           example: NEW NEW NEW
         towingCapacityBraked:
-          description: Towing capacity of the vehicle when braked in kg.
+          description: Towing capacity of the vehicle when braked, measured in kilograms.
           type: integer
           format: int32
           minimum: 1
           maximum: 99999
           example: 1000
         transmissionType:
-          description: Transmission type of the vehicle.
+          description: The type of transmission in the vehicle (e.g., automatic, manual).
           allOf:
             - $ref: "#/components/schemas/TransmissionType"
           example: automatic
         transporter:
-          description: Flag indicating if a vehicle is a transporter.
+          description: A flag indicating whether the vehicle is designed as a transporter.
           type: boolean
           example: true
         tuned:
-          description: Flag indicating if the vehicle was altered to make it nicer or faster.
+          description: A flag indicating whether the vehicle has been tuned for performance or aesthetics.
           type: boolean
           example: false
         vehicleCategory:
-          description: Category of the vehicle.
+          description: The category or type of the vehicle (e.g., car, truck, SUV).
           allOf:
             - $ref: "#/components/schemas/VehicleCategory"
           example: car
         versionFullName:
-          description: Full version name of the vehicle.
+          description: The full name of the vehicle’s version, including model and specifications.
           type: string
           maxLength: 128
           example: A6 3.0 55 TFSI quattro S-Tronic
         warranty:
-          description: Warranty of the vehicle.
+          description: Details about the vehicle’s warranty, including terms and conditions.
           type: object
           properties:
             details:
-              description: Details of the warranty.
+              description: A description of the specific warranty details.
               type: string
               example: Up to 10k
             duration:
-              description: Duration of the warranty in months.
+              description: The duration of the warranty in months.
               type: integer
               format: int32
               minimum: 1
               maximum: 199
               example: 24
             mileage:
-              description: Mileage of the warranty in km.
+              description: The maximum mileage covered by the warranty in kilometers.
               type: integer
               format: int32
               minimum: 1
               maximum: 9999999
               example: 10000
             startDate:
-              description: Start date of the warranty.
+              description: The start date of the warranty in YYYY-MM-DD format.
               type: string
               format: date
               example: '2020-12-15'
             type:
-              description: Type of the warranty.
+              description: The type of warranty (e.g., from-date, from-mileage).
               allOf:
                 - $ref: "#/components/schemas/WarrantyType"
               example: from-date
         weightCurb:
-          description: Curb weight of the vehicle in kg.
+          description: The curb weight of the vehicle, measured in kilograms, excluding passengers and cargo.
           type: integer
           format: int32
           minimum: 1
           maximum: 29999
           example: 2000
         weightTotal:
-          description: Total weight of the vehicle in kg.
+          description: The total weight of the vehicle, measured in kilograms, including all components.
           type: integer
           format: int32
           minimum: 1
           maximum: 29999
           example: 2500
         width:
-          description: Width of the vehicle in cm.
+          description: The width of the vehicle in centimeters, typically measured at the widest point.
           type: integer
           format: int32
           minimum: 1
@@ -1554,34 +1555,35 @@ components:
       properties:
         standard:
           type: array
-          description: Standard equipment.
+          description: List of standard equipment of the vehicle.
           items:
             $ref: '#/components/schemas/Equipment'
           example:
-            name: "ABS"
+            - name: "abs"
         optional:
           type: array
-          description: Optional equipment.
+          description: List of optional equipment aof the vehicle.
           items:
             $ref: '#/components/schemas/Equipment'
           example:
-            name: "Assistance Package"
-            packageItems:
-              - name: "Adaptive Cruise Control"
+            - name: "Assistance Package"
+              packageItems:
+                - name: "Adaptive Cruise Control"
         searchAttributes:
           type: array
-          description: Search attributes.
+          description: List of search attributes for filtering the vehicle equipment.
           items:
             $ref: '#/components/schemas/EquipmentSearchAttribute'
     ListingFacet:
-      description: Definition of facet to retrieve.
+      description: Defines a facet to retrieve for filtering or sorting purposes.
       type: object
       properties:
         name:
           $ref: "#/components/schemas/Facet"
-      example: { "name": "makeKeys" }
+      example:
+        { "name": "makeKeys" }
     ListingFacets:
-      description: Represents the request structure for listing facets.
+      description: Represents the request structure for retrieving listing facets based on the provided search query.
       required:
         - facets
       type: object
@@ -1589,12 +1591,12 @@ components:
         query:
           $ref: '#/components/schemas/ListingQuery'
         facets:
-          description: Facets to retrieve.
+          description: List of facets to retrieve for filtering or categorization.
           type: array
           items:
             $ref: '#/components/schemas/ListingFacet'
     ListingSearch:
-      description: Represents the request structure for listing search.
+      description: Represents the request structure for searching listings.
       type: object
       properties:
         query:
@@ -1602,12 +1604,12 @@ components:
         pagination:
           $ref: "#/components/schemas/Pageable"
         sort:
-          description: Sort request for listing search.
+          description: Sorting options for the listing search result.
           type: array
           items:
             $ref: "#/components/schemas/ListingSort"
     ListingSearchResponse:
-      description: Represents the response structure for listing search.
+      description: Represents the response structure for a listing search query, including pagination and result metadata.
       type: object
       properties:
         content:
@@ -1615,51 +1617,51 @@ components:
           items:
             $ref: "#/components/schemas/ListingBaseResponse"
         empty:
-          description: Flag indicating if the search result is empty.
+          description: Flag indicating if the search result contains no items.
           type: boolean
           example: false
         numberOfElements:
-          description: Number of elements in the search result.
+          description: Number of elements in the current page of search results.
           type: integer
           format: int32
           example: 15
         size:
-          description: Number of elements requested.
+          description: Total number of elements requested for the search query.
           type: integer
           format: int32
           example: 20
         totalElements:
-          description: Total number of elements matched by provided search criteria.
+          description: Total number of elements that match the provided search criteria across all pages.
           type: integer
           format: int64
           example: 15
         first:
-          description: Flag indicating if the search result is the first page.
+          description: Flag indicating if the current page is the first page of the search results.
           type: boolean
           example: true
         last:
-          description: Flag indicating if the search result is the last page.
+          description: Flag indicating if the current page is the last page of the search results.
           type: boolean
           example: true
         number:
-          description: Number of the current page.
+          description: Current page number in the search result.
           type: integer
           format: int32
           example: 0
         totalPages:
-          description: Total number of pages for provided search criteria.
+          description: Total number of pages available for the given search criteria.
           type: integer
           format: int32
           example: 1
     ListingSort:
-      description: Represents the sort request for listing search.
+      description: Defines the sorting criteria for the listing search results.
       required:
         - order
         - type
       type: object
       properties:
         type:
-          description: Sort type.
+          description: Type of sorting to apply to the search results.
           type: string
           enum:
             - PRICE
@@ -1669,7 +1671,7 @@ components:
             - HORSE_POWER
             - CREATED_DATE
         order:
-          description: Sort order.
+          description: Direction of the sorting order.
           type: string
           enum:
             - ASC

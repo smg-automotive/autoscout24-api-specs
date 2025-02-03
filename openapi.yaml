@@ -2358,12 +2358,14 @@ components:
               items:
                 $ref: "#/components/schemas/SellerListing"
     TransmissionType:
+      description: Type of transmission in the vehicle.
       type: string
       enum:
         - automatic
         - automatic-stepless
         - semi-automatic
         - manual
+      example: automatic
     VehicleCategoriesResponse:
       type: object
       properties:
@@ -2373,6 +2375,7 @@ components:
           items:
             $ref: '#/components/schemas/VehicleCategory'
     VehicleCategory:
+      description: Represents the category or type of a vehicle.
       type: string
       enum:
         - car
@@ -2381,6 +2384,7 @@ components:
         - truck
         - camper
         - trailer
+      example: car
     VersionShared:
       description: Represents a shared set of fields for different Version objects.
       properties:

@@ -570,7 +570,7 @@ components:
       example:
         name: "ABS"
         packageItems:
-          - { "name": "ABS Module"}
+          - { "name": "ABS Module" }
     EquipmentSearchAttribute:
       type: string
       description: Represents specific equipment features that can be searched for in a vehicle.
@@ -1686,12 +1686,12 @@ components:
           format: int32
           example: 60
         batteryCapacityFrom:
-          description: Filter listings by battery capacity in kWh.
+          description: Filter listings by minimum battery capacity in kWh.
           type: number
           format: double
           example: 50.55
         batteryCapacityTo:
-          description: Filter listings by battery capacity in kWh.
+          description: Filter listings by maximum battery capacity in kWh.
           type: number
           format: double
           example: 150.55
@@ -1717,32 +1717,32 @@ components:
             $ref: '#/components/schemas/ConditionType'
           example: [ "new", "used" ]
         cubicCapacityFrom:
-          description: Filter listings by cubic capacity in cm³.
+          description: Filter listings by minimum cubic capacity in cm³.
           type: integer
           format: int32
           example: 2000
         cubicCapacityTo:
-          description: Filter listings by cubic capacity in cm³.
+          description: Filter listings by maximum cubic capacity in cm³.
           type: integer
           format: int32
           example: 3000
         cylindersFrom:
-          description: Filter listings by number of cylinders.
+          description: Filter listings by minimum number of cylinders.
           type: integer
           format: int32
           example: 4
         cylindersTo:
-          description: Filter listings by number of cylinders.
+          description: Filter listings by maximum number of cylinders.
           type: integer
           format: int32
           example: 6
         doorsFrom:
-          description: Filter listings by number of doors.
+          description: Filter listings by minimum number of doors.
           type: integer
           format: int32
           example: 3
         doorsTo:
-          description: Filter listings by number of doors.
+          description: Filter listings by maximum number of doors.
           type: integer
           format: int32
           example: 5
@@ -1761,19 +1761,19 @@ components:
             $ref: '#/components/schemas/DriveType'
           example: [ "rear", "all" ]
         equipmentSearchAttributes:
-          description: Filter listings by equipment search attributes.
+          description: Filter listings by specific equipment attributes.
           uniqueItems: true
           type: array
           items:
             $ref: '#/components/schemas/EquipmentSearchAttribute'
           example: [ "abs", "air-condition", "adaptive-cruise-control" ]
         firstRegistrationDateFrom:
-          description: Filter listings by first registration date.
+          description: Filter listings by the earliest first registration date.
           type: string
           format: date
           example: '2020-12-15'
         firstRegistrationDateTo:
-          description: Filter listings by first registration date.
+          description: Filter listings by the latest first registration date.
           type: string
           format: date
           example: '2021-12-15'
@@ -1789,7 +1789,7 @@ components:
           type: boolean
           example: false
         hasWarrantyOnly:
-          description: Flag indicating if the listing has a warranty.
+          description: Flag indicating if the listing includes a warranty.
           type: boolean
           example: true
         inspectedOnly:
@@ -1797,59 +1797,59 @@ components:
           type: boolean
           example: true
         kiloWattsFrom:
-          description: Filter listings by power in kW.
+          description: Filter listings by minimum power in kW.
           type: integer
           format: int32
           example: 40
         kiloWattsTo:
-          description: Filter listings by power in kW.
+          description: Filter listings by maximum power in kW.
           type: integer
           format: int32
           example: 250
         makeModelVersions:
-          description: Filter listings by make and model combinations.
+          description: Filter listings by specific make and model combinations.
           uniqueItems: true
           type: array
           items:
             $ref: '#/components/schemas/ListingQuery_MakeModelVersion'
           example: [ { "makeKey": "bmw", "modelGroupKey": "3-series", "modelKey": "320d" } ]
         mileageFrom:
-          description: Filter listings by mileage in km.
+          description: Filter listings by minimum mileage in km.
           type: integer
           format: int32
           example: 10000
         mileageTo:
-          description: Filter listings by mileage in km.
+          description: Filter listings by maximum mileage in km.
           type: integer
           format: int32
           example: 50000
         priceFrom:
-          description: Filter listings by price.
+          description: Filter listings by minimum price.
           type: number
           format: double
           example: 10000
         priceTo:
-          description: Filter listings by price.
+          description: Filter listings by maximum price.
           type: number
           format: double
           example: 50000
         rangeFrom:
-          description: Filter listings by range in km.
+          description: Filter listings by minimum range in km.
           type: integer
           format: int32
           example: 500
         rangeTo:
-          description: Filter listings by range in km.
+          description: Filter listings by maximum range in km.
           type: integer
           format: int32
           example: 1000
         seatsFrom:
-          description: Filter listings by number of seats.
+          description: Filter listings by minimum number of seats.
           type: integer
           format: int32
           example: 2
         seatsTo:
-          description: Filter listings by number of seats.
+          description: Filter listings by maximum number of seats.
           type: integer
           format: int32
           example: 5
@@ -1940,7 +1940,7 @@ components:
         language:
           $ref: '#/components/schemas/Language'
         message:
-          description: Message.
+          description: Message content.
           maxLength: 5000
           minLength: 0
           type: string
@@ -1978,22 +1978,25 @@ components:
       type: object
       properties:
         key:
+          description: Unique key of the model group.
           type: string
           example: "a-series"
         name:
+          description: Display name of the model group.
           type: string
           example: "A Series"
     PackageItem:
       type: object
       properties:
         name:
-          type: string
           description: Name of the equipment item.
+          type: string
           example: Adaptive Cruise Control
     Page:
       type: object
       properties:
         empty:
+          description: Indicates if the page is empty.
           type: boolean
           example: false
         numberOfElements:
@@ -2012,11 +2015,11 @@ components:
           format: int64
           example: 138
         first:
-          description: Is first page.
+          description: Indicates if it's the first page.
           type: boolean
           example: false
         last:
-          description: Is last page.
+          description: Indicates if it's the last page.
           type: boolean
           example: true
         number:
@@ -2048,15 +2051,16 @@ components:
       type: object
       properties:
         number:
-          description: Number.
+          description: Phone number.
           type: string
           example: "+41761234567"
         type:
-          description: Type.
+          description: Type of phone number.
           allOf:
             - $ref: "#/components/schemas/PhoneType"
           example: business
     PhoneType:
+      description: Type of phone number.
       type: string
       enum:
         - business
@@ -2085,7 +2089,7 @@ components:
           type: string
           example: "/qualilogos/12.svg"
     QualiLogoResponse:
-      description: Represents Quali Logo.
+      description: Represents Quali Logo response.
       type: object
       properties:
         id:
@@ -2098,7 +2102,7 @@ components:
           type: string
           example: "/qualilogos/12.svg"
         name:
-          description: Localized name.
+          description: Localized name of the logo.
           type: string
           example: "AutoScout verified"
         url:
@@ -2106,7 +2110,7 @@ components:
           type: string
           example: "https://www.autoscout24.ch/de/s"
     ReferenceDataResponse:
-      description: Represents the reference data.
+      description: Represents the reference data for vehicle attributes.
       type: object
       properties:
         bodyTypes:
@@ -2140,8 +2144,8 @@ components:
           items:
             $ref: "#/components/schemas/EquipmentSearchAttributeGroup"
         equipmentSearchAttributeGroupMapping:
-          type: object
           description: Mapping between EquipmentSearchAttribute and EquipmentSearchAttributeGroup.
+          type: object
           additionalProperties:
             type: string
             nullable: true

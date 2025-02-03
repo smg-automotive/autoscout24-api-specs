@@ -2165,33 +2165,33 @@ components:
       description: Represents a set of fields for Seller object.
       properties:
         address:
-          description: Address.
+          description: The address of the seller.
           type: string
           example: "Bahnhofstrasse 123b"
         city:
-          description: City.
+          description: The city where the seller is located.
           type: string
           example: "Zurich"
         id:
-          description: ID.
+          description: Unique identifier for the seller.
           type: integer
           format: int64
           example: 1923
         name:
-          description: Name.
+          description: Name of the seller.
           type: string
           example: "John Seller LLC"
         phone:
-          description: Primary phone number.
+          description: Primary phone number of the seller.
           type: string
           example: "+41761234567"
         phones:
-          description: All phones.
+          description: All phone numbers associated with the seller.
           type: array
           items:
             $ref: "#/components/schemas/Phone"
         zipCode:
-          description: Zip code.
+          description: Postal code of the seller's location.
           type: string
           example: "8080"
     SellerListing:
@@ -2212,10 +2212,9 @@ components:
           minLength: 6
           maxLength: 6
           pattern: '^\w{6}$'
-          example:
-            1AE899
+          example: "1AE899"
         cubicCapacity:
-          description: Volume of the engines cylinders in cubic centimeters.
+          description: Volume of the engine's cylinders in cubic centimeters.
           type: integer
           format: int32
           minimum: 1
@@ -2241,12 +2240,12 @@ components:
             - $ref: "#/components/schemas/DriveType"
           example: all
         firstRegistrationDate:
-          description: First registration date of the vehicle.
+          description: The date when the vehicle was first registered.
           type: string
           format: date
           example: '2020-12-15'
         firstRegistrationYear:
-          description: Year when the vehicle was first registered.
+          description: The year when the vehicle was first registered.
           type: integer
           format: int32
           minimum: 1800
@@ -2258,17 +2257,17 @@ components:
             - $ref: "#/components/schemas/FuelType"
           example: petrol
         id:
-          description: Listing's ID.
+          description: Unique identifier for the listing.
           type: integer
           format: int64
           example: 1620023
         images:
-          description: Listing images.
+          description: List of images associated with the listing.
           type: array
           items:
             $ref: "#/components/schemas/Image"
         kiloWatts:
-          description: Power the engine produces in kW.
+          description: Power produced by the engine in kilowatts (kW).
           type: integer
           format: int32
           minimum: 1
@@ -2282,44 +2281,44 @@ components:
           maximum: 9999999.0
           example: 65400
         live:
-          description: Flag indicating if a listing is live.
+          description: Flag indicating if the listing is currently live.
           type: boolean
           example: true
         makeKey:
-          description: Unique key of the make.
+          description: Unique key for the vehicle's make.
           type: string
           minLength: 1
           maxLength: 64
           example: audi
         mileage:
-          description: Distance in km that the vehicle has run.
+          description: The distance in kilometers that the vehicle has been driven.
           type: integer
           format: int32
           minimum: 0
           maximum: 99999999
           example: 17500
         modelKey:
-          description: Key of the model (unique on the make level).
+          description: Unique key for the model within the make.
           type: string
           minLength: 1
           maxLength: 64
           example: a6
         price:
-          description: Price of the vehicle.
+          description: Current price of the vehicle.
           type: number
           format: double
           minimum: 1.0
           maximum: 9999999.0
           example: 47000
         seats:
-          description: Number of seats of the vehicle.
+          description: The number of seats in the vehicle.
           type: integer
           format: int32
           minimum: 1
           maximum: 199
           example: 5
         sellerId:
-          description: Seller's ID.
+          description: Unique identifier for the seller of the listing.
           type: integer
           format: int64
           example: 601
@@ -2329,11 +2328,11 @@ components:
             - $ref: "#/components/schemas/TransmissionType"
           example: automatic
         tuned:
-          description: Flag indicating if the vehicle was altered to make it nicer or faster.
+          description: Flag indicating if the vehicle has been tuned for better performance.
           type: boolean
           example: false
         vehicleCategory:
-          description: Category of the vehicle.
+          description: Category of the vehicle (e.g., car, truck, motorcycle).
           allOf:
             - $ref: "#/components/schemas/VehicleCategory"
           example: car
@@ -2343,7 +2342,7 @@ components:
           maxLength: 128
           example: A6 3.0 55 TFSI quattro S-Tronic
         versionId:
-          description: Version ID of a listing.
+          description: Unique identifier for the version of the vehicle.
           type: integer
           format: int64
           example: 100201
@@ -2369,7 +2368,7 @@ components:
       type: object
       properties:
         vehicleCategories:
-          description: Retrieved vehicle categories.
+          description: List of retrieved vehicle categories.
           type: array
           items:
             $ref: '#/components/schemas/VehicleCategory'
@@ -2386,29 +2385,31 @@ components:
       description: Represents a shared set of fields for different Version objects.
       properties:
         source:
-          description: Version source.
+          description: The source of the version data.
           allOf:
             - $ref: "#/components/schemas/VersionSource"
           example: eurotax
         externalId:
-          description: |
-            Version's external ID, usually provided and used by a data provider as the version's key/identificator
-            in the origin system.
+          description: External ID of the version, provided by a data provider as the key/identifier.
           type: string
           maxLength: 64
           example: "100200401"
     VersionSource:
+      description: Represents the source of the version data.
       type: string
       enum:
         - eurotax
         - auto-i
+      example: eurotax
     WarrantyType:
+      description: Type of warranty.
       type: string
       enum:
         - from-date
         - from-delivery
         - first-registration
         - none
+      example: from-date
   securitySchemes:
     BearerAuth:
       bearerFormat: auth-scheme

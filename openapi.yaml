@@ -312,14 +312,14 @@ components:
     languageParam:
       in: query
       name: language
-      description: Specify the language (defaults to German).
+      description: The language in which the response should be returned (defaults to German).
       required: false
       schema:
         $ref: '#/components/schemas/Language'
     listingIdPathParam:
       in: path
       name: listingId
-      description: Listing ID.
+      description: The ID of the listing.
       required: true
       schema:
         type: integer
@@ -328,7 +328,7 @@ components:
     pageQueryParam:
       in: query
       name: page
-      description: Specify the page number for data retrieval (defaults to 0).
+      description: The page number for data retrieval (defaults to 0).
       required: false
       schema:
         type: integer
@@ -340,7 +340,7 @@ components:
     sellerIdPathParam:
       in: path
       name: sellerId
-      description: Seller ID.
+      description: The ID of the seller.
       required: true
       schema:
         type: integer
@@ -349,7 +349,7 @@ components:
     sizeQueryParam:
       in: query
       name: size
-      description: Number of records per page (defaults to 20, maximum 2000).
+      description: The number of records per page (defaults to 20, maximum 2000).
       required: false
       schema:
         type: integer
@@ -361,14 +361,14 @@ components:
     vehicleCategoryQueryParam:
       in: query
       name: vehicleCategory
-      description: Vehicle category to retrieve.
+      description: The vehicle category for which data should be retrieved.
       required: true
       schema:
         $ref: "#/components/schemas/VehicleCategory"
     versionIdPathParam:
       in: path
       name: versionId
-      description: Version ID.
+      description: The ID of the version.
       required: true
       schema:
         type: integer
@@ -377,6 +377,7 @@ components:
   schemas:
     BodyType:
       type: string
+      description: Defines the body type of the vehicle, indicating the general structure and form.
       enum:
         - alcove
         - atv-quad
@@ -437,13 +438,17 @@ components:
         - trike
         - uploader
         - wood-transporter
+      example: "car"
     ChargingPlugType:
       type: string
+      description: The type of charging plug supported by the vehicle for electric vehicles.
       enum:
         - type-1
         - type-2
+      example: "type-2"
     Color:
       type: string
+      description: The color of the vehicle or its components.
       enum:
         - anthracite
         - beige
@@ -464,24 +469,29 @@ components:
         - white
         - yellow
         - other
+      example: "blue"
     ConditionType:
       type: string
+      description: Specifies the condition of the vehicle, whether it's new, used, or other categories.
       enum:
         - new
         - used
         - demonstration
         - oldtimer
         - pre-registered
+      example: "new"
     Consumption:
-      description: Represents consumption of the vehicle.
+      description: Represents the fuel consumption of the vehicle.
       type: object
       properties:
         combined:
-          description: Combined fuel consumption in l/100km.
+          description: The combined fuel consumption of the vehicle in liters per 100 kilometers.
           type: number
           example: 8.55
+      example: { "combined": 8.55 }
     CylinderArrangement:
       type: string
+      description: The arrangement of cylinders in the vehicle’s engine.
       enum:
         - inline
         - flat
@@ -490,21 +500,27 @@ components:
         - rotary
         - monobloc
         - w
+      example: "v"
     DriveSystem:
       type: string
+      description: The type of system used to transmit power from the engine to the wheels or other moving parts.
       enum:
         - belt
         - chain
         - shaft
         - direct
+      example: "belt"
     DriveType:
       type: string
+      description: The type of drive that determines how the vehicle's wheels are powered.
       enum:
         - rear
         - front
         - all
+      example: "rear"
     EmissionStandard:
       type: string
+      description: The emission standard that the vehicle complies with, indicating the level of pollutants it produces.
       enum:
         - euro-1
         - euro-2
@@ -524,8 +540,10 @@ components:
         - euro-6d-isc
         - euro-6d-isc-fcm
         - euro-6e
+      example: "euro-6"
     EnergyLabel:
       type: string
+      description: The energy efficiency label of the vehicle, indicating how energy-efficient it is.
       enum:
         - a
         - b
@@ -534,20 +552,28 @@ components:
         - e
         - f
         - g
+      example: "a"
     Equipment:
       type: object
+      description: Represents an equipment item or package included in the vehicle.
       properties:
         name:
           type: string
-          description: Name of the equipment item or package.
+          description: The name of the equipment item or package.
+          example: "ABS"
         packageItems:
           type: array
-          description: Equipment items included in the package.
+          description: A list of equipment items included in the package, if any.
           items:
             $ref: '#/components/schemas/PackageItem'
           nullable: true
+      example:
+        name: "ABS"
+        packageItems:
+          - { "itemName": "ABS Module", "quantity": 1 }
     EquipmentSearchAttribute:
       type: string
+      description: Represents specific equipment features that can be searched for in a vehicle.
       enum:
         - abs
         - active-brake-assistant
@@ -637,14 +663,17 @@ components:
         - wing-doors
         - xenon-headlights
         - electric-windows
+      example: "abs"
     EquipmentSearchAttributeGroup:
       type: string
+      description: A group of related equipment search attributes for filtering.
       enum:
         - air-condition
         - headlights
         - navigation-system
         - seat-covers
         - towbar
+      example: "headlights"
     Facet:
       type: string
       enum:

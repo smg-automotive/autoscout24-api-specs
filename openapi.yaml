@@ -706,8 +706,8 @@ components:
         - transmissionTypes
         - tunedOnly
         - vehicleCategories
+      description: A list of possible facet categories used for filtering or sorting listings.
     FacetsResponse:
-      description: Retrieved facets.
       type: object
       properties:
         facets:
@@ -721,6 +721,7 @@ components:
               type: integer
               format: int64
       example: { "makeKeys": { "audi": 100, "bmw": 200 } }
+      description: The response containing the facets retrieved, with each facet represented by its name and associated values.
     FastChargingPlugType:
       type: string
       enum:
@@ -728,12 +729,13 @@ components:
         - ccs-2
         - chademo
         - supercharger
+      description: A list of possible fast charging plug types supported by electric vehicles.
     Feature:
       type: string
       enum:
         - top-list
+      description: A list of features available for filtering or categorizing listings, such as 'top-list' for featured listings.
     FinanceScout24Listing:
-      description: Represents a set of fields for FinanceScout24's Listing objects.
       properties:
         availableForLeasing:
           description: Flag indicating if the listing is available for leasing.
@@ -750,10 +752,9 @@ components:
           minLength: 6
           maxLength: 6
           pattern: '^\w{6}$'
-          example:
-            1AE899
+          example: 1AE899
         cubicCapacity:
-          description: Volume of the engines cylinders in cubic centimeters.
+          description: Volume of the engine's cylinders in cubic centimeters.
           type: integer
           format: int32
           minimum: 1
@@ -885,6 +886,7 @@ components:
           type: integer
           format: int64
           example: 100201
+      description: A representation of a listing object from FinanceScout24 containing various attributes of the vehicle such as fuel type, body type, and pricing information.
     FuelType:
       type: string
       enum:
@@ -902,22 +904,23 @@ components:
         - phev-diesel
         - phev-petrol
         - two-stroke-mixture
+      description: A list of possible fuel types that a vehicle can use.
     Image:
-      description: Represents the data for the Image entity.
       properties:
         url:
           description: URL of the image.
           type: string
           format: uri
           example: https://images.autoscout24.ch/853/11878853/0.jpg
+      description: Represents an image associated with a listing, containing a relative URL to the image file.
     Language:
-      description: Language of the user.
       type: string
       enum:
         - de
         - fr
         - it
       example: de
+      description: The language used by the user, which can be German (de), French (fr), or Italian (it).
     LicenseCategory:
       type: string
       enum:
@@ -930,8 +933,8 @@ components:
         - c1
         - f
         - m
+      description: A list of possible vehicle license categories based on the driver's license type.
     ListingBaseResponse:
-      description: Represents the base data for the Listing entity.
       type: object
       properties:
         conditionType:
@@ -1025,8 +1028,8 @@ components:
           description: Full version name of the vehicle.
           type: string
           example: A6 3.0 55 TFSI quattro S-Tronic
+      description: The base response for vehicle listings, including key attributes such as fuel type, price, mileage, and more.
     ListingBaseResponse_Seller:
-      description: Represents the data for the Seller entity.
       type: object
       properties:
         id:
@@ -1034,6 +1037,7 @@ components:
           type: integer
           format: int64
           example: 1923
+      description: Represents the data for a seller, including the seller's unique identifier.
     ListingFeature:
       type: object
       properties:

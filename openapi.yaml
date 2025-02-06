@@ -36,17 +36,17 @@ paths:
         - $ref: '#/components/parameters/listingIdPathParam'
       responses:
         "200":
-          description: Listing returned.
+          description: Listing successfully returned.
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/FinanceScout24Listing"
   /public/v1/listings/{listingId}:
     get:
+      operationId: GetListing
+      description: Returns a localized listing for the specified listing ID.
       tags:
         - Listing
-      description: Returns localized listing.
-      operationId: GetListing
       parameters:
         - name: listingId
           in: path
@@ -64,10 +64,10 @@ paths:
                 $ref: '#/components/schemas/ListingResponse'
   /public/v1/listings/facets:
     post:
+      operationId: GetFacets
+      description: Returns facets based on the specified query parameters.
       tags:
         - Listing Search
-      description: Retrieve facets based on specified query parameters.
-      operationId: GetFacets
       requestBody:
         content:
           application/json:
@@ -83,10 +83,10 @@ paths:
                 $ref: "#/components/schemas/FacetsResponse"
   /public/v1/listings/search:
     post:
+      operationId: SearchListings
+      description: Returns listings based on the specified query parameters.
       tags:
         - Listing Search
-      description: Retrieve listings based on specified query parameters.
-      operationId: Search
       requestBody:
         content:
           application/json:
@@ -102,10 +102,10 @@ paths:
                 $ref: "#/components/schemas/ListingSearchResponse"
   /public/v1/listings/{listingId}/equipment:
     get:
+      operationId: GetListingEquipment
+      description: Returns localized equipment details for the specified listing ID.
       tags:
         - Listing Equipment
-      description: Returns localized listing equipment.
-      operationId: GetListingEquipment
       parameters:
         - name: listingId
           in: path
@@ -124,7 +124,7 @@ paths:
   /public/v1/makes:
     get:
       operationId: GetMakes
-      description: Returns a sorted list of makes for a vehicle category.
+      description: Returns a sorted list of makes for the specified vehicle category.
       tags:
         - Make
       parameters:
@@ -133,17 +133,17 @@ paths:
         - $ref: "#/components/parameters/sizeQueryParam"
       responses:
         "200":
-          description: Makes for a vehicle category returned.
+          description: List of makes successfully returned.
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/MakeResponse"
   /public/v1/makes/key/{makeKey}/models:
     get:
+      operationId: GetModels
+      description: Returns a sorted list of models for the specified makeKey and vehicle category.
       tags:
         - Model
-      description: Returns a sorted list of models by makeKey and vehicleCategory.
-      operationId: GetModels
       parameters:
         - name: makeKey
           in: path
@@ -155,17 +155,17 @@ paths:
         - $ref: "#/components/parameters/sizeQueryParam"
       responses:
         "200":
-          description: Models for a makeKey and vehicle category returned.
+          description: List of models successfully returned.
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ModelResponse"
   /public/v1/listings/{listingId}/message-leads:
     post:
+      operationId: CreateMessageLead
+      description: Creates a message lead for the specified listing ID.
       tags:
         - Message Lead
-      description: Creates a message lead for the specified listing ID.
-      operationId: CreateMessageLead
       parameters:
         - $ref: '#/components/parameters/listingIdPathParam'
         - name: X-AS24-Source
@@ -192,10 +192,10 @@ paths:
                 type: string
   /public/v1/quali-logos/{qualiLogoId}:
     get:
+      operationId: GetQualiLogo
+      description: Returns the specified Quali Logo.
       tags:
         - Quali Logo
-      description: Returns Quali Logo.
-      operationId: GetQualiLogo
       parameters:
         - name: qualiLogoId
           in: path
@@ -213,10 +213,10 @@ paths:
                 $ref: "#/components/schemas/QualiLogoResponse"
   /public/v1/reference-data:
     get:
+      operationId: GetReferenceData
+      description: Returns reference data, optionally filtered by vehicle category.
       tags:
         - Reference Data
-      description: Returns reference data.
-      operationId: GetReferenceData
       parameters:
         - name: vehicleCategory
           in: query
@@ -233,23 +233,23 @@ paths:
                 $ref: "#/components/schemas/ReferenceDataResponse"
   /public/v1/sellers/{sellerId}:
     get:
-      operationId: GetSellersSellerId
-      description: Returns a seller for the specified seller ID.
+      operationId: GetSeller
+      description: Returns seller details for the specified seller ID.
       tags:
         - Seller
       parameters:
         - $ref: '#/components/parameters/sellerIdPathParam'
       responses:
         "200":
-          description: Seller returned.
+          description: Seller details successfully returned.
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/SellerResponse"
   /public/v1/sellers/{sellerId}/listings:
     get:
-      operationId: GetSellersSellerIdListings
-      description: Returns a page of listings for the specified seller ID.
+      operationId: GetSellerListings
+      description: Returns listings for the specified seller ID.
       tags:
         - Listing
       parameters:
@@ -258,15 +258,15 @@ paths:
         - $ref: "#/components/parameters/sizeQueryParam"
       responses:
         "200":
-          description: Listings returned.
+          description: Seller's listings successfully returned.
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/SellerListingPage"
   /public/v1/sellers/{sellerId}/listings/{listingId}:
     get:
-      operationId: GetSellersSellerIdListingsListingId
-      description: Returns a listing for the specified seller ID and listing ID.
+      operationId: GetSellerListing
+      description: Returns listing details for the specified seller ID and listing ID.
       tags:
         - Listing
       parameters:
@@ -274,17 +274,17 @@ paths:
         - $ref: '#/components/parameters/listingIdPathParam'
       responses:
         "200":
-          description: Listing returned.
+          description: Listing details successfully returned.
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/SellerListing"
   /public/v1/vehicle-categories:
     get:
+      operationId: GetVehicleCategories
+      description: Returns a list of available vehicle categories.
       tags:
         - Reference Data
-      description: Returns vehicle categories.
-      operationId: GetVehicleCategories
       responses:
         "200":
           description: Vehicle categories successfully returned.
@@ -294,15 +294,15 @@ paths:
                 $ref: "#/components/schemas/VehicleCategoriesResponse"
   /public/v1/versions/{versionId}:
     get:
-      operationId: GetVersionsVersionId
-      description: Returns a version for the specified version ID.
+      operationId: GetVersion
+      description: Returns version details for the specified version ID.
       tags:
         - Version
       parameters:
         - $ref: '#/components/parameters/versionIdPathParam'
       responses:
         "200":
-          description: Version returned.
+          description: Version details successfully returned.
           content:
             application/json:
               schema:
@@ -312,14 +312,14 @@ components:
     languageParam:
       in: query
       name: language
-      description: Specify the language (defaults to German).
+      description: The language in which the response should be returned (defaults to German).
       required: false
       schema:
         $ref: '#/components/schemas/Language'
     listingIdPathParam:
       in: path
       name: listingId
-      description: Listing ID.
+      description: The ID of the listing.
       required: true
       schema:
         type: integer
@@ -328,7 +328,7 @@ components:
     pageQueryParam:
       in: query
       name: page
-      description: Specify the page number for data retrieval (defaults to 0).
+      description: The page number for data retrieval (defaults to 0).
       required: false
       schema:
         type: integer
@@ -340,7 +340,7 @@ components:
     sellerIdPathParam:
       in: path
       name: sellerId
-      description: Seller ID.
+      description: The ID of the seller.
       required: true
       schema:
         type: integer
@@ -349,7 +349,7 @@ components:
     sizeQueryParam:
       in: query
       name: size
-      description: Number of records per page (defaults to 20, maximum 2000).
+      description: The number of records per page (defaults to 20, maximum 2000).
       required: false
       schema:
         type: integer
@@ -361,14 +361,14 @@ components:
     vehicleCategoryQueryParam:
       in: query
       name: vehicleCategory
-      description: Vehicle category to retrieve.
+      description: The vehicle category for which data should be retrieved.
       required: true
       schema:
         $ref: "#/components/schemas/VehicleCategory"
     versionIdPathParam:
       in: path
       name: versionId
-      description: Version ID.
+      description: The ID of the version.
       required: true
       schema:
         type: integer
@@ -377,6 +377,7 @@ components:
   schemas:
     BodyType:
       type: string
+      description: Defines the body type of the vehicle, indicating the general structure and form.
       enum:
         - alcove
         - atv-quad
@@ -437,13 +438,17 @@ components:
         - trike
         - uploader
         - wood-transporter
+      example: "car"
     ChargingPlugType:
       type: string
+      description: The type of charging plug supported by the vehicle for electric vehicles.
       enum:
         - type-1
         - type-2
+      example: "type-2"
     Color:
       type: string
+      description: The color of the vehicle or its components.
       enum:
         - anthracite
         - beige
@@ -464,24 +469,29 @@ components:
         - white
         - yellow
         - other
+      example: "blue"
     ConditionType:
       type: string
+      description: Specifies the condition of the vehicle, whether it's new, used, or other categories.
       enum:
         - new
         - used
         - demonstration
         - oldtimer
         - pre-registered
+      example: "new"
     Consumption:
-      description: Represents consumption of the vehicle.
+      description: Represents the fuel consumption of the vehicle.
       type: object
       properties:
         combined:
-          description: Combined fuel consumption in l/100km.
+          description: The combined fuel consumption of the vehicle in liters per 100 kilometers.
           type: number
           example: 8.55
+      example: { "combined": 8.55 }
     CylinderArrangement:
       type: string
+      description: The arrangement of cylinders in the vehicle’s engine.
       enum:
         - inline
         - flat
@@ -490,21 +500,27 @@ components:
         - rotary
         - monobloc
         - w
+      example: "v"
     DriveSystem:
       type: string
+      description: The type of system used to transmit power from the engine to the wheels or other moving parts.
       enum:
         - belt
         - chain
         - shaft
         - direct
+      example: "belt"
     DriveType:
       type: string
+      description: The type of drive that determines how the vehicle's wheels are powered.
       enum:
         - rear
         - front
         - all
+      example: "rear"
     EmissionStandard:
       type: string
+      description: The emission standard that the vehicle complies with, indicating the level of pollutants it produces.
       enum:
         - euro-1
         - euro-2
@@ -524,8 +540,10 @@ components:
         - euro-6d-isc
         - euro-6d-isc-fcm
         - euro-6e
+      example: "euro-6"
     EnergyLabel:
       type: string
+      description: The energy efficiency label of the vehicle, indicating how energy-efficient it is.
       enum:
         - a
         - b
@@ -534,20 +552,28 @@ components:
         - e
         - f
         - g
+      example: "a"
     Equipment:
       type: object
+      description: Represents an equipment item or package included in the vehicle.
       properties:
         name:
           type: string
-          description: Name of the equipment item or package.
+          description: The name of the equipment item or package.
+          example: "ABS"
         packageItems:
           type: array
-          description: Equipment items included in the package.
+          description: A list of equipment items included in the package, if any.
           items:
             $ref: '#/components/schemas/PackageItem'
           nullable: true
+      example:
+        name: "ABS"
+        packageItems:
+          - { "name": "ABS Module" }
     EquipmentSearchAttribute:
       type: string
+      description: Represents specific equipment features that can be searched for in a vehicle.
       enum:
         - abs
         - active-brake-assistant
@@ -637,14 +663,17 @@ components:
         - wing-doors
         - xenon-headlights
         - electric-windows
+      example: "abs"
     EquipmentSearchAttributeGroup:
       type: string
+      description: A group of related equipment search attributes for filtering.
       enum:
         - air-condition
         - headlights
         - navigation-system
         - seat-covers
         - towbar
+      example: "headlights"
     Facet:
       type: string
       enum:
@@ -677,8 +706,8 @@ components:
         - transmissionTypes
         - tunedOnly
         - vehicleCategories
+      description: A list of possible facet categories used for filtering or sorting listings.
     FacetsResponse:
-      description: Retrieved facets.
       type: object
       properties:
         facets:
@@ -692,6 +721,7 @@ components:
               type: integer
               format: int64
       example: { "makeKeys": { "audi": 100, "bmw": 200 } }
+      description: The response containing the facets retrieved, with each facet represented by its name and associated values.
     FastChargingPlugType:
       type: string
       enum:
@@ -699,12 +729,13 @@ components:
         - ccs-2
         - chademo
         - supercharger
+      description: A list of possible fast charging plug types supported by electric vehicles.
     Feature:
       type: string
       enum:
         - top-list
+      description: A list of features available for filtering or categorizing listings, such as 'top-list' for featured listings.
     FinanceScout24Listing:
-      description: Represents a set of fields for FinanceScout24's Listing objects.
       properties:
         availableForLeasing:
           description: Flag indicating if the listing is available for leasing.
@@ -721,10 +752,9 @@ components:
           minLength: 6
           maxLength: 6
           pattern: '^\w{6}$'
-          example:
-            1AE899
+          example: 1AE899
         cubicCapacity:
-          description: Volume of the engines cylinders in cubic centimeters.
+          description: Volume of the engine's cylinders in cubic centimeters.
           type: integer
           format: int32
           minimum: 1
@@ -856,6 +886,7 @@ components:
           type: integer
           format: int64
           example: 100201
+      description: A representation of a listing object from FinanceScout24 containing various attributes of the vehicle such as fuel type, body type, and pricing information.
     FuelType:
       type: string
       enum:
@@ -873,22 +904,23 @@ components:
         - phev-diesel
         - phev-petrol
         - two-stroke-mixture
+      description: A list of possible fuel types that a vehicle can use.
     Image:
-      description: Represents the data for the Image entity.
       properties:
         url:
           description: URL of the image.
           type: string
           format: uri
           example: https://images.autoscout24.ch/853/11878853/0.jpg
+      description: Represents an image associated with a listing, containing a relative URL to the image file.
     Language:
-      description: Language of the user.
       type: string
       enum:
         - de
         - fr
         - it
       example: de
+      description: The language used by the user, which can be German (de), French (fr), or Italian (it).
     LicenseCategory:
       type: string
       enum:
@@ -901,8 +933,8 @@ components:
         - c1
         - f
         - m
+      description: A list of possible vehicle license categories based on the driver's license type.
     ListingBaseResponse:
-      description: Represents the base data for the Listing entity.
       type: object
       properties:
         conditionType:
@@ -996,8 +1028,8 @@ components:
           description: Full version name of the vehicle.
           type: string
           example: A6 3.0 55 TFSI quattro S-Tronic
+      description: The base response for vehicle listings, including key attributes such as fuel type, price, mileage, and more.
     ListingBaseResponse_Seller:
-      description: Represents the data for the Seller entity.
       type: object
       properties:
         id:
@@ -1005,6 +1037,7 @@ components:
           type: integer
           format: int64
           example: 1923
+      description: Represents the data for a seller, including the seller's unique identifier.
     ListingFeature:
       type: object
       properties:
@@ -1117,6 +1150,7 @@ components:
             - $ref: "#/components/schemas/ConditionType"
           example: demonstration
         consumption:
+          description: Fuel consumption data for the vehicle.
           type: object
           properties:
             combined:
@@ -1135,7 +1169,7 @@ components:
               format: double
               example: 10.55
         cubicCapacity:
-          description: Volume of the engines cylinders in cubic centimeters.
+          description: Volume of the engine's cylinders in cubic centimeters.
           type: integer
           format: int32
           minimum: 1
@@ -1430,87 +1464,87 @@ components:
           maximum: 9
           example: 1
         teaser:
-          description: Teaser of the listing.
+          description: Teaser or highlight of the listing to capture interest.
           type: string
           example: NEW NEW NEW
         towingCapacityBraked:
-          description: Towing capacity of the vehicle when braked in kg.
+          description: Towing capacity of the vehicle when braked, measured in kilograms.
           type: integer
           format: int32
           minimum: 1
           maximum: 99999
           example: 1000
         transmissionType:
-          description: Transmission type of the vehicle.
+          description: The type of transmission in the vehicle (e.g., automatic, manual).
           allOf:
             - $ref: "#/components/schemas/TransmissionType"
           example: automatic
         transporter:
-          description: Flag indicating if a vehicle is a transporter.
+          description: A flag indicating whether the vehicle is designed as a transporter.
           type: boolean
           example: true
         tuned:
-          description: Flag indicating if the vehicle was altered to make it nicer or faster.
+          description: A flag indicating whether the vehicle has been tuned for performance or aesthetics.
           type: boolean
           example: false
         vehicleCategory:
-          description: Category of the vehicle.
+          description: The category or type of the vehicle (e.g., car, truck, SUV).
           allOf:
             - $ref: "#/components/schemas/VehicleCategory"
           example: car
         versionFullName:
-          description: Full version name of the vehicle.
+          description: The full name of the vehicle’s version, including model and specifications.
           type: string
           maxLength: 128
           example: A6 3.0 55 TFSI quattro S-Tronic
         warranty:
-          description: Warranty of the vehicle.
+          description: Details about the vehicle’s warranty, including terms and conditions.
           type: object
           properties:
             details:
-              description: Details of the warranty.
+              description: A description of the specific warranty details.
               type: string
               example: Up to 10k
             duration:
-              description: Duration of the warranty in months.
+              description: The duration of the warranty in months.
               type: integer
               format: int32
               minimum: 1
               maximum: 199
               example: 24
             mileage:
-              description: Mileage of the warranty in km.
+              description: The maximum mileage covered by the warranty in kilometers.
               type: integer
               format: int32
               minimum: 1
               maximum: 9999999
               example: 10000
             startDate:
-              description: Start date of the warranty.
+              description: The start date of the warranty in YYYY-MM-DD format.
               type: string
               format: date
               example: '2020-12-15'
             type:
-              description: Type of the warranty.
+              description: The type of warranty (e.g., from-date, from-mileage).
               allOf:
                 - $ref: "#/components/schemas/WarrantyType"
               example: from-date
         weightCurb:
-          description: Curb weight of the vehicle in kg.
+          description: The curb weight of the vehicle, measured in kilograms, excluding passengers and cargo.
           type: integer
           format: int32
           minimum: 1
           maximum: 29999
           example: 2000
         weightTotal:
-          description: Total weight of the vehicle in kg.
+          description: The total weight of the vehicle, measured in kilograms, including all components.
           type: integer
           format: int32
           minimum: 1
           maximum: 29999
           example: 2500
         width:
-          description: Width of the vehicle in cm.
+          description: The width of the vehicle in centimeters, typically measured at the widest point.
           type: integer
           format: int32
           minimum: 1
@@ -1521,34 +1555,35 @@ components:
       properties:
         standard:
           type: array
-          description: Standard equipment.
+          description: List of standard equipment of the vehicle.
           items:
             $ref: '#/components/schemas/Equipment'
           example:
-            name: "ABS"
+            - name: "abs"
         optional:
           type: array
-          description: Optional equipment.
+          description: List of optional equipment aof the vehicle.
           items:
             $ref: '#/components/schemas/Equipment'
           example:
-            name: "Assistance Package"
-            packageItems:
-              - name: "Adaptive Cruise Control"
+            - name: "Assistance Package"
+              packageItems:
+                - name: "Adaptive Cruise Control"
         searchAttributes:
           type: array
-          description: Search attributes.
+          description: List of search attributes for filtering the vehicle equipment.
           items:
             $ref: '#/components/schemas/EquipmentSearchAttribute'
     ListingFacet:
-      description: Definition of facet to retrieve.
+      description: Defines a facet to retrieve for filtering or sorting purposes.
       type: object
       properties:
         name:
           $ref: "#/components/schemas/Facet"
-      example: { "name": "makeKeys" }
+      example:
+        { "name": "makeKeys" }
     ListingFacets:
-      description: Represents the request structure for listing facets.
+      description: Represents the request structure for retrieving listing facets based on the provided search query.
       required:
         - facets
       type: object
@@ -1556,12 +1591,12 @@ components:
         query:
           $ref: '#/components/schemas/ListingQuery'
         facets:
-          description: Facets to retrieve.
+          description: List of facets to retrieve for filtering or categorization.
           type: array
           items:
             $ref: '#/components/schemas/ListingFacet'
     ListingSearch:
-      description: Represents the request structure for listing search.
+      description: Represents the request structure for searching listings.
       type: object
       properties:
         query:
@@ -1569,12 +1604,12 @@ components:
         pagination:
           $ref: "#/components/schemas/Pageable"
         sort:
-          description: Sort request for listing search.
+          description: Sorting options for the listing search result.
           type: array
           items:
             $ref: "#/components/schemas/ListingSort"
     ListingSearchResponse:
-      description: Represents the response structure for listing search.
+      description: Represents the response structure for a listing search query, including pagination and result metadata.
       type: object
       properties:
         content:
@@ -1582,51 +1617,51 @@ components:
           items:
             $ref: "#/components/schemas/ListingBaseResponse"
         empty:
-          description: Flag indicating if the search result is empty.
+          description: Flag indicating if the search result contains no items.
           type: boolean
           example: false
         numberOfElements:
-          description: Number of elements in the search result.
+          description: Number of elements in the current page of search results.
           type: integer
           format: int32
           example: 15
         size:
-          description: Number of elements requested.
+          description: Total number of elements requested for the search query.
           type: integer
           format: int32
           example: 20
         totalElements:
-          description: Total number of elements matched by provided search criteria.
+          description: Total number of elements that match the provided search criteria across all pages.
           type: integer
           format: int64
           example: 15
         first:
-          description: Flag indicating if the search result is the first page.
+          description: Flag indicating if the current page is the first page of the search results.
           type: boolean
           example: true
         last:
-          description: Flag indicating if the search result is the last page.
+          description: Flag indicating if the current page is the last page of the search results.
           type: boolean
           example: true
         number:
-          description: Number of the current page.
+          description: Current page number in the search result.
           type: integer
           format: int32
           example: 0
         totalPages:
-          description: Total number of pages for provided search criteria.
+          description: Total number of pages available for the given search criteria.
           type: integer
           format: int32
           example: 1
     ListingSort:
-      description: Represents the sort request for listing search.
+      description: Defines the sorting criteria for the listing search results.
       required:
         - order
         - type
       type: object
       properties:
         type:
-          description: Sort type.
+          description: Type of sorting to apply to the search results.
           type: string
           enum:
             - PRICE
@@ -1636,7 +1671,7 @@ components:
             - HORSE_POWER
             - CREATED_DATE
         order:
-          description: Sort order.
+          description: Direction of the sorting order.
           type: string
           enum:
             - ASC
@@ -1651,12 +1686,12 @@ components:
           format: int32
           example: 60
         batteryCapacityFrom:
-          description: Filter listings by battery capacity in kWh.
+          description: Filter listings by minimum battery capacity in kWh.
           type: number
           format: double
           example: 50.55
         batteryCapacityTo:
-          description: Filter listings by battery capacity in kWh.
+          description: Filter listings by maximum battery capacity in kWh.
           type: number
           format: double
           example: 150.55
@@ -1682,32 +1717,32 @@ components:
             $ref: '#/components/schemas/ConditionType'
           example: [ "new", "used" ]
         cubicCapacityFrom:
-          description: Filter listings by cubic capacity in cm³.
+          description: Filter listings by minimum cubic capacity in cm³.
           type: integer
           format: int32
           example: 2000
         cubicCapacityTo:
-          description: Filter listings by cubic capacity in cm³.
+          description: Filter listings by maximum cubic capacity in cm³.
           type: integer
           format: int32
           example: 3000
         cylindersFrom:
-          description: Filter listings by number of cylinders.
+          description: Filter listings by minimum number of cylinders.
           type: integer
           format: int32
           example: 4
         cylindersTo:
-          description: Filter listings by number of cylinders.
+          description: Filter listings by maximum number of cylinders.
           type: integer
           format: int32
           example: 6
         doorsFrom:
-          description: Filter listings by number of doors.
+          description: Filter listings by minimum number of doors.
           type: integer
           format: int32
           example: 3
         doorsTo:
-          description: Filter listings by number of doors.
+          description: Filter listings by maximum number of doors.
           type: integer
           format: int32
           example: 5
@@ -1726,19 +1761,19 @@ components:
             $ref: '#/components/schemas/DriveType'
           example: [ "rear", "all" ]
         equipmentSearchAttributes:
-          description: Filter listings by equipment search attributes.
+          description: Filter listings by specific equipment attributes.
           uniqueItems: true
           type: array
           items:
             $ref: '#/components/schemas/EquipmentSearchAttribute'
           example: [ "abs", "air-condition", "adaptive-cruise-control" ]
         firstRegistrationDateFrom:
-          description: Filter listings by first registration date.
+          description: Filter listings by the earliest first registration date.
           type: string
           format: date
           example: '2020-12-15'
         firstRegistrationDateTo:
-          description: Filter listings by first registration date.
+          description: Filter listings by the latest first registration date.
           type: string
           format: date
           example: '2021-12-15'
@@ -1754,7 +1789,7 @@ components:
           type: boolean
           example: false
         hasWarrantyOnly:
-          description: Flag indicating if the listing has a warranty.
+          description: Flag indicating if the listing includes a warranty.
           type: boolean
           example: true
         inspectedOnly:
@@ -1762,59 +1797,59 @@ components:
           type: boolean
           example: true
         kiloWattsFrom:
-          description: Filter listings by power in kW.
+          description: Filter listings by minimum power in kW.
           type: integer
           format: int32
           example: 40
         kiloWattsTo:
-          description: Filter listings by power in kW.
+          description: Filter listings by maximum power in kW.
           type: integer
           format: int32
           example: 250
         makeModelVersions:
-          description: Filter listings by make and model combinations.
+          description: Filter listings by specific make and model combinations.
           uniqueItems: true
           type: array
           items:
             $ref: '#/components/schemas/ListingQuery_MakeModelVersion'
           example: [ { "makeKey": "bmw", "modelGroupKey": "3-series", "modelKey": "320d" } ]
         mileageFrom:
-          description: Filter listings by mileage in km.
+          description: Filter listings by minimum mileage in km.
           type: integer
           format: int32
           example: 10000
         mileageTo:
-          description: Filter listings by mileage in km.
+          description: Filter listings by maximum mileage in km.
           type: integer
           format: int32
           example: 50000
         priceFrom:
-          description: Filter listings by price.
+          description: Filter listings by minimum price.
           type: number
           format: double
           example: 10000
         priceTo:
-          description: Filter listings by price.
+          description: Filter listings by maximum price.
           type: number
           format: double
           example: 50000
         rangeFrom:
-          description: Filter listings by range in km.
+          description: Filter listings by minimum range in km.
           type: integer
           format: int32
           example: 500
         rangeTo:
-          description: Filter listings by range in km.
+          description: Filter listings by maximum range in km.
           type: integer
           format: int32
           example: 1000
         seatsFrom:
-          description: Filter listings by number of seats.
+          description: Filter listings by minimum number of seats.
           type: integer
           format: int32
           example: 2
         seatsTo:
-          description: Filter listings by number of seats.
+          description: Filter listings by maximum number of seats.
           type: integer
           format: int32
           example: 5
@@ -1905,7 +1940,7 @@ components:
         language:
           $ref: '#/components/schemas/Language'
         message:
-          description: Message.
+          description: Message content.
           maxLength: 5000
           minLength: 0
           type: string
@@ -1943,22 +1978,25 @@ components:
       type: object
       properties:
         key:
+          description: Unique key of the model group.
           type: string
           example: "a-series"
         name:
+          description: Display name of the model group.
           type: string
           example: "A Series"
     PackageItem:
       type: object
       properties:
         name:
-          type: string
           description: Name of the equipment item.
+          type: string
           example: Adaptive Cruise Control
     Page:
       type: object
       properties:
         empty:
+          description: Indicates if the page is empty.
           type: boolean
           example: false
         numberOfElements:
@@ -1977,11 +2015,11 @@ components:
           format: int64
           example: 138
         first:
-          description: Is first page.
+          description: Indicates if it's the first page.
           type: boolean
           example: false
         last:
-          description: Is last page.
+          description: Indicates if it's the last page.
           type: boolean
           example: true
         number:
@@ -2013,15 +2051,16 @@ components:
       type: object
       properties:
         number:
-          description: Number.
+          description: Phone number.
           type: string
           example: "+41761234567"
         type:
-          description: Type.
+          description: Type of phone number.
           allOf:
             - $ref: "#/components/schemas/PhoneType"
           example: business
     PhoneType:
+      description: Type of phone number.
       type: string
       enum:
         - business
@@ -2050,7 +2089,7 @@ components:
           type: string
           example: "/qualilogos/12.svg"
     QualiLogoResponse:
-      description: Represents Quali Logo.
+      description: Represents Quali Logo response.
       type: object
       properties:
         id:
@@ -2063,7 +2102,7 @@ components:
           type: string
           example: "/qualilogos/12.svg"
         name:
-          description: Localized name.
+          description: Localized name of the logo.
           type: string
           example: "AutoScout verified"
         url:
@@ -2071,7 +2110,7 @@ components:
           type: string
           example: "https://www.autoscout24.ch/de/s"
     ReferenceDataResponse:
-      description: Represents the reference data.
+      description: Represents the reference data for vehicle attributes.
       type: object
       properties:
         bodyTypes:
@@ -2105,8 +2144,8 @@ components:
           items:
             $ref: "#/components/schemas/EquipmentSearchAttributeGroup"
         equipmentSearchAttributeGroupMapping:
-          type: object
           description: Mapping between EquipmentSearchAttribute and EquipmentSearchAttributeGroup.
+          type: object
           additionalProperties:
             type: string
             nullable: true
@@ -2126,33 +2165,33 @@ components:
       description: Represents a set of fields for Seller object.
       properties:
         address:
-          description: Address.
+          description: The address of the seller.
           type: string
           example: "Bahnhofstrasse 123b"
         city:
-          description: City.
+          description: The city where the seller is located.
           type: string
           example: "Zurich"
         id:
-          description: ID.
+          description: Unique identifier for the seller.
           type: integer
           format: int64
           example: 1923
         name:
-          description: Name.
+          description: Name of the seller.
           type: string
           example: "John Seller LLC"
         phone:
-          description: Primary phone number.
+          description: Primary phone number of the seller.
           type: string
           example: "+41761234567"
         phones:
-          description: All phones.
+          description: All phone numbers associated with the seller.
           type: array
           items:
             $ref: "#/components/schemas/Phone"
         zipCode:
-          description: Zip code.
+          description: Postal code of the seller's location.
           type: string
           example: "8080"
     SellerListing:
@@ -2173,10 +2212,9 @@ components:
           minLength: 6
           maxLength: 6
           pattern: '^\w{6}$'
-          example:
-            1AE899
+          example: "1AE899"
         cubicCapacity:
-          description: Volume of the engines cylinders in cubic centimeters.
+          description: Volume of the engine's cylinders in cubic centimeters.
           type: integer
           format: int32
           minimum: 1
@@ -2202,12 +2240,12 @@ components:
             - $ref: "#/components/schemas/DriveType"
           example: all
         firstRegistrationDate:
-          description: First registration date of the vehicle.
+          description: The date when the vehicle was first registered.
           type: string
           format: date
           example: '2020-12-15'
         firstRegistrationYear:
-          description: Year when the vehicle was first registered.
+          description: The year when the vehicle was first registered.
           type: integer
           format: int32
           minimum: 1800
@@ -2219,17 +2257,17 @@ components:
             - $ref: "#/components/schemas/FuelType"
           example: petrol
         id:
-          description: Listing's ID.
+          description: Unique identifier for the listing.
           type: integer
           format: int64
           example: 1620023
         images:
-          description: Listing images.
+          description: List of images associated with the listing.
           type: array
           items:
             $ref: "#/components/schemas/Image"
         kiloWatts:
-          description: Power the engine produces in kW.
+          description: Power produced by the engine in kilowatts (kW).
           type: integer
           format: int32
           minimum: 1
@@ -2243,44 +2281,44 @@ components:
           maximum: 9999999.0
           example: 65400
         live:
-          description: Flag indicating if a listing is live.
+          description: Flag indicating if the listing is currently live.
           type: boolean
           example: true
         makeKey:
-          description: Unique key of the make.
+          description: Unique key for the vehicle's make.
           type: string
           minLength: 1
           maxLength: 64
           example: audi
         mileage:
-          description: Distance in km that the vehicle has run.
+          description: The distance in kilometers that the vehicle has been driven.
           type: integer
           format: int32
           minimum: 0
           maximum: 99999999
           example: 17500
         modelKey:
-          description: Key of the model (unique on the make level).
+          description: Unique key for the model within the make.
           type: string
           minLength: 1
           maxLength: 64
           example: a6
         price:
-          description: Price of the vehicle.
+          description: Current price of the vehicle.
           type: number
           format: double
           minimum: 1.0
           maximum: 9999999.0
           example: 47000
         seats:
-          description: Number of seats of the vehicle.
+          description: The number of seats in the vehicle.
           type: integer
           format: int32
           minimum: 1
           maximum: 199
           example: 5
         sellerId:
-          description: Seller's ID.
+          description: Unique identifier for the seller of the listing.
           type: integer
           format: int64
           example: 601
@@ -2290,11 +2328,11 @@ components:
             - $ref: "#/components/schemas/TransmissionType"
           example: automatic
         tuned:
-          description: Flag indicating if the vehicle was altered to make it nicer or faster.
+          description: Flag indicating if the vehicle has been tuned for better performance.
           type: boolean
           example: false
         vehicleCategory:
-          description: Category of the vehicle.
+          description: Category of the vehicle (e.g., car, truck, motorcycle).
           allOf:
             - $ref: "#/components/schemas/VehicleCategory"
           example: car
@@ -2304,7 +2342,7 @@ components:
           maxLength: 128
           example: A6 3.0 55 TFSI quattro S-Tronic
         versionId:
-          description: Version ID of a listing.
+          description: Unique identifier for the version of the vehicle.
           type: integer
           format: int64
           example: 100201
@@ -2320,21 +2358,24 @@ components:
               items:
                 $ref: "#/components/schemas/SellerListing"
     TransmissionType:
+      description: Type of transmission in the vehicle.
       type: string
       enum:
         - automatic
         - automatic-stepless
         - semi-automatic
         - manual
+      example: automatic
     VehicleCategoriesResponse:
       type: object
       properties:
         vehicleCategories:
-          description: Retrieved vehicle categories.
+          description: List of retrieved vehicle categories.
           type: array
           items:
             $ref: '#/components/schemas/VehicleCategory'
     VehicleCategory:
+      description: Represents the category or type of a vehicle.
       type: string
       enum:
         - car
@@ -2343,33 +2384,36 @@ components:
         - truck
         - camper
         - trailer
+      example: car
     VersionShared:
       description: Represents a shared set of fields for different Version objects.
       properties:
         source:
-          description: Version source.
+          description: The source of the version data.
           allOf:
             - $ref: "#/components/schemas/VersionSource"
           example: eurotax
         externalId:
-          description: |
-            Version's external ID, usually provided and used by a data provider as the version's key/identificator
-            in the origin system.
+          description: External ID of the version, provided by a data provider as the key/identifier.
           type: string
           maxLength: 64
           example: "100200401"
     VersionSource:
+      description: Represents the source of the version data.
       type: string
       enum:
         - eurotax
         - auto-i
+      example: eurotax
     WarrantyType:
+      description: Type of warranty.
       type: string
       enum:
         - from-date
         - from-delivery
         - first-registration
         - none
+      example: from-date
   securitySchemes:
     BearerAuth:
       bearerFormat: auth-scheme

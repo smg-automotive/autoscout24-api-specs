@@ -100,6 +100,25 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ListingSearchResponse"
+  /public/v1/listings/count:
+    post:
+      operationId: CountListings
+      description: Returns the number of listings based on the specified query parameters.
+      tags:
+        - Listing Search
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ListingCount"
+        required: true
+      responses:
+        "200":
+          description: Number of listings successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CountResponse"
   /public/v1/listings/{listingId}/equipment:
     get:
       operationId: GetListingEquipment
@@ -1653,6 +1672,21 @@ components:
           type: integer
           format: int32
           example: 1
+    ListingCount:
+      description: Represents the request structure for counting listings.
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/ListingQuery'
+    CountResponse:
+      description: Represents the response structure for data counting.
+      type: object
+      properties:
+        count:
+          description: Number of elements that match the provided search criteria.
+          type: integer
+          format: int64
+          example: 15
     ListingSort:
       description: Defines the sorting criteria for the listing search results.
       required:

@@ -1792,6 +1792,16 @@ components:
           description: Flag indicating if the listing includes a warranty.
           type: boolean
           example: true
+        horsePowerFrom:
+          description: Filter listings by minimum horse power.
+          type: integer
+          format: int32
+          example: 150
+        horsePowerTo:
+          description: Filter listings by maximum horse power.
+          type: integer
+          format: int32
+          example: 250
         inspectedOnly:
           description: Flag indicating if the listing was inspected.
           type: boolean

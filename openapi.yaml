@@ -62,6 +62,25 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListingResponse'
+  /public/v1/listings/count:
+    post:
+      operationId: CountListings
+      description: Returns the number of listings based on the specified query parameters.
+      tags:
+        - Listing Search
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ListingCount"
+        required: true
+      responses:
+        "200":
+          description: Number of listings successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CountResponse"
   /public/v1/listings/facets:
     post:
       operationId: GetFacets
@@ -489,6 +508,15 @@ components:
           type: number
           example: 8.55
       example: { "combined": 8.55 }
+    CountResponse:
+      description: Represents the response structure for data counting.
+      type: object
+      properties:
+        count:
+          description: Number of elements that match the provided search criteria.
+          type: integer
+          format: int64
+          example: 15
     CylinderArrangement:
       type: string
       description: The arrangement of cylinders in the vehicle’s engine.
@@ -1038,6 +1066,12 @@ components:
           format: int64
           example: 1923
       description: Represents the data for a seller, including the seller's unique identifier.
+    ListingCount:
+      description: Represents the request structure for counting listings.
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/ListingQuery'
     ListingFeature:
       type: object
       properties:

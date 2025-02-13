@@ -15,59 +15,36 @@ security:
   - BearerAuth: [ ]
 
 tags:
-  - name: Listing
-  - name: Listing Equipment
-  - name: Listing Search
-  - name: Make
+  - name: Listing Search & Exploration
   - name: Message Lead
-  - name: Model
-  - name: Quali Logo
-  - name: Reference Data
-  - name: Seller
-  - name: Version
+  - name: Inventory Management
+  - name: Catalogue
 paths:
-  /fs24/v1/listings/{listingId}:
-    get:
-      operationId: GetFinanceScout24ListingsListingId
-      description: Returns a FinanceScout24 listing for the specified listing ID.
+  /public/v1/listings/search:
+    post:
+      operationId: SearchListings
+      description: Returns listings based on the specified query parameters.
       tags:
-        - Listing
-      parameters:
-        - $ref: '#/components/parameters/listingIdPathParam'
+        - Listing Search & Exploration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ListingSearch"
+        required: true
       responses:
         "200":
-          description: Listing successfully returned.
+          description: Listings successfully returned.
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/FinanceScout24Listing"
-  /public/v1/listings/{listingId}:
-    get:
-      operationId: GetListing
-      description: Returns a localized listing for the specified listing ID.
-      tags:
-        - Listing
-      parameters:
-        - name: listingId
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - $ref: "#/components/parameters/languageParam"
-      responses:
-        "200":
-          description: Listing successfully returned.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ListingResponse'
+                $ref: "#/components/schemas/ListingSearchResponse"
   /public/v1/listings/count:
     post:
       operationId: CountListings
       description: Returns the number of listings based on the specified query parameters.
       tags:
-        - Listing Search
+        - Listing Search & Exploration
       requestBody:
         content:
           application/json:
@@ -86,7 +63,7 @@ paths:
       operationId: GetFacets
       description: Returns facets based on the specified query parameters.
       tags:
-        - Listing Search
+        - Listing Search & Exploration
       requestBody:
         content:
           application/json:
@@ -100,31 +77,33 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FacetsResponse"
-  /public/v1/listings/search:
-    post:
-      operationId: SearchListings
-      description: Returns listings based on the specified query parameters.
+  /public/v1/listings/{listingId}:
+    get:
+      operationId: GetListing
+      description: Returns a localized listing for the specified listing ID.
       tags:
-        - Listing Search
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/ListingSearch"
-        required: true
+        - Listing Search & Exploration
+      parameters:
+        - name: listingId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - $ref: "#/components/parameters/languageParam"
       responses:
         "200":
-          description: Listings successfully returned.
+          description: Listing successfully returned.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ListingSearchResponse"
+                $ref: '#/components/schemas/ListingResponse'
   /public/v1/listings/{listingId}/equipment:
     get:
       operationId: GetListingEquipment
       description: Returns localized equipment details for the specified listing ID.
       tags:
-        - Listing Equipment
+        - Listing Search & Exploration
       parameters:
         - name: listingId
           in: path
@@ -140,45 +119,75 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListingEquipmentResponse'
-  /public/v1/makes:
+  /public/v1/sellers/{sellerId}:
     get:
-      operationId: GetMakes
-      description: Returns a sorted list of makes for the specified vehicle category.
+      operationId: GetSeller
+      description: Returns seller details for the specified seller ID.
       tags:
-        - Make
+        - Listing Search & Exploration
       parameters:
-        - $ref: "#/components/parameters/vehicleCategoryQueryParam"
-        - $ref: "#/components/parameters/pageQueryParam"
-        - $ref: "#/components/parameters/sizeQueryParam"
+        - $ref: '#/components/parameters/sellerIdPathParam'
       responses:
         "200":
-          description: List of makes successfully returned.
+          description: Seller details successfully returned.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/MakeResponse"
-  /public/v1/makes/key/{makeKey}/models:
+                "$ref": "#/components/schemas/SellerResponse"
+  /public/v1/quali-logos/{qualiLogoId}:
     get:
-      operationId: GetModels
-      description: Returns a sorted list of models for the specified makeKey and vehicle category.
+      operationId: GetQualiLogo
+      description: Returns the specified Quali Logo.
       tags:
-        - Model
+        - Listing Search & Exploration
       parameters:
-        - name: makeKey
+        - name: qualiLogoId
           in: path
           required: true
           schema:
-            type: string
-        - $ref: "#/components/parameters/vehicleCategoryQueryParam"
-        - $ref: "#/components/parameters/pageQueryParam"
-        - $ref: "#/components/parameters/sizeQueryParam"
+            type: integer
+            format: int64
+        - $ref: "#/components/parameters/languageParam"
       responses:
         "200":
-          description: List of models successfully returned.
+          description: Quali Logo successfully returned.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ModelResponse"
+                $ref: "#/components/schemas/QualiLogoResponse"
+  /public/v1/vehicle-categories:
+    get:
+      operationId: GetVehicleCategories
+      description: Returns a list of available vehicle categories.
+      tags:
+        - Listing Search & Exploration
+      responses:
+        "200":
+          description: Vehicle categories successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VehicleCategoriesResponse"
+  /public/v1/reference-data:
+    get:
+      operationId: GetReferenceData
+      description: Returns reference data, optionally filtered by vehicle category.
+      tags:
+        - Listing Search & Exploration
+      parameters:
+        - name: vehicleCategory
+          in: query
+          description: Filter reference data by vehicle category.
+          required: false
+          schema:
+            $ref: "#/components/schemas/VehicleCategory"
+      responses:
+        "200":
+          description: Reference data successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReferenceDataResponse"
   /public/v1/listings/{listingId}/message-leads:
     post:
       operationId: CreateMessageLead
@@ -209,68 +218,51 @@ paths:
               description: Relative path to the newly created resource.
               schema:
                 type: string
-  /public/v1/quali-logos/{qualiLogoId}:
+  /public/v1/makes:
     get:
-      operationId: GetQualiLogo
-      description: Returns the specified Quali Logo.
+      operationId: GetMakes
+      description: Returns a sorted list of makes for the specified vehicle category.
       tags:
-        - Quali Logo
+        - Catalogue
       parameters:
-        - name: qualiLogoId
+        - $ref: "#/components/parameters/vehicleCategoryQueryParam"
+        - $ref: "#/components/parameters/pageQueryParam"
+        - $ref: "#/components/parameters/sizeQueryParam"
+      responses:
+        "200":
+          description: List of makes successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MakeResponse"
+  /public/v1/makes/key/{makeKey}/models:
+    get:
+      operationId: GetModels
+      description: Returns a sorted list of models for the specified makeKey and vehicle category.
+      tags:
+        - Catalogue
+      parameters:
+        - name: makeKey
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
-        - $ref: "#/components/parameters/languageParam"
+            type: string
+        - $ref: "#/components/parameters/vehicleCategoryQueryParam"
+        - $ref: "#/components/parameters/pageQueryParam"
+        - $ref: "#/components/parameters/sizeQueryParam"
       responses:
         "200":
-          description: Quali Logo successfully returned.
+          description: List of models successfully returned.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/QualiLogoResponse"
-  /public/v1/reference-data:
-    get:
-      operationId: GetReferenceData
-      description: Returns reference data, optionally filtered by vehicle category.
-      tags:
-        - Reference Data
-      parameters:
-        - name: vehicleCategory
-          in: query
-          description: Filter reference data by vehicle category.
-          required: false
-          schema:
-            $ref: "#/components/schemas/VehicleCategory"
-      responses:
-        "200":
-          description: Reference data successfully returned.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ReferenceDataResponse"
-  /public/v1/sellers/{sellerId}:
-    get:
-      operationId: GetSeller
-      description: Returns seller details for the specified seller ID.
-      tags:
-        - Seller
-      parameters:
-        - $ref: '#/components/parameters/sellerIdPathParam'
-      responses:
-        "200":
-          description: Seller details successfully returned.
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/SellerResponse"
+                $ref: "#/components/schemas/ModelResponse"
   /public/v1/sellers/{sellerId}/listings:
     get:
       operationId: GetSellerListings
       description: Returns listings for the specified seller ID.
       tags:
-        - Listing
+        - Inventory Management
       parameters:
         - $ref: '#/components/parameters/sellerIdPathParam'
         - $ref: "#/components/parameters/pageQueryParam"
@@ -287,7 +279,7 @@ paths:
       operationId: GetSellerListing
       description: Returns listing details for the specified seller ID and listing ID.
       tags:
-        - Listing
+        - Inventory Management
       parameters:
         - $ref: '#/components/parameters/sellerIdPathParam'
         - $ref: '#/components/parameters/listingIdPathParam'
@@ -298,25 +290,12 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/SellerListing"
-  /public/v1/vehicle-categories:
-    get:
-      operationId: GetVehicleCategories
-      description: Returns a list of available vehicle categories.
-      tags:
-        - Reference Data
-      responses:
-        "200":
-          description: Vehicle categories successfully returned.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/VehicleCategoriesResponse"
   /public/v1/versions/{versionId}:
     get:
       operationId: GetVersion
       description: Returns version details for the specified version ID.
       tags:
-        - Version
+        - Catalogue
       parameters:
         - $ref: '#/components/parameters/versionIdPathParam'
       responses:

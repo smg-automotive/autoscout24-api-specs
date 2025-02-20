@@ -921,8 +921,8 @@ components:
           description: URL of the image.
           type: string
           format: uri
-          example: 853/11878853/0.jpg
-      description: Represents an image associated with a listing, containing a relative URL to the image file.
+          example: https://images.autoscout24.ch/853/11878853/0.jpg
+      description: Represents an image, containing an absolute URL to the image file.
     Language:
       type: string
       enum:
@@ -2110,10 +2110,11 @@ components:
           type: integer
           format: int64
           example: 12
-        imageKey:
-          description: Image relative URL.
+        imageUrl:
+          description: URL of the image.
           type: string
-          example: "/qualilogos/12.svg"
+          format: uri
+          example: https://images.autoscout24.ch/qualilogos/12.svg
     QualiLogoResponse:
       description: Represents Quali Logo response.
       type: object
@@ -2123,10 +2124,11 @@ components:
           type: integer
           format: int64
           example: 12
-        imageKey:
-          description: Image relative URL.
+        imageUrl:
+          description: URL of the image.
           type: string
-          example: "/qualilogos/12.svg"
+          format: uri
+          example: https://images.autoscout24.ch/qualilogos/12.svg
         name:
           description: Localized name of the logo.
           type: string

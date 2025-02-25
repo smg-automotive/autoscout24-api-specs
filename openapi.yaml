@@ -2232,7 +2232,7 @@ components:
       description: Represents a set of fields for Seller object.
       properties:
         id:
-          description: Unique identifier for the seller.
+          description: Unique identifier of the seller.
           type: integer
           format: int64
           example: 1923
@@ -2252,7 +2252,7 @@ components:
           type: string
           example: "Zurich"
         id:
-          description: Unique identifier for the seller.
+          description: Unique identifier of the seller.
           type: integer
           format: int64
           example: 1923

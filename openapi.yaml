@@ -118,6 +118,25 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListingEquipmentResponse'
+  /public/v1/sellers/search:
+    post:
+      operationId: SearchSellers
+      description: Returns sellers based on the specified query parameters.
+      tags:
+        - Listing Search & Exploration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SellerSearch"
+        required: true
+      responses:
+        "200":
+          description: Sellers successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SellerSearchResponse"
   /public/v1/sellers/{sellerId}:
     get:
       operationId: GetSeller
@@ -2189,6 +2208,38 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/TransmissionType"
+    SellerSearch:
+      description: Represents the request structure for searching sellers.
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/SellerQuery'
+        pagination:
+          $ref: "#/components/schemas/Pageable"
+    SellerQuery:
+      description: Represents the query parameters for filtering sellers.
+      type: object
+      properties:
+        sellerIds:
+          description: Filter sellers by seller IDs.
+          uniqueItems: true
+          type: array
+          items:
+            type: integer
+            format: int64
+          example: [ 601 ]
+    SellerSearchResponse:
+      description: Represents a set of fields for Seller object.
+      properties:
+        id:
+          description: Unique identifier of the seller.
+          type: integer
+          format: int64
+          example: 1923
+        name:
+          description: Name of the seller.
+          type: string
+          example: "John Seller LLC"
     SellerResponse:
       description: Represents a set of fields for Seller object.
       properties:
@@ -2201,7 +2252,7 @@ components:
           type: string
           example: "Zurich"
         id:
-          description: Unique identifier for the seller.
+          description: Unique identifier of the seller.
           type: integer
           format: int64
           example: 1923

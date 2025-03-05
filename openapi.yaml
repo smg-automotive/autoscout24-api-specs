@@ -327,6 +327,25 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ReferenceDataResponse"
+  /public/v1/translations/{language}:
+    get:
+      operationId: GetTranslations
+      description: Returns translations for the specified language.
+      tags:
+        - Listing Search & Exploration
+      parameters:
+        - name: language
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Translations successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Translation"
 components:
   parameters:
     languageParam:
@@ -2436,6 +2455,14 @@ components:
               type: array
               items:
                 $ref: "#/components/schemas/SellerListing"
+    Translation:
+      description: Represents the response structure for translations.
+      type: object
+      properties:
+        translations:
+          description: Key value pairs of translations.
+          type: object
+          example: { "box": "Box", "box.type": "Box type" }
     TransmissionType:
       description: Type of transmission in the vehicle.
       type: string

@@ -2460,7 +2460,7 @@ components:
       type: object
       properties:
         translations:
-          description: Set of translations.
+          description: Key value pairs of translations.
           type: object
           example: { "box": "Box", "box.type": "Box type" }
     TransmissionType:

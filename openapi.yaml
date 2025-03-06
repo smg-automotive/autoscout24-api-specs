@@ -708,9 +708,7 @@ components:
       enum:
         - bodyColors
         - bodyTypes
-        - co2EmissionRange
         - conditionTypes
-        - consumptionCombinedRange
         - driveSystems
         - driveTypes
         - emissionStandards

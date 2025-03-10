@@ -730,6 +730,8 @@ components:
         - conditionTypes
         - driveSystems
         - driveTypes
+        - emissionStandards
+        - energyLabels
         - equipmentSearchAttributes
         - equipmentSearchAttributeGroups
         - fuelTypes
@@ -746,6 +748,7 @@ components:
         - hasWinchOnly
         - inspectedOnly
         - interiorColors
+        - licenseCategories
         - makeKeys
         - modelGroupKeys
         - modelKeys
@@ -1763,6 +1766,16 @@ components:
           items:
             $ref: '#/components/schemas/BodyType'
           example: [ "coupe", "suv" ]
+        co2EmissionFrom:
+          description: Filter listings by minimum CO₂ emission amount in g/km.
+          type: integer
+          format: int32
+          example: 40
+        co2EmissionTo:
+          description: Filter listings by maximum CO₂ emission amount in g/km.
+          type: integer
+          format: int32
+          example: 50
         conditionTypes:
           description: Filter listings by condition types.
           uniqueItems: true
@@ -1770,6 +1783,16 @@ components:
           items:
             $ref: '#/components/schemas/ConditionType'
           example: [ "new", "used" ]
+        consumptionCombinedFrom:
+          description: Filter listings by minimum fuel consumption in liters/100km.
+          type: number
+          format: float
+          example: 8.5
+        consumptionCombinedTo:
+          description: Filter listings by maximum fuel consumption in liters/100km.
+          type: number
+          format: float
+          example: 8.6
         cubicCapacityFrom:
           description: Filter listings by minimum cubic capacity in cm³.
           type: integer
@@ -1814,6 +1837,20 @@ components:
           items:
             $ref: '#/components/schemas/DriveType'
           example: [ "rear", "all" ]
+        emissionStandards:
+          description: Filter listings by emission standard.
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/EmissionStandard'
+          example: [ "euro-5", "euro-6" ]
+        energyLabels:
+          description: Filter listings by energy efficiency label.
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/EnergyLabel'
+          example: [ "a", "b" ]
         equipmentSearchAttributes:
           description: Filter listings by specific equipment attributes.
           uniqueItems: true
@@ -1860,6 +1897,13 @@ components:
           description: Flag indicating if the listing was inspected.
           type: boolean
           example: true
+        interiorColors:
+          description: Filter listings by interior colors.
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Color'
+          example: [ "red", "white" ]
         kiloWattsFrom:
           description: Filter listings by minimum power in kW.
           type: integer
@@ -1870,6 +1914,13 @@ components:
           type: integer
           format: int32
           example: 250
+        licenseCategories:
+          description: Filter listings by vehicle license categories.
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/LicenseCategory'
+          example: [ "a", "c" ]
         makeModelVersions:
           description: Filter listings by specific make and model combinations.
           uniqueItems: true

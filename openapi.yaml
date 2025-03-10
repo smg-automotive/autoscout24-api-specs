@@ -2245,6 +2245,11 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Color"
+        driveSystems:
+          description: Vehicle drive systems.
+          type: array
+          items:
+            $ref: "#/components/schemas/DriveSystem"
         driveTypes:
           description: Vehicle drive types.
           type: array
@@ -2273,6 +2278,11 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/FuelType"
+        licenseCategories:
+          description: The required driving license categories needed to operate the vehicle.
+          type: array
+          items:
+            $ref: "#/components/schemas/LicenseCategory"
         transmissionTypes:
           description: Vehicle transmission types.
           type: array

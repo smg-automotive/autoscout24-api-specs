@@ -152,6 +152,24 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/SellerResponse"
+  /public/v1/geo-locations:
+    get:
+      operationId: SearchGeoLocations
+      description: Returns geo locations based on the specified query parameters.
+      tags:
+        - Listing Search & Exploration
+      parameters:
+        - $ref: "#/components/parameters/textSearchQueryParam"
+        - $ref: "#/components/parameters/languageParam"
+        - $ref: "#/components/parameters/pageQueryParam"
+        - $ref: "#/components/parameters/sizeQueryParam"
+      responses:
+        "200":
+          description: Geo locations successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GeoLocationSearchResponse"
   /public/v1/quali-logos/{qualiLogoId}:
     get:
       operationId: GetQualiLogo
@@ -376,6 +394,16 @@ components:
         maximum: 999999
         default: 0
       example: 0
+    textSearchQueryParam:
+      in: query
+      name: query
+      description: The characters for the text search of the data.
+      required: false
+      schema:
+        type: string
+        minLength: 2
+        maxLength: 256
+        example: zur
     sellerIdPathParam:
       in: path
       name: sellerId
@@ -956,6 +984,63 @@ components:
         - phev-petrol
         - two-stroke-mixture
       description: A list of possible fuel types that a vehicle can use.
+    GeoLocation:
+      type: object
+      properties:
+        id:
+          type: string
+          example: geo-city-zurich
+        type:
+          type: string
+          example: place
+        name:
+          type: string
+          example: Zürich
+    GeoLocationSearchResponse:
+      description: Represents the response structure for a geo location search query, including pagination and result metadata.
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: "#/components/schemas/GeoLocation"
+        empty:
+          description: Flag indicating if the search result contains no items.
+          type: boolean
+          example: false
+        numberOfElements:
+          description: Number of elements in the current page of search results.
+          type: integer
+          format: int32
+          example: 15
+        siz`e:
+          description: Total number of elements requested for the search query.
+          type: integer
+          format: int32
+          example: 20
+        totalElements:
+          description: Total number of elements that match the provided search criteria across all pages.
+          type: integer
+          format: int64
+          example: 15
+        first:
+          description: Flag indicating if the current page is the first page of the search results.
+          type: boolean
+          example: true
+        last:
+          description: Flag indicating if the current page is the last page of the search results.
+          type: boolean
+          example: true
+        number:
+          description: Current page number in the search result.
+          type: integer
+          format: int32
+          example: 0
+        totalPages:
+          description: Total number of pages available for the given search criteria.
+          type: integer
+          format: int32
+          example: 1
     Image:
       properties:
         url:
@@ -1875,6 +1960,8 @@ components:
           items:
             $ref: '#/components/schemas/FuelType'
           example: [ "electric", "petrol" ]
+        geoLocation:
+          $ref: '#/components/schemas/ListingQuery_GeoLocation'
         hadNoAccidentOnly:
           description: Flag indicating if the listing had no accident.
           type: boolean
@@ -1990,6 +2077,17 @@ components:
           items:
             $ref: "#/components/schemas/VehicleCategory"
           example: [ "car", "utility" ]
+    ListingQuery_GeoLocation:
+      description: Represents the geo location for querying.
+      type: object
+      properties:
+        id:
+          type: string
+          example: geo-city-zurich
+        radius:
+          type: number
+          format: double
+          example: 32.5
     ListingQuery_MakeModelVersion:
       description: Represents the make and model version for querying.
       type: object

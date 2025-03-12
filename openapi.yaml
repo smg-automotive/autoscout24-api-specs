@@ -1012,8 +1012,8 @@ components:
           description: Number of elements in the current page of search results.
           type: integer
           format: int32
-          example: 15
-        siz`e:
+          example: 1
+        size:
           description: Total number of elements requested for the search query.
           type: integer
           format: int32
@@ -1022,7 +1022,7 @@ components:
           description: Total number of elements that match the provided search criteria across all pages.
           type: integer
           format: int64
-          example: 15
+          example: 1
         first:
           description: Flag indicating if the current page is the first page of the search results.
           type: boolean

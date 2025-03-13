@@ -159,7 +159,15 @@ paths:
       tags:
         - Listing Search & Exploration
       parameters:
-        - $ref: "#/components/parameters/textSearchQueryParam"
+        - name: query
+          in: query
+          description: The characters for the text search of the data.
+          required: false
+          schema:
+            type: string
+            minLength: 2
+            maxLength: 256
+            example: zur
         - $ref: "#/components/parameters/languageParam"
         - $ref: "#/components/parameters/pageQueryParam"
         - $ref: "#/components/parameters/sizeQueryParam"
@@ -394,16 +402,6 @@ components:
         maximum: 999999
         default: 0
       example: 0
-    textSearchQueryParam:
-      in: query
-      name: query
-      description: The characters for the text search of the data.
-      required: false
-      schema:
-        type: string
-        minLength: 2
-        maxLength: 256
-        example: zur
     sellerIdPathParam:
       in: path
       name: sellerId
@@ -985,15 +983,19 @@ components:
         - two-stroke-mixture
       description: A list of possible fuel types that a vehicle can use.
     GeoLocation:
+      description: Geo location.
       type: object
       properties:
         id:
+          description: Key of the geo location.
           type: string
           example: geo-city-zurich
         type:
+          description: Type of the geo location.
           type: string
           example: place
         name:
+          description: Name of the geo location.
           type: string
           example: Zürich
     GeoLocationSearchResponse:
@@ -2078,13 +2080,15 @@ components:
             $ref: "#/components/schemas/VehicleCategory"
           example: [ "car", "utility" ]
     ListingQuery_GeoLocation:
-      description: Represents the geo location for querying.
+      description: Represents the geo location for querying listings based on listing seller location.
       type: object
       properties:
         id:
+          description: Key of the geo location.
           type: string
           example: geo-city-zurich
         radius:
+          description: Radius of the geo location within which the listing is eligible.
           type: number
           format: double
           example: 32.5

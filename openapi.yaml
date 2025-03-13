@@ -161,7 +161,7 @@ paths:
       parameters:
         - name: query
           in: query
-          description: The characters for the text search of the data.
+          description: Text search criteria.
           required: false
           schema:
             type: string
@@ -2080,7 +2080,7 @@ components:
             $ref: "#/components/schemas/VehicleCategory"
           example: [ "car", "utility" ]
     ListingQuery_GeoLocation:
-      description: Represents the geo location for querying listings based on listing seller location.
+      description: Represents the geo location for querying listings based on seller's location.
       type: object
       properties:
         id:
@@ -2088,7 +2088,7 @@ components:
           type: string
           example: geo-city-zurich
         radius:
-          description: Radius of the geo location within which the listing is eligible.
+          description: Radius of the geo location search.
           type: number
           format: double
           example: 32.5

@@ -15,10 +15,31 @@ security:
   - BearerAuth: [ ]
 
 tags:
+  - name: Client Authentication
   - name: Listing Search & Exploration
   - name: Message Lead
   - name: Inventory Management
 paths:
+  /public/v1/clients/oauth/token:
+    post:
+      operationId: ObtainClientAccessToken
+      description: Obtains client access token for the specified grant type, client ID, secret and audience.
+      tags:
+        - Client Authentication
+      security: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/ObtainClientAccessToken"
+        required: true
+      responses:
+        "200":
+          description: Client access token successfully obtained.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ObtainClientAccessTokenResponse"
   /public/v1/listings/search:
     post:
       operationId: SearchListings
@@ -2202,6 +2223,48 @@ components:
           description: Display name of the model group.
           type: string
           example: "A Series"
+    ObtainClientAccessToken:
+      description: Represents the request structure for obtaining a client access token.
+      required:
+        - grant_type
+        - client_id
+        - client_secret
+        - audience
+      type: object
+      properties:
+        grant_type:
+          description: Grant type.
+          type: string
+          example: "client_credentials"
+        client_id:
+          description: Client ID.
+          type: string
+          example: "client-id"
+        client_secret:
+          description: Client secret.
+          type: string
+          example: "client-secret"
+        audience:
+          description: Audience.
+          type: string
+          example: "https://api.autoscout24.ch"
+    ObtainClientAccessTokenResponse:
+      description: Represents the response structure for obtaining a client access token.
+      type: object
+      properties:
+        access_token:
+          description: Access token.
+          type: string
+          example: "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+        token_type:
+          description: Token type.
+          type: string
+          example: "Bearer"
+        expires_in:
+          description: Expiration of access token in seconds.
+          type: integer
+          format: int32
+          example: 84600
     PackageItem:
       type: object
       properties:

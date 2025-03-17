@@ -2264,7 +2264,7 @@ components:
           description: Expiration of access token in seconds.
           type: integer
           format: int32
-          example: 84600
+          example: 86400
     PackageItem:
       type: object
       properties:

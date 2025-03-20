@@ -310,6 +310,18 @@ paths:
       responses:
         "204":
           description: Seller listing successfully activated
+  /sellers/{sellerId}/listings/{listingId}/deactivate:
+    post:
+      operationId: DeactivateSellerListing
+      description: Deactivates listing for the specified seller ID
+      tags:
+        - Inventory Management
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/listingIdPathParam'
+      responses:
+        "204":
+          description: Seller listing successfully deactivated
   /public/v1/makes:
     get:
       operationId: GetMakes

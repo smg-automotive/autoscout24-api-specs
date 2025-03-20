@@ -278,11 +278,11 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ListingCreate"
+              $ref: "#/components/schemas/SellerListingCreate"
         required: true
       responses:
         "201":
-          description: Listings successfully created.
+          description: Seller listing successfully created.
   /public/v1/sellers/{sellerId}/listings/{listingId}:
     get:
       operationId: GetSellerListing
@@ -311,10 +311,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ListingUpdate"
+              $ref: "#/components/schemas/SellerListingUpdate"
       responses:
         "204":
-          description: Listing successfully updated
+          description: Seller listing successfully updated
   /public/v1/versions/{versionId}:
     get:
       operationId: GetVersion
@@ -2796,7 +2796,7 @@ components:
         - first-registration
         - none
       example: from-date
-    ListingCreate:
+    SellerListingCreate:
       description: Represents the request structure for creating a listing.
       required:
         - bodyColor
@@ -3410,7 +3410,7 @@ components:
           minimum: 1
           maximum: 29999
           example: 180
-    ListingUpdate:
+    SellerListingUpdate:
       description: Represents the request structure for updating a listing.
       required:
         - bodyColor

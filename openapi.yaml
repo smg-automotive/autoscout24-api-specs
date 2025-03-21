@@ -314,10 +314,10 @@ paths:
               $ref: "#/components/schemas/SellerListingUpdateRequest"
       responses:
         "204":
-          description: Seller listing successfully updated
+          description: Seller listing successfully updated.
     delete:
       operationId: DeleteSellerListing
-      description: Deletes listing for the specified seller ID and listing ID
+      description: Deletes listing for the specified seller ID and listing ID.
       tags:
         - Inventory Management
       parameters:
@@ -325,7 +325,7 @@ paths:
         - $ref: '#/components/parameters/listingIdPathParam'
       responses:
         "204":
-          description: Seller listing successfully deleted
+          description: Seller listing successfully deleted.
   /public/v1/versions/{versionId}:
     get:
       operationId: GetVersion
@@ -2778,7 +2778,7 @@ components:
         - manual
       example: automatic
     TransmissionTypeGroup:
-      description: Transsmision type group in the vehicle
+      description: Transmission type group in the vehicle
       type: string
       enum:
         - automatic
@@ -2804,7 +2804,7 @@ components:
         - trailer
       example: car
     VersionIdentificationMethod:
-      description: Represents the identification method of a version
+      description: Represents the identification method of a version.
       type: string
       enum:
         - certification-number
@@ -2935,7 +2935,7 @@ components:
         certificationNumber:
           type: string
           pattern: '^\w{6}$'
-          description: Registration document number; in Swiss market known as Typenscheinnummer
+          description: Registration document number; in Swiss market known as Typenscheinnummer.
           example: 1AE899
         chargingPlugType:
           description: Type of the charging plug.
@@ -2954,14 +2954,14 @@ components:
           format: int16
           minimum: 1
           maximum: 9999
-          description: Time to charge from 0 to 100%.
+          description: Time to charge from 0 to 100% in minutes.
           example: 600
         chargingTime0To80:
           type: integer
           format: int16
           minimum: 1
           maximum: 9999
-          description: Time to charge from 0 to 80%.
+          description: Time to charge from 0 to 80% in minutes.
           example: 450
         co2Emission:
           type: integer
@@ -3460,7 +3460,7 @@ components:
             - $ref: "#/components/schemas/VehicleCategory"
           example: car
         versionIdentificationMethod:
-          description: Identification method of the version
+          description: Identification method of the version.
           allOf:
             - $ref: "#/components/schemas/VersionIdentificationMethod"
           example: make-model

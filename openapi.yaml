@@ -1436,7 +1436,7 @@ components:
           type: string
           example: Awesome car!
         directImport:
-          description: Flag that indicates whether the vehicle is a direct import, meaning it was imported outside the official Swiss distributor network.
+          description: Flag indicating if the vehicle was imported by the official seller.
           type: boolean
           example: true
         doors:

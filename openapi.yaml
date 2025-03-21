@@ -269,7 +269,7 @@ paths:
                 "$ref": "#/components/schemas/SellerListingPage"
     post:
       operationId: CreateSellerListings
-      description: Creates a listing for the specified seller ID
+      description: Creates a listing for the specified seller ID.
       tags:
         - Inventory Management
       parameters:

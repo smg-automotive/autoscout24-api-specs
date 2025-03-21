@@ -1389,7 +1389,7 @@ components:
           type: string
           example: Awesome car!
         directImport:
-          description: Flag indicating if the vehicle was imported by the official seller.
+          description: Flag that indicates whether the vehicle is a direct import, meaning it was imported outside the official Swiss distributor network.
           type: boolean
           example: true
         doors:
@@ -2981,7 +2981,7 @@ components:
           description: Short description of the vehicle (subtitle).
           example: Car in a perfect shape! Great equipment, warranty and much more...
         directImport:
-          description: Flag indicating if the vehicle was imported by the official seller.
+          description: Flag that indicates whether the vehicle is a direct import, meaning it was imported outside the official Swiss distributor network.
           type: boolean
           example: true
         doors:

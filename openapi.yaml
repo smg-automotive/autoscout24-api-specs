@@ -298,10 +298,10 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/VersionShared"
-  /sellers/{sellerId}/listings/{listingId}/activate:
+  public/v1/sellers/{sellerId}/listings/{listingId}/activate:
     post:
       operationId: ActivateSellerListing
-      description: Activates listing for the specified seller ID
+      description: Activates listing for the specified seller ID and listing ID
       tags:
         - Inventory Management
       parameters:
@@ -310,10 +310,10 @@ paths:
       responses:
         "204":
           description: Seller listing successfully activated
-  /sellers/{sellerId}/listings/{listingId}/deactivate:
+  public/v1/sellers/{sellerId}/listings/{listingId}/deactivate:
     post:
       operationId: DeactivateSellerListing
-      description: Deactivates listing for the specified seller ID
+      description: Deactivates listing for the specified seller ID and listing ID
       tags:
         - Inventory Management
       parameters:

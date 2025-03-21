@@ -322,7 +322,7 @@ paths:
       responses:
         "204":
           description: Seller listing successfully deactivated
-  /public/v1//sellers/{sellerId}/listings/{listingId}/remove:
+  /public/v1/sellers/{sellerId}/listings/{listingId}/remove:
     post:
       operationId: RemoveSellerListing
       description: Removes listing for the specified seller ID and listing ID

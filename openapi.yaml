@@ -283,6 +283,17 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/SellerListing"
+    delete:
+      operationId: DeleteSellerListing
+      description: Deletes listing for the specified seller ID and listing ID
+      tags:
+        - Inventory Management
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/listingIdPathParam'
+      responses:
+        "204":
+          description: Seller listing successfully deleted
   /public/v1/versions/{versionId}:
     get:
       operationId: GetVersion

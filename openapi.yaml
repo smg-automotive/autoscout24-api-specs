@@ -283,6 +283,17 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/SellerListing"
+    delete:
+      operationId: DeleteSellerListing
+      description: Deletes listing for the specified seller ID and listing ID
+      tags:
+        - Inventory Management
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/listingIdPathParam'
+      responses:
+        "204":
+          description: Seller listing successfully deleted
   /public/v1/versions/{versionId}:
     get:
       operationId: GetVersion
@@ -298,10 +309,10 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/VersionShared"
-  /sellers/{sellerId}/listings/{listingId}:
-    delete:
-      operationId: DeleteSellerListing
-      description: Deletes listing for the specified seller ID
+  /public/v1/sellers/{sellerId}/listings/{listingId}/activate:
+    post:
+      operationId: ActivateSellerListing
+      description: Activates listing for the specified seller ID and listing ID
       tags:
         - Inventory Management
       parameters:
@@ -309,7 +320,31 @@ paths:
         - $ref: '#/components/parameters/listingIdPathParam'
       responses:
         "204":
-          description: Seller listing successfully deleted
+          description: Seller listing successfully activated
+  /public/v1/sellers/{sellerId}/listings/{listingId}/deactivate:
+    post:
+      operationId: DeactivateSellerListing
+      description: Deactivates listing for the specified seller ID and listing ID
+      tags:
+        - Inventory Management
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/listingIdPathParam'
+      responses:
+        "204":
+          description: Seller listing successfully deactivated
+  /public/v1/sellers/{sellerId}/listings/{listingId}/remove:
+    post:
+      operationId: RemoveSellerListing
+      description: Removes listing for the specified seller ID and listing ID
+      tags:
+        - Inventory Management
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/listingIdPathParam'
+      responses:
+        "204":
+          description: Seller listing successfully removed
   /public/v1/makes:
     get:
       operationId: GetMakes

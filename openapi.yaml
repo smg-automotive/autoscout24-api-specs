@@ -3364,7 +3364,7 @@ components:
           example: false
         vehicleIdentificationNumber:
           type: string
-          pattern: "^\w{17}$"
+          pattern: '^\w{17}$'
           description: Unique vehicle identification number (VIN).
           example: 1HGCM82633A123456
         versionFullName:

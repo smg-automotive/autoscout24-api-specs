@@ -2494,7 +2494,7 @@ components:
             type: string
             example: "This vehicle has been inspected by our experts."
         name:
-          description: Name of the logo.
+          description: Name of the Quali Logo.
           type: string
           example: "AutoScout verified"
         url:
@@ -2537,7 +2537,7 @@ components:
               format: int64
               example: 10000
             minDuration:
-              description: Flag indicating if the duration provided is minimal.
+              description: Flag indicating whether the provided warranty duration is a minimum value rather than an exact duration.
               type: boolean
               example: true
     ReferenceDataResponse:

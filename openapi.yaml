@@ -2537,7 +2537,7 @@ components:
               format: int64
               example: 10000
             minDuration:
-              description: Flag indicating whether the provided warranty duration is a minimum value rather than an exact duration.
+              description: Flag indicating if the provided warranty duration is a minimum value rather than an exact duration.
               type: boolean
               example: true
     ReferenceDataResponse:

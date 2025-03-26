@@ -2532,7 +2532,7 @@ components:
               maximum: 9999
               example: 24
             mileage:
-              description: Maximum mileage limit covered under the warranty (in kilometers).
+              description: Maximum mileage covered by the warranty (in kilometers).
               type: integer
               format: int64
               example: 10000

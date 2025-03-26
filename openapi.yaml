@@ -202,7 +202,7 @@ paths:
   /public/v1/quali-logos/{qualiLogoId}:
     get:
       operationId: GetQualiLogo
-      description: Returns the specified Quali Logo.
+      description: Returns a localized Quali Logo for the specified Quali Logo ID.
       tags:
         - Listing Search & Exploration
       parameters:
@@ -2452,24 +2452,94 @@ components:
       description: Represents Quali Logo response.
       type: object
       properties:
+        exchangePolicyPeriod:
+            description: Number of days the exchange policy is valid.
+            type: integer
+            format: int16
+            minimum: 1
+            maximum: 9999
+            example: 30
+            nullable: true
         id:
           description: Quali Logo's ID.
           type: integer
           format: int64
           example: 12
         imageUrl:
-          description: URL of the image.
+          description: URL of the Quali Logo image.
           type: string
           format: uri
           example: https://images.autoscout24.ch/qualilogos/12.svg
+        includedInPrice:
+            description: Flag indicating if the Quali Logo is included in the vehicle's price.
+            type: boolean
+            example: true
+        inspectionCheckedPoints:
+            description: Number of checked points during inspection.
+            type: integer
+            format: int16
+            minimum: 1
+            maximum: 9999
+            example: 100
+            nullable: true
+        benefits:
+          description: List of benefits associated with the Quali Logo.
+          type: array
+          items:
+            type: string
+          example: [ "100 points check", "Extended warranty" ]
+          nullable: true
+        description:
+            description: Description of the Quali Logo.
+            type: string
+            example: "This vehicle has been inspected by our experts."
         name:
-          description: Localized name of the logo.
+          description: Name of the Quali Logo.
           type: string
           example: "AutoScout verified"
         url:
-          description: Localized URL.
+          description: URL pointing to more information about the Quali Logo.
           type: string
           example: "https://www.autoscout24.ch/de/s"
+        returnPolicyPeriod:
+            description: Return policy period in days.
+            type: integer
+            format: int16
+            minimum: 1
+            maximum: 9999
+            example: 14
+            nullable: true
+        vehicleCategories:
+            description: List of vehicle categories to which Quali Logo applies.
+            type: array
+            items:
+                $ref: "#/components/schemas/VehicleCategory"
+            example: [ "car", "utility" ]
+        warranty:
+          description: Details about the Quali Logo’s warranty.
+          type: object
+          nullable: true
+          properties:
+            coverage:
+              description: Details of the warranty coverage.
+              type: string
+              example: "Engine, transmission, and drive"
+            duration:
+              description: Warranty duration in months.
+              type: integer
+              format: int16
+              minimum: 1
+              maximum: 9999
+              example: 24
+            mileage:
+              description: Maximum mileage covered by the warranty (in kilometers).
+              type: integer
+              format: int64
+              example: 10000
+            minDuration:
+              description: Flag indicating if the provided warranty duration is a minimum value rather than an exact duration.
+              type: boolean
+              example: true
     ReferenceDataResponse:
       description: Represents the reference data for vehicle attributes.
       type: object

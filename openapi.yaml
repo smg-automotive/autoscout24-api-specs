@@ -26,7 +26,7 @@ paths:
       description: Obtains client access token for the specified grant type, client ID, secret and audience.
       tags:
         - Client Authentication
-      security: [ ]
+      security: []
       requestBody:
         content:
           application/x-www-form-urlencoded:

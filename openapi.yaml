@@ -329,7 +329,7 @@ paths:
   /public/v1/sellers/{sellerId}/listings/external-id/{externalId}:
     get:
       operationId: GetListingByExternalId
-      description: Gets listing for the specified seller ID and external ID
+      description: Gets listing for the specified seller ID and external ID.
       tags:
         - Inventory Management
       parameters:
@@ -345,7 +345,7 @@ paths:
   /public/v1/sellers/{sellerId}/listings/seller-vehicle-id/{sellerVehicleId}:
     get:
       operationId: GetListingBySellerVehicleId
-      description: Gets listing for the specified seller ID and seller vehicle ID
+      description: Gets listing for the specified seller ID and seller vehicle ID.
       tags:
         - Inventory Management
       parameters:

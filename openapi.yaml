@@ -26,7 +26,7 @@ paths:
       description: Obtains client access token for the specified grant type, client ID, secret and audience.
       tags:
         - Client Authentication
-      security: []
+      security: [ ]
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -341,10 +341,44 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/VersionShared"
+  /public/v1/sellers/{sellerId}/listings/{listingId}/equipment:
+    get:
+      operationId: GetSellerListingEquipment
+      description: Returns localized seller listing equipment for specified seller ID and listing ID.
+      tags:
+        - Inventory Management
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/listingIdPathParam'
+        - $ref: "#/components/parameters/languageParam"
+      responses:
+        "200":
+          description: Seller listing equipment successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListingEquipmentResponse'
+    post:
+      operationId: SetSellerListingEquipment
+      description: Sets equipment for the specified seller ID and listing ID.
+      tags:
+        - Inventory Management
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/listingIdPathParam'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SellerListingEquipmentSetRequest"
+        required: true
+      responses:
+        "204":
+          description: Seller listing equipment set successfully.
   /public/v1/sellers/{sellerId}/listings/{listingId}/activate:
     post:
       operationId: ActivateSellerListing
-      description: Activates listing for the specified seller ID and listing ID
+      description: Activates listing for the specified seller ID and listing ID.
       tags:
         - Inventory Management
       parameters:
@@ -356,7 +390,7 @@ paths:
   /public/v1/sellers/{sellerId}/listings/{listingId}/deactivate:
     post:
       operationId: DeactivateSellerListing
-      description: Deactivates listing for the specified seller ID and listing ID
+      description: Deactivates listing for the specified seller ID and listing ID.
       tags:
         - Inventory Management
       parameters:
@@ -368,7 +402,7 @@ paths:
   /public/v1/sellers/{sellerId}/listings/{listingId}/remove:
     post:
       operationId: RemoveSellerListing
-      description: Removes listing for the specified seller ID and listing ID
+      description: Removes listing for the specified seller ID and listing ID.
       tags:
         - Inventory Management
       parameters:
@@ -2344,6 +2378,27 @@ components:
           type: integer
           format: int32
           example: 86400
+    Option:
+      type: object
+      description: Equipment option.
+      properties:
+        id:
+          type: integer
+          description: ID of the equipment option.
+        packageItems:
+          type: array
+          description: Package items included in the option.
+          items:
+            type: string
+          nullable: true
+      example:
+        {
+          "id": 1502,
+          "packageItems": [
+            "forfait-confort",
+            "licht-fernlicht-assistent"
+          ]
+        }
     PackageItem:
       type: object
       properties:
@@ -2453,13 +2508,13 @@ components:
       type: object
       properties:
         exchangePolicyPeriod:
-            description: Number of days the exchange policy is valid.
-            type: integer
-            format: int16
-            minimum: 1
-            maximum: 9999
-            example: 30
-            nullable: true
+          description: Number of days the exchange policy is valid.
+          type: integer
+          format: int16
+          minimum: 1
+          maximum: 9999
+          example: 30
+          nullable: true
         id:
           description: Quali Logo's ID.
           type: integer
@@ -2471,17 +2526,17 @@ components:
           format: uri
           example: https://images.autoscout24.ch/qualilogos/12.svg
         includedInPrice:
-            description: Flag indicating if the Quali Logo is included in the vehicle's price.
-            type: boolean
-            example: true
+          description: Flag indicating if the Quali Logo is included in the vehicle's price.
+          type: boolean
+          example: true
         inspectionCheckedPoints:
-            description: Number of checked points during inspection.
-            type: integer
-            format: int16
-            minimum: 1
-            maximum: 9999
-            example: 100
-            nullable: true
+          description: Number of checked points during inspection.
+          type: integer
+          format: int16
+          minimum: 1
+          maximum: 9999
+          example: 100
+          nullable: true
         benefits:
           description: List of benefits associated with the Quali Logo.
           type: array
@@ -2490,9 +2545,9 @@ components:
           example: [ "100 points check", "Extended warranty" ]
           nullable: true
         description:
-            description: Description of the Quali Logo.
-            type: string
-            example: "This vehicle has been inspected by our experts."
+          description: Description of the Quali Logo.
+          type: string
+          example: "This vehicle has been inspected by our experts."
         name:
           description: Name of the Quali Logo.
           type: string
@@ -2502,19 +2557,19 @@ components:
           type: string
           example: "https://www.autoscout24.ch/de/s"
         returnPolicyPeriod:
-            description: Return policy period in days.
-            type: integer
-            format: int16
-            minimum: 1
-            maximum: 9999
-            example: 14
-            nullable: true
+          description: Return policy period in days.
+          type: integer
+          format: int16
+          minimum: 1
+          maximum: 9999
+          example: 14
+          nullable: true
         vehicleCategories:
-            description: List of vehicle categories to which Quali Logo applies.
-            type: array
-            items:
-                $ref: "#/components/schemas/VehicleCategory"
-            example: [ "car", "utility" ]
+          description: List of vehicle categories to which Quali Logo applies.
+          type: array
+          items:
+            $ref: "#/components/schemas/VehicleCategory"
+          example: [ "car", "utility" ]
         warranty:
           description: Details about the Quali Logo’s warranty.
           type: object
@@ -3534,6 +3589,31 @@ components:
           allOf:
             - $ref: "#/components/schemas/VersionIdentificationMethod"
           example: make-model
+    SellerListingEquipmentSetRequest:
+      description: Represents the request structure for setting the seller listing equipment.
+      type: object
+      properties:
+        standard:
+          type: array
+          description: Standard equipment options.
+          items:
+            $ref: '#/components/schemas/Option'
+          example:
+            [ {"id": 1502, "packageItems": ["forfait-confort", "licht-fernlicht-assistent"]} ]
+        optional:
+          type: array
+          description: Optional equipment options.
+          items:
+            $ref: '#/components/schemas/Option'
+          example:
+            [ { "id": 1504, "packageItems": [ "heckklappe-automatisch", "ferngesteuertes-parken" ] } ]
+        searchAttributes:
+          type: array
+          description: Equipment search attributes.
+          items:
+            $ref: '#/components/schemas/EquipmentSearchAttribute'
+          example:
+            ["abs", "isofix"]
     SellerListingUpdateRequest:
       allOf:
         - $ref: '#/components/schemas/SellerListingSharedRequest'

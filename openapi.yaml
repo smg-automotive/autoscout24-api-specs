@@ -2686,6 +2686,11 @@ components:
           maxLength: 6
           pattern: '^\w{6}$'
           example: "1AE899"
+        conditionType:
+          description: Condition type of the vehicle.
+          allOf:
+            - $ref: "#/components/schemas/ConditionType"
+          example: demonstration
         cubicCapacity:
           description: Volume of the engine's cylinders in cubic centimeters.
           type: integer

@@ -341,6 +341,24 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/VersionShared"
+  /public/v1/versions/{versionId}/equipment:
+    get:
+      operationId: GetVersionEquipment
+      description: Returns version equipment details for the specified version ID.
+      tags:
+        - Inventory Management
+      parameters:
+        - $ref: '#/components/parameters/versionIdPathParam'
+        - $ref: "#/components/parameters/languageParam"
+        - $ref: '#/components/parameters/productionMonthParam'
+        - $ref: '#/components/parameters/productionYearParam'
+      responses:
+        "200":
+          description: Version equipment details successfully returned.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/VersionEquipmentResponse"
   /public/v1/sellers/{sellerId}/listings/{listingId}/activate:
     post:
       operationId: ActivateSellerListing
@@ -502,6 +520,24 @@ components:
         maximum: 999999
         default: 0
       example: 0
+    productionMonthParam:
+      in: query
+      name: productionMonth
+      description: The month of the production.
+      required: true
+      schema:
+        type: integer
+        format: int16
+      example: 5
+    productionYearParam:
+      in: query
+      name: productionYear
+      description: The year of the production.
+      required: true
+      schema:
+        type: integer
+        format: int16
+      example: 2025
     sellerIdPathParam:
       in: path
       name: sellerId
@@ -2878,6 +2914,40 @@ components:
         - camper
         - trailer
       example: car
+    VersionEquipmentOption:
+      type: object
+      description: Equipment option with localized name and optional package items.
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier of the equipment option.
+          example: 1002
+        name:
+          type: string
+          description: Localized display name of the equipment option.
+          example: Pack Assistenz Tour
+        packageItems:
+          type: array
+          nullable: true
+          description: List of package items if part of a package, otherwise null.
+          items:
+            $ref: '#/components/schemas/VersionPackageItem'
+    VersionEquipmentResponse:
+      type: object
+      description: Represents the equipment data for a specific version.
+      properties:
+        standard:
+          type: array
+          items:
+            $ref: '#/components/schemas/VersionEquipmentOption'
+        optional:
+          type: array
+          items:
+            $ref: '#/components/schemas/VersionEquipmentOption'
     VersionIdentificationMethod:
       description: Represents the identification method of a version.
       type: string
@@ -2888,6 +2958,29 @@ components:
         - vehicle-identification-number
         - none
       example: make-model
+    VersionPackageItem:
+      type: object
+      description: Item included in an version equipment package.
+      required:
+        - standard
+        - key
+        - name
+      properties:
+        standard:
+          type: boolean
+          description: Whether the package item is standard or optional.
+        key:
+          type: string
+          description: Identifier key for the package item.
+        name:
+          type: string
+          description: Localized name of the package item.
+      example:
+        {
+          "standard": true,
+          "key": "adaptive-cruise-control",
+          "name": "Adaptive Cruise Control"
+        }
     VersionShared:
       description: Represents a shared set of fields for different Version objects.
       properties:

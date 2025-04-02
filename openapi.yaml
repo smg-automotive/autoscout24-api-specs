@@ -462,7 +462,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListingEquipmentResponse'
+                $ref: '#/components/schemas/SellerEquipmentResponse'
     post:
       operationId: SetSellerListingEquipment
       description: Sets equipment for the specified seller ID and listing ID.
@@ -920,6 +920,25 @@ components:
         name: "ABS"
         packageItems:
           - { "name": "ABS Module" }
+    EquipmentOption:
+      type: object
+      description: Represents an equipment item or package included in the vehicle.
+      properties:
+        id:
+          type: integer
+          description: The unique identifier of the equipment item.
+          example: 1502
+        name:
+          type: string
+          description: The name of the equipment item or package.
+          example: "Pack Assistenz Tour"
+        packageItems:
+          type: array
+          description: A list of equipment items included in the package, if any.
+          nullable: true
+          items:
+            type: string
+          example: ["forfait-confort", "licht-fernlicht-assistent"]
     EquipmentSearchAttribute:
       type: string
       description: Represents specific equipment features that can be searched for in a vehicle.
@@ -2825,6 +2844,23 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/TransmissionType"
+    SellerEquipmentResponse:
+      description: Represents the response structure for returning seller listing equipment.
+      type: object
+      properties:
+        standard:
+          type: array
+          items:
+            $ref: '#/components/schemas/EquipmentOption'
+        optional:
+          type: array
+          items:
+            $ref: '#/components/schemas/EquipmentOption'
+        searchAttributes:
+          type: array
+          items:
+            type: string
+          example: ["abs", "isofix"]
     SellerSearch:
       description: Represents the request structure for searching sellers.
       type: object

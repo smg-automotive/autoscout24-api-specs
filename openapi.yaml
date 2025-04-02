@@ -326,6 +326,38 @@ paths:
       responses:
         "204":
           description: Seller listing successfully deleted.
+  /public/v1/sellers/{sellerId}/listings/external-id/{externalId}:
+    get:
+      operationId: GetListingByExternalId
+      description: Returns listing for the specified seller ID and external ID.
+      tags:
+        - Inventory Management
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/externalIdPathParam'
+      responses:
+        "200":
+          description: Listing details successfully returned.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/SellerListing"
+  /public/v1/sellers/{sellerId}/listings/seller-vehicle-id/{sellerVehicleId}:
+    get:
+      operationId: GetListingBySellerVehicleId
+      description: Returns listing for the specified seller ID and seller vehicle ID.
+      tags:
+        - Inventory Management
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/sellerVehicleIdPathParam'
+      responses:
+        "200":
+          description: Listing details successfully returned.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/SellerListing"
   /public/v1/versions/{versionId}:
     get:
       operationId: GetVersion
@@ -545,6 +577,24 @@ components:
         type: integer
         format: int64
       example: 601
+    externalIdPathParam:
+      in: path
+      name: externalId
+      description: The external ID.
+      required: true
+      schema:
+        type: integer
+        format: int64
+      example: 100200401
+    sellerVehicleIdPathParam:
+      in: path
+      name: sellerVehicleId
+      description: The ID of the seller vehicle.
+      required: true
+      schema:
+        type: integer
+        format: int64
+      example: 100200401
     sizeQueryParam:
       in: query
       name: size

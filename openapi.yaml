@@ -934,7 +934,7 @@ components:
           example: "Pack Assistenz Tour"
         packageItems:
           type: array
-          description: A list of equipment items included in the package, if any.
+          description: A list of selected equipment keys for a package, if any.
           nullable: true
           items:
             type: string

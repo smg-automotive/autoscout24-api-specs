@@ -396,7 +396,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ListingObject"
+                "$ref": "#/components/schemas/SellerListingObject"
   /public/v1/sellers/{sellerId}/listings/seller-vehicle-id/{sellerVehicleId}:
     get:
       operationId: GetListingBySellerVehicleId
@@ -412,7 +412,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ListingDetailsResponse"
+                "$ref": "#/components/schemas/SellerListingDetailsResponse"
   /public/v1/versions/{versionId}:
     get:
       operationId: GetVersion
@@ -1457,11 +1457,6 @@ components:
       properties:
         query:
           $ref: '#/components/schemas/ListingQuery'
-    ListingDetailsResponse:
-      description: Represents the response structure for get listing details.
-      type: array
-      items:
-        $ref: "#/components/schemas/ListingObject"
     ListingImage:
       type: object
       required:
@@ -1497,14 +1492,6 @@ components:
           allOf:
             - $ref: "#/components/schemas/Feature"
           example: top-listing
-    ListingObject:
-      type: object
-      properties:
-        id:
-          description: Unique identifier of the listing.
-          type: integer
-          format: int64
-          example: 1923
     ListingResponse:
       type: object
       properties:
@@ -2838,6 +2825,19 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/TransmissionType"
+    SellerListingDetailsResponse:
+      description: Represents the response structure for get listing details.
+      type: array
+      items:
+        $ref: "#/components/schemas/SellerListingObject"
+    SellerListingObject:
+      type: object
+      properties:
+        id:
+          description: Unique identifier of the listing.
+          type: integer
+          format: int64
+          example: 1923
     SellerSearch:
       description: Represents the request structure for searching sellers.
       type: object

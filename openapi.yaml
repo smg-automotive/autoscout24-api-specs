@@ -396,7 +396,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/SellerListing"
+                "$ref": "#/components/schemas/SellerListingObject"
   /public/v1/sellers/{sellerId}/listings/seller-vehicle-id/{sellerVehicleId}:
     get:
       operationId: GetListingBySellerVehicleId
@@ -412,7 +412,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/SellerListing"
+                "$ref": "#/components/schemas/SellerListingDetailsResponse"
   /public/v1/versions/{versionId}:
     get:
       operationId: GetVersion
@@ -463,7 +463,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListingEquipmentResponse'
-    post:
+    put:
       operationId: SetSellerListingEquipment
       description: Sets equipment for the specified seller ID and listing ID.
       tags:
@@ -2825,6 +2825,19 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/TransmissionType"
+    SellerListingDetailsResponse:
+      description: Represents the response structure for get listing details.
+      type: array
+      items:
+        $ref: "#/components/schemas/SellerListingObject"
+    SellerListingObject:
+      type: object
+      properties:
+        id:
+          description: Unique identifier of the listing.
+          type: integer
+          format: int64
+          example: 1923
     SellerSearch:
       description: Represents the request structure for searching sellers.
       type: object

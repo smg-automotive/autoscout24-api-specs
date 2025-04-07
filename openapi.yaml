@@ -19,6 +19,7 @@ tags:
   - name: Listing Search & Exploration
   - name: Message Lead
   - name: Inventory Management
+  - name: Configurator
 paths:
   /public/v1/clients/oauth/token:
     post:
@@ -611,8 +612,141 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Translation"
+  /public/v1/configurator/eurotax/sellers/{sellerId}/vehicle-identification-number/{vehicleIdentificationNumber}:
+    get:
+      operationId: GetEurotaxVehicle
+      description: Returns vehicle information for the provided vehicle identification number.
+      tags:
+        - Configurator
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/vehicleIdentificationNumberPathParam'
+      responses:
+        "200":
+          description: Seller vehicle successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleIdentificationNumberResponse'
+  /public/v1/sellers/{sellerId}/configurator/eurotax/vehicle-identification-number/{vehicleIdentificationNumber}/equipment:
+    get:
+      operationId: GetEurotaxVehicleEquipment
+      description: Returns vehicle equipment information for the provided vehicle identification number.
+      tags:
+        - Configurator
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/vehicleIdentificationNumberPathParam'
+      responses:
+        "200":
+          description: Vehicle equipment successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleIdentificationNumberEquipmentResponse'
+  /public/v1/configurator/eurotax/sellers/{sellerId}/make-key/{makeKey}:
+    get:
+      operationId: GetVersionsByMakeAndModelKey
+      description: Returns a list of versions based on the make and model key.
+      tags:
+        - Configurator
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/makeKeyPathParam'
+        - $ref: '#/components/parameters/modelKeyPathParam'
+      responses:
+        "200":
+          description: List of vehicle versions successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VersionBaseListResponse'
+  /public/v1/configurator/eurotax/sellers/{sellerId}/certification-number/{certificationNumber}:
+    get:
+      operationId: GetVersionsByCertificationNumber
+      description: Returns a list of versions based on the certification number and production date.
+      tags:
+        - Configurator
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/certificationNumberPathParam'
+        - $ref: '#/components/parameters/productionYearParam'
+        - $ref: '#/components/parameters/productionMonthParam'
+      responses:
+        "200":
+          description: List of vehicle versions successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VersionBaseListResponse'
+  /public/v1/configurator/eurotax/sellers/{sellerId}/external-id/{externalId}:
+    get:
+      operationId: GetVersionByExternalId
+      description: Returns a specific version based on the external ID and production information.
+      tags:
+        - Configurator
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/externalIdPathParam'
+        - $ref: '#/components/parameters/productionYearParam'
+        - $ref: '#/components/parameters/productionMonthParam'
+        - $ref: '#/components/parameters/transmissionTypeParam'
+        - $ref: '#/components/parameters/certificationCodeParam'
+      responses:
+        "200":
+          description: Vehicle version successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VersionResponse'
+  /public/v1/configurator/autovista/sellers/{sellerId}/serial-number/{serialNumber}:
+    get:
+      operationId: GetAutovistaVersionBySerialNumber
+      description: Returns Autovista versions for a given serial number and production date.
+      tags:
+        - Configurator
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/serialNumberParam'
+        - $ref: '#/components/parameters/productionYearParam'
+        - $ref: '#/components/parameters/productionMonthParam'
+      responses:
+        "200":
+          description: List of catalogue vehicle versions successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VersionBaseListResponse'
 components:
   parameters:
+    certificationCodeParam:
+      in: query
+      name: certificationNumber
+      description: The certification code.
+      required: true
+      schema:
+        type: string
+      example: 3VF943
+    certificationNumberPathParam:
+      in: path
+      name: certificationNumber
+      description: The certification number param.
+      required: true
+      schema:
+        type: string
+        minLength: 6
+        maxLength: 6
+        pattern: '^\w{6}$'
+      example: 1AE899
+    externalIdPathParam:
+      in: path
+      name: externalId
+      description: The external ID.
+      required: true
+      schema:
+        type: integer
+        format: int64
+      example: 100200401
     languageParam:
       in: query
       name: language
@@ -629,6 +763,22 @@ components:
         type: integer
         format: int64
       example: 1620023
+    makeKeyPathParam:
+      in: path
+      name: makeKey
+      description: The make key.
+      required: true
+      schema:
+        type: string
+      example: Audi
+    modelKeyPathParam:
+      in: path
+      name: modelKey
+      description: The model key.
+      required: true
+      schema:
+        type: string
+      example: A6
     pageQueryParam:
       in: query
       name: page
@@ -645,7 +795,7 @@ components:
       in: query
       name: productionMonth
       description: The month of the production.
-      required: true
+      required: false
       schema:
         type: integer
         format: int16
@@ -654,7 +804,7 @@ components:
       in: query
       name: productionYear
       description: The year of the production.
-      required: true
+      required: false
       schema:
         type: integer
         format: int16
@@ -668,15 +818,6 @@ components:
         type: integer
         format: int64
       example: 601
-    externalIdPathParam:
-      in: path
-      name: externalId
-      description: The external ID.
-      required: true
-      schema:
-        type: integer
-        format: int64
-      example: 100200401
     sellerVehicleIdPathParam:
       in: path
       name: sellerVehicleId
@@ -686,6 +827,15 @@ components:
         type: integer
         format: int64
       example: 100200401
+    serialNumberParam:
+      in: query
+      name: serialNumber
+      description: The serial number of the vehicle.
+      required: false
+      schema:
+        type: string
+        pattern: '^\d{3}\.\d{3}\.\d{3}$'
+      example: 123.456.789
     sizeQueryParam:
       in: query
       name: size
@@ -698,6 +848,14 @@ components:
         maximum: 2000
         default: 20
       example: 20
+    transmissionTypeParam:
+      in: query
+      name: transmissionType
+      description: The transmission type of the vehicle.
+      required: false
+      schema:
+        allOf:
+          - $ref: "#/components/schemas/TransmissionType"
     vehicleCategoryQueryParam:
       in: query
       name: vehicleCategory
@@ -705,6 +863,14 @@ components:
       required: true
       schema:
         $ref: "#/components/schemas/VehicleCategory"
+    vehicleIdentificationNumberPathParam:
+      in: path
+      name: vehicleIdentificationNumber
+      description: The vehicle identification number.
+      required: true
+      schema:
+        type: string
+      example: W0LPD2EC5CG042448
     versionIdPathParam:
       in: path
       name: versionId
@@ -2908,7 +3074,7 @@ components:
           minLength: 6
           maxLength: 6
           pattern: '^\w{6}$'
-          example: "1AE899"
+          example: 1AE899
         conditionType:
           description: Condition type of the vehicle.
           allOf:
@@ -3101,6 +3267,201 @@ components:
         - camper
         - trailer
       example: car
+    VehicleIdentificationNumberResponse:
+      type: object
+      description: Represents the Eurotax vehicle details retrieved using a vehicle identification number.
+      properties:
+        bodyType:
+          description: Shape of the vehicle body.
+          allOf:
+            - $ref: '#/components/schemas/BodyType'
+          example: estate
+        certificationNumber:
+          type: string
+          description: Certification code (Typenschein) used to determine energy and environmental data.
+          example: ABC123
+        conditionType:
+          description: Condition type of the vehicle.
+          allOf:
+            - $ref: "#/components/schemas/ConditionType"
+          example: demonstration
+        consumptionCombined:
+          type: number
+          format: double
+          description: Combined fuel consumption (l/100km).
+          example: 5.5
+        consumptionExtraUrban:
+          type: number
+          format: double
+          description: Fuel consumption in extra urban conditions (l/100km).
+          example: 4.8
+        consumptionUrban:
+          type: number
+          format: double
+          description: Fuel consumption in urban conditions (l/100km).
+          example: 6.4
+        cylinderArrangement:
+          description: Cylinder design type of the engine.
+          allOf:
+            - $ref: '#/components/schemas/CylinderArrangement'
+          example: inline
+        driveSystem:
+          description: Transmission shaft or drivetrain mechanism.
+          allOf:
+            - $ref: '#/components/schemas/DriveSystem'
+          example: shaft
+        driveType:
+          description: Drive type of the vehicle.
+          allOf:
+            - $ref: '#/components/schemas/DriveType'
+          example: front
+        doors:
+          type: integer
+          format: int16
+          description: Number of doors.
+          example: 5
+        emissionStandard:
+          description: Emission standard classification.
+          allOf:
+            - $ref: '#/components/schemas/EmissionStandard'
+          example: euro6
+        energyLabel:
+          description: Energy efficiency label of the vehicle.
+          allOf:
+            - $ref: '#/components/schemas/EnergyLabel'
+          example: A
+        firstRegistrationMonth:
+          type: integer
+          format: int16
+          description: First month of vehicle operation.
+          example: 5
+        firstRegistrationYear:
+          type: integer
+          format: int16
+          description: First year of vehicle operation.
+          example: 2022
+        fuelType:
+          description: Fuel type of the vehicle.
+          allOf:
+            - $ref: '#/components/schemas/FuelType'
+          example: petrol
+        id:
+          type: integer
+          format: int64
+          description: Vehicle ID.
+          example: 123456
+        lastInspectionDate:
+          type: string
+          format: date
+          description: Last inspection date.
+          example: '2023-06-15'
+        licenseCategory:
+          description: Required driving license category.
+          allOf:
+            - $ref: '#/components/schemas/LicenseCategory'
+          example: B
+        modelMonth:
+          type: integer
+          format: int16
+          description: Month of manufacture.
+          example: 12
+        modelYear:
+          type: integer
+          format: int16
+          description: Year of manufacture.
+          example: 2021
+        seats:
+          type: integer
+          format: int16
+          description: Number of seats.
+          example: 5
+        segmentationType:
+          description: Segmentation classification.
+          allOf:
+            - $ref: '#/components/schemas/SegmentationType'
+          example: touring
+        sellerVehicleId:
+          type: string
+          maxLength: 64
+          description: Unique identifier assigned by the seller to the vehicle (Wagen-Nr.).
+          example: A123XYZ
+        transmissionType:
+          description: Transmission type of the vehicle.
+          allOf:
+            - $ref: '#/components/schemas/TransmissionType'
+          example: automatic
+        typeName:
+          type: string
+          description: Typename of the vehicle.
+          example: Golf VIII 1.5 TSI ACT DSG Style
+        vehicleIdentificationNumber:
+          type: string
+          pattern: '^\w{17}$'
+          description: Unique vehicle identification number (VIN).
+          example: 1HGCM82633A123456
+    VersionBase:
+      type: object
+      description: Represents a base version of a vehicle with key specification details.
+      properties:
+        eurotaxVehicleId:
+          type: integer
+          format: int64
+          description: Unique identifier of the Eurotax vehicle.
+          example: 123456
+        typename:
+          type: string
+          description: Descriptive name of the vehicle version.
+          example: 1.5 TSI ACT DSG Style
+        certificationCodes:
+          type: array
+          description: List of certification codes associated with the vehicle.
+          items:
+            type: string
+            example: ABC123
+        bodyType:
+          description: Shape of the vehicle body.
+          allOf:
+            - $ref: "#/components/schemas/BodyType"
+          example: estate
+        transmissionType:
+          description: Transmission type of the vehicle.
+          allOf:
+            - $ref: "#/components/schemas/TransmissionType"
+          example: automatic
+        driveType:
+          description: Drive type of the vehicle.
+          allOf:
+            - $ref: "#/components/schemas/DriveType"
+          example: all
+        horsePower:
+          type: integer
+          format: int16
+          minimum: 1
+          maximum: 9999
+          description: Engine power in horsepower.
+          example: 150
+        kiloWatts:
+          description: Power produced by the engine in kilowatts (kW).
+          type: integer
+          format: int16
+          minimum: 1
+          maximum: 9999
+          example: 250
+        doors:
+          type: integer
+          format: int16
+          description: Number of doors on the vehicle.
+          example: 5
+        seats:
+          type: integer
+          format: int16
+          description: Number of seats in the vehicle.
+          example: 5
+    VersionBaseListResponse:
+      type: array
+      description: List of vehicle base versions returned by the Eurotax configurator.
+      items:
+        $ref: '#/components/schemas/VersionBase'
     VersionEquipmentOption:
       type: object
       description: Equipment option with localized name and optional package items.

@@ -3267,9 +3267,147 @@ components:
         - camper
         - trailer
       example: car
+    VehicleIdentificationNumberEquipmentResponse:
+      description: Represents the equipment structure response.
+      allOf:
+        - $ref: '#/components/schemas/VersionEquipmentResponse'
     VehicleIdentificationNumberResponse:
-      type: object
       description: Represents the Eurotax vehicle details retrieved using a vehicle identification number.
+      allOf:
+        - $ref: '#/components/schemas/VersionResponse'
+    VersionBase:
+      type: object
+      description: Represents a base version of a vehicle with key specification details.
+      properties:
+        bodyType:
+          description: Shape of the vehicle body.
+          allOf:
+            - $ref: "#/components/schemas/BodyType"
+          example: estate
+        certificationCodes:
+          type: array
+          description: List of certification codes associated with the vehicle.
+          items:
+            type: string
+            example: ABC123
+        doors:
+          type: integer
+          format: int16
+          description: Number of doors on the vehicle.
+          example: 5
+        driveType:
+          description: Drive type of the vehicle.
+          allOf:
+            - $ref: "#/components/schemas/DriveType"
+          example: all
+        horsePower:
+          type: integer
+          format: int16
+          minimum: 1
+          maximum: 9999
+          description: Engine power in horsepower.
+          example: 150
+        kiloWatts:
+          description: Power produced by the engine in kilowatts (kW).
+          type: integer
+          format: int16
+          minimum: 1
+          maximum: 9999
+          example: 250
+        providerVehicleId:
+          type: integer
+          format: int64
+          description: Unique identifier of the Eurotax vehicle.
+          example: 123456
+        seats:
+          type: integer
+          format: int16
+          description: Number of seats in the vehicle.
+          example: 5
+        transmissionType:
+          description: Transmission type of the vehicle.
+          allOf:
+            - $ref: "#/components/schemas/TransmissionType"
+          example: automatic
+        versionFullName:
+          type: string
+          description: Descriptive name of the vehicle version.
+          example: 1.5 TSI ACT DSG Style
+    VersionBaseListResponse:
+      type: array
+      description: List of vehicle base versions returned by the Eurotax configurator.
+      items:
+        $ref: '#/components/schemas/VersionBase'
+    VersionEquipmentOption:
+      type: object
+      description: Equipment option with localized name and optional package items.
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier of the equipment option.
+          example: 1002
+        name:
+          type: string
+          description: Localized display name of the equipment option.
+          example: Pack Assistenz Tour
+        packageItems:
+          type: array
+          nullable: true
+          description: List of package items if part of a package, otherwise null.
+          items:
+            $ref: '#/components/schemas/VersionPackageItem'
+    VersionEquipmentResponse:
+      type: object
+      description: Represents the equipment data for a specific version.
+      properties:
+        standard:
+          type: array
+          items:
+            $ref: '#/components/schemas/VersionEquipmentOption'
+        optional:
+          type: array
+          items:
+            $ref: '#/components/schemas/VersionEquipmentOption'
+    VersionIdentificationMethod:
+      description: Represents the identification method of a version.
+      type: string
+      enum:
+        - certification-number
+        - make-model
+        - serial-number
+        - vehicle-identification-number
+        - none
+      example: make-model
+    VersionPackageItem:
+      type: object
+      description: Item included in an version equipment package.
+      required:
+        - standard
+        - key
+        - name
+      properties:
+        standard:
+          type: boolean
+          description: Whether the package item is standard or optional.
+        key:
+          type: string
+          description: Identifier key for the package item.
+        name:
+          type: string
+          description: Localized name of the package item.
+      example:
+        {
+          "standard": true,
+          "key": "adaptive-cruise-control",
+          "name": "Adaptive Cruise Control"
+        }
+    VersionResponse:
+      type: object
+      description: Represents the version details response structure.
       properties:
         bodyType:
           description: Shape of the vehicle body.
@@ -3375,11 +3513,6 @@ components:
           format: int16
           description: Number of seats.
           example: 5
-        segmentationType:
-          description: Segmentation classification.
-          allOf:
-            - $ref: '#/components/schemas/SegmentationType'
-          example: touring
         sellerVehicleId:
           type: string
           maxLength: 64
@@ -3390,145 +3523,15 @@ components:
           allOf:
             - $ref: '#/components/schemas/TransmissionType'
           example: automatic
-        typeName:
+        versionFullName:
           type: string
-          description: Typename of the vehicle.
+          description: Type name of the vehicle version.
           example: Golf VIII 1.5 TSI ACT DSG Style
         vehicleIdentificationNumber:
           type: string
           pattern: '^\w{17}$'
           description: Unique vehicle identification number (VIN).
           example: 1HGCM82633A123456
-    VersionBase:
-      type: object
-      description: Represents a base version of a vehicle with key specification details.
-      properties:
-        eurotaxVehicleId:
-          type: integer
-          format: int64
-          description: Unique identifier of the Eurotax vehicle.
-          example: 123456
-        typename:
-          type: string
-          description: Descriptive name of the vehicle version.
-          example: 1.5 TSI ACT DSG Style
-        certificationCodes:
-          type: array
-          description: List of certification codes associated with the vehicle.
-          items:
-            type: string
-            example: ABC123
-        bodyType:
-          description: Shape of the vehicle body.
-          allOf:
-            - $ref: "#/components/schemas/BodyType"
-          example: estate
-        transmissionType:
-          description: Transmission type of the vehicle.
-          allOf:
-            - $ref: "#/components/schemas/TransmissionType"
-          example: automatic
-        driveType:
-          description: Drive type of the vehicle.
-          allOf:
-            - $ref: "#/components/schemas/DriveType"
-          example: all
-        horsePower:
-          type: integer
-          format: int16
-          minimum: 1
-          maximum: 9999
-          description: Engine power in horsepower.
-          example: 150
-        kiloWatts:
-          description: Power produced by the engine in kilowatts (kW).
-          type: integer
-          format: int16
-          minimum: 1
-          maximum: 9999
-          example: 250
-        doors:
-          type: integer
-          format: int16
-          description: Number of doors on the vehicle.
-          example: 5
-        seats:
-          type: integer
-          format: int16
-          description: Number of seats in the vehicle.
-          example: 5
-    VersionBaseListResponse:
-      type: array
-      description: List of vehicle base versions returned by the Eurotax configurator.
-      items:
-        $ref: '#/components/schemas/VersionBase'
-    VersionEquipmentOption:
-      type: object
-      description: Equipment option with localized name and optional package items.
-      required:
-        - id
-        - name
-      properties:
-        id:
-          type: integer
-          format: int64
-          description: Unique identifier of the equipment option.
-          example: 1002
-        name:
-          type: string
-          description: Localized display name of the equipment option.
-          example: Pack Assistenz Tour
-        packageItems:
-          type: array
-          nullable: true
-          description: List of package items if part of a package, otherwise null.
-          items:
-            $ref: '#/components/schemas/VersionPackageItem'
-    VersionEquipmentResponse:
-      type: object
-      description: Represents the equipment data for a specific version.
-      properties:
-        standard:
-          type: array
-          items:
-            $ref: '#/components/schemas/VersionEquipmentOption'
-        optional:
-          type: array
-          items:
-            $ref: '#/components/schemas/VersionEquipmentOption'
-    VersionIdentificationMethod:
-      description: Represents the identification method of a version.
-      type: string
-      enum:
-        - certification-number
-        - make-model
-        - serial-number
-        - vehicle-identification-number
-        - none
-      example: make-model
-    VersionPackageItem:
-      type: object
-      description: Item included in an version equipment package.
-      required:
-        - standard
-        - key
-        - name
-      properties:
-        standard:
-          type: boolean
-          description: Whether the package item is standard or optional.
-        key:
-          type: string
-          description: Identifier key for the package item.
-        name:
-          type: string
-          description: Localized name of the package item.
-      example:
-        {
-          "standard": true,
-          "key": "adaptive-cruise-control",
-          "name": "Adaptive Cruise Control"
-        }
     VersionShared:
       description: Represents a shared set of fields for different Version objects.
       properties:

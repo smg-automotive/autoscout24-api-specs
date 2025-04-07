@@ -396,7 +396,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/SellerListingObject"
+                "$ref": "#/components/schemas/SellerListing"
   /public/v1/sellers/{sellerId}/listings/seller-vehicle-id/{sellerVehicleId}:
     get:
       operationId: GetListingBySellerVehicleId
@@ -412,7 +412,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/SellerListingDetailsResponse"
+                "$ref": "#/components/schemas/SellerListing"
   /public/v1/versions/{versionId}:
     get:
       operationId: GetVersion
@@ -462,8 +462,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListingEquipmentResponse'
-    put:
+                $ref: '#/components/schemas/SellerEquipmentResponse'
+    post:
       operationId: SetSellerListingEquipment
       description: Sets equipment for the specified seller ID and listing ID.
       tags:
@@ -920,6 +920,25 @@ components:
         name: "ABS"
         packageItems:
           - { "name": "ABS Module" }
+    EquipmentOption:
+      type: object
+      description: Represents an equipment item or package included in the vehicle.
+      properties:
+        id:
+          type: integer
+          description: The unique identifier of the equipment item.
+          example: 1502
+        name:
+          type: string
+          description: The name of the equipment item or package.
+          example: "Pack Assistenz Tour"
+        packageItems:
+          type: array
+          description: A list of selected equipment keys for a package, if any.
+          nullable: true
+          items:
+            type: string
+          example: ["forfait-confort", "licht-fernlicht-assistent"]
     EquipmentSearchAttribute:
       type: string
       description: Represents specific equipment features that can be searched for in a vehicle.
@@ -2825,19 +2844,43 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/TransmissionType"
-    SellerListingDetailsResponse:
-      description: Represents the response structure for get listing details.
-      type: array
-      items:
-        $ref: "#/components/schemas/SellerListingObject"
-    SellerListingObject:
+    SellerEquipmentResponse:
+      description: Represents the response structure for returning seller listing equipment.
       type: object
       properties:
-        id:
-          description: Unique identifier of the listing.
-          type: integer
-          format: int64
-          example: 1923
+        standard:
+          type: array
+          items:
+            $ref: '#/components/schemas/EquipmentOption'
+          example:
+            - id: 1501
+              name: "Matrix LED-Scheinwerfer"
+              packageItems: null
+            - id: 1502
+              name: "Pack Assistenz Tour"
+              packageItems:
+                - "forfait-confort"
+                - "licht-fernlicht-assistent"
+        optional:
+          type: array
+          items:
+            $ref: '#/components/schemas/EquipmentOption'
+          example:
+            - id: 1503
+              name: "Paket: Premiumpaket"
+              packageItems: null
+            - id: 1504
+              name: "Sportsitze vorne"
+              packageItems:
+                - "heckklappe-automatisch"
+                - "ferngesteuertes-parken"
+        searchAttributes:
+          type: array
+          items:
+            type: string
+          example:
+            - "abs"
+            - "isofix"
     SellerSearch:
       description: Represents the request structure for searching sellers.
       type: object

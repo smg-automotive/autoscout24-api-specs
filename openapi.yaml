@@ -653,7 +653,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/sellerIdPathParam'
         - $ref: '#/components/parameters/makeKeyPathParam'
-        - $ref: '#/components/parameters/modelKeyPathParam'
+        - $ref: '#/components/parameters/modelKeyParam'
       responses:
         "200":
           description: List of vehicle versions successfully returned.
@@ -682,7 +682,7 @@ paths:
   /public/v1/configurator/eurotax/sellers/{sellerId}/external-id/{externalId}:
     get:
       operationId: GetVersionByExternalId
-      description: Returns a specific version based on the external ID and production information.
+      description: Returns a specific version based on the provided seller ID and external ID (eurotax nat code).
       tags:
         - Configurator
       parameters:
@@ -691,7 +691,7 @@ paths:
         - $ref: '#/components/parameters/productionYearParam'
         - $ref: '#/components/parameters/productionMonthParam'
         - $ref: '#/components/parameters/transmissionTypeParam'
-        - $ref: '#/components/parameters/certificationCodeParam'
+        - $ref: '#/components/parameters/certificationNumberParam'
       responses:
         "200":
           description: Vehicle version successfully returned.
@@ -707,7 +707,7 @@ paths:
         - Configurator
       parameters:
         - $ref: '#/components/parameters/sellerIdPathParam'
-        - $ref: '#/components/parameters/serialNumberParam'
+        - $ref: '#/components/parameters/serialNumberPathParam'
         - $ref: '#/components/parameters/productionYearParam'
         - $ref: '#/components/parameters/productionMonthParam'
       responses:
@@ -719,13 +719,14 @@ paths:
                 $ref: '#/components/schemas/VersionBaseListResponse'
 components:
   parameters:
-    certificationCodeParam:
+    certificationNumberParam:
       in: query
       name: certificationNumber
-      description: The certification code.
-      required: true
+      description: The certification number param.
+      required: false
       schema:
         type: string
+        pattern: '^\w{6}$'
       example: 3VF943
     certificationNumberPathParam:
       in: path
@@ -734,8 +735,6 @@ components:
       required: true
       schema:
         type: string
-        minLength: 6
-        maxLength: 6
         pattern: '^\w{6}$'
       example: 1AE899
     externalIdPathParam:
@@ -771,11 +770,11 @@ components:
       schema:
         type: string
       example: Audi
-    modelKeyPathParam:
+    modelKeyParam:
       in: path
       name: modelKey
       description: The model key.
-      required: true
+      required: false
       schema:
         type: string
       example: A6
@@ -827,11 +826,11 @@ components:
         type: integer
         format: int64
       example: 100200401
-    serialNumberParam:
+    serialNumberPathParam:
       in: query
       name: serialNumber
       description: The serial number of the vehicle.
-      required: false
+      required: true
       schema:
         type: string
         pattern: '^\d{3}\.\d{3}\.\d{3}$'
@@ -870,6 +869,7 @@ components:
       required: true
       schema:
         type: string
+        pattern: '^\w{17}$'
       example: W0LPD2EC5CG042448
     versionIdPathParam:
       in: path
@@ -3268,11 +3268,11 @@ components:
         - trailer
       example: car
     VehicleIdentificationNumberEquipmentResponse:
-      description: Represents the equipment structure response.
+      description: Represents the response structure for get version equipment by vehicle identification number.
       allOf:
         - $ref: '#/components/schemas/VersionEquipmentResponse'
     VehicleIdentificationNumberResponse:
-      description: Represents the Eurotax vehicle details retrieved using a vehicle identification number.
+      description: Represents the vehicle details retrieved using a vehicle identification number.
       allOf:
         - $ref: '#/components/schemas/VersionResponse'
     VersionBase:
@@ -3284,7 +3284,7 @@ components:
           allOf:
             - $ref: "#/components/schemas/BodyType"
           example: estate
-        certificationCodes:
+        certificationNumbers:
           type: array
           description: List of certification codes associated with the vehicle.
           items:
@@ -3314,11 +3314,11 @@ components:
           minimum: 1
           maximum: 9999
           example: 250
-        providerVehicleId:
-          type: integer
-          format: int64
-          description: Unique identifier of the Eurotax vehicle.
-          example: 123456
+        vehicleCategory:
+          description: Category of the vehicle.
+          allOf:
+            - $ref: "#/components/schemas/VehicleCategory"
+          example: car
         seats:
           type: integer
           format: int16
@@ -3335,7 +3335,7 @@ components:
           example: 1.5 TSI ACT DSG Style
     VersionBaseListResponse:
       type: array
-      description: List of vehicle base versions returned by the Eurotax configurator.
+      description: List of vehicle base versions returned by the configurator.
       items:
         $ref: '#/components/schemas/VersionBase'
     VersionEquipmentOption:
@@ -3486,7 +3486,7 @@ components:
         id:
           type: integer
           format: int64
-          description: Vehicle ID.
+          description: Version ID.
           example: 123456
         lastInspectionDate:
           type: string
@@ -3523,9 +3523,9 @@ components:
           allOf:
             - $ref: '#/components/schemas/TransmissionType'
           example: automatic
-        versionFullName:
+        fullName:
           type: string
-          description: Type name of the vehicle version.
+          description: Full name of the version.
           example: Golf VIII 1.5 TSI ACT DSG Style
         vehicleIdentificationNumber:
           type: string

@@ -400,12 +400,14 @@ paths:
   /public/v1/sellers/{sellerId}/listings/seller-vehicle-id/{sellerVehicleId}:
     get:
       operationId: GetListingBySellerVehicleId
-      description: Returns listing for the specified seller ID and seller vehicle ID.
+      description: Returns listings for the specified seller ID and seller vehicle ID.
       tags:
         - Inventory Management
       parameters:
         - $ref: '#/components/parameters/sellerIdPathParam'
         - $ref: '#/components/parameters/sellerVehicleIdPathParam'
+        - $ref: "#/components/parameters/pageQueryParam"
+        - $ref: "#/components/parameters/sizeQueryParam"
       responses:
         "200":
           description: Listing details successfully returned.
@@ -2845,10 +2847,16 @@ components:
           items:
             $ref: "#/components/schemas/TransmissionType"
     SellerListingDetailsResponse:
-      description: Represents the response structure for get listing details.
-      type: array
-      items:
-        $ref: "#/components/schemas/SellerListingObject"
+      description: Represents a page of Listing entities.
+      allOf:
+        - $ref: "#/components/schemas/Page"
+        - type: object
+          properties:
+            content:
+              description: List of listing entries on the current page.
+              type: array
+              items:
+                $ref: "#/components/schemas/SellerListingObject"
     SellerListingObject:
       type: object
       properties:

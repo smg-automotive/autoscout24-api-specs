@@ -1,6 +1,6 @@
-# AutoScout24 Specification [![CircleCI](https://dl.circleci.com/status-badge/img/gh/carforyou/carforyou-api-specification/tree/master.svg?style=svg&circle-token=cee9b6d636e53880dd7a64ffd621c90a0cf7ee7b)](https://dl.circleci.com/status-badge/redirect/gh/carforyou/carforyou-api-specification/tree/master)
+# AutoScout24 API Specifications
 
-Project for managing public AutoScout24 API specifications.
+Project for managing Public and Partners' AutoScout24 API specifications.
 
 ### Template
 

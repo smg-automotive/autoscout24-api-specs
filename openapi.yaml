@@ -612,9 +612,9 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Translation"
-  /public/v1/configurator/eurotax/sellers/{sellerId}/vehicle-identification-number/{vehicleIdentificationNumber}:
+  /public/v1/configurator/eurotax/sellers/{sellerId}/vehicle/vehicle-identification-number/{vehicleIdentificationNumber}:
     get:
-      operationId: GetEurotaxVehicle
+      operationId: GetVehicleByVehicleIdentificationNumber
       description: Returns vehicle information for the provided vehicle identification number.
       tags:
         - Configurator
@@ -623,15 +623,15 @@ paths:
         - $ref: '#/components/parameters/vehicleIdentificationNumberPathParam'
       responses:
         "200":
-          description: Seller vehicle successfully returned.
+          description: Vehicle successfully returned.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/VehicleIdentificationNumberResponse'
-  /public/v1/sellers/{sellerId}/configurator/eurotax/vehicle-identification-number/{vehicleIdentificationNumber}/equipment:
+  /public/v1/configurator/eurotax/sellers/{sellerId}/vehicle-identification-number/{vehicleIdentificationNumber}/equipment:
     get:
-      operationId: GetEurotaxVehicleEquipment
-      description: Returns vehicle equipment information for the provided vehicle identification number.
+      operationId: GetVersionEquipmentByVehicleIdentificationNumber
+      description: Returns version equipment information for the provided vehicle identification number.
       tags:
         - Configurator
       parameters:
@@ -639,12 +639,12 @@ paths:
         - $ref: '#/components/parameters/vehicleIdentificationNumberPathParam'
       responses:
         "200":
-          description: Vehicle equipment successfully returned.
+          description: Version equipment successfully returned.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/VehicleIdentificationNumberEquipmentResponse'
-  /public/v1/configurator/eurotax/sellers/{sellerId}/make-key/{makeKey}:
+  /public/v1/configurator/eurotax/sellers/{sellerId}/versions/make-key/{makeKey}:
     get:
       operationId: GetVersionsByMakeAndModelKey
       description: Returns a list of versions based on the make and model key.
@@ -661,7 +661,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/VersionBaseListResponse'
-  /public/v1/configurator/eurotax/sellers/{sellerId}/certification-number/{certificationNumber}:
+  /public/v1/configurator/eurotax/sellers/{sellerId}/versions/certification-number/{certificationNumber}:
     get:
       operationId: GetVersionsByCertificationNumber
       description: Returns a list of versions based on the certification number and production date.
@@ -674,12 +674,12 @@ paths:
         - $ref: '#/components/parameters/productionMonthParam'
       responses:
         "200":
-          description: List of vehicle versions successfully returned.
+          description: List of versions successfully returned.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/VersionBaseListResponse'
-  /public/v1/configurator/eurotax/sellers/{sellerId}/external-id/{externalId}:
+  /public/v1/configurator/eurotax/sellers/{sellerId}/versions/external-id/{externalId}:
     get:
       operationId: GetVersionByExternalId
       description: Returns a specific version based on the provided seller ID and external ID (eurotax nat code).
@@ -694,15 +694,15 @@ paths:
         - $ref: '#/components/parameters/certificationNumberParam'
       responses:
         "200":
-          description: Vehicle version successfully returned.
+          description: Version successfully returned.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/VersionResponse'
-  /public/v1/configurator/autovista/sellers/{sellerId}/serial-number/{serialNumber}:
+  /public/v1/configurator/eurotax/sellers/{sellerId}/versions/serial-number/{serialNumber}:
     get:
-      operationId: GetAutovistaVersionBySerialNumber
-      description: Returns Autovista versions for a given serial number and production date.
+      operationId: GetVersionBySerialNumber
+      description: Returns versions for a given serial number and production date.
       tags:
         - Configurator
       parameters:
@@ -712,7 +712,7 @@ paths:
         - $ref: '#/components/parameters/productionMonthParam'
       responses:
         "200":
-          description: List of catalogue vehicle versions successfully returned.
+          description: List of versions successfully returned.
           content:
             application/json:
               schema:
@@ -3272,9 +3272,38 @@ components:
       allOf:
         - $ref: '#/components/schemas/VersionEquipmentResponse'
     VehicleIdentificationNumberResponse:
-      description: Represents the vehicle details retrieved using a vehicle identification number.
-      allOf:
-        - $ref: '#/components/schemas/VersionResponse'
+      description: Response object for vehicle by vehicle identification number search.
+      properties:
+        firstRegistrationMonth:
+          type: integer
+          format: int32
+          example: 5
+          description: Month of the vehicle's first registration.
+        firstRegistrationYear:
+          type: integer
+          format: int32
+          example: 2021
+          description: Year of the vehicle's first registration.
+        productionMonth:
+          type: integer
+          format: int32
+          example: 3
+          description: Month the vehicle was produced.
+        productionYear:
+          type: integer
+          format: int32
+          example: 2020
+          description: Year the vehicle was produced.
+        vehicleIdentificationNumber:
+          type: string
+          pattern: '^\w{17}$'
+          description: Unique vehicle identification number (VIN).
+          example: 1HGCM82633A123456
+        versions:
+          type: array
+          description: A list of matching version for the vehicle.
+          items:
+            $ref: '#/components/schemas/VersionObject'
     VersionBase:
       type: object
       description: Represents a base version of a vehicle with key specification details.
@@ -3382,6 +3411,14 @@ components:
         - vehicle-identification-number
         - none
       example: make-model
+    VersionObject:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 123456
+          description: The ID of the vehicle version.
     VersionPackageItem:
       type: object
       description: Item included in an version equipment package.
@@ -3409,20 +3446,26 @@ components:
       type: object
       description: Represents the version details response structure.
       properties:
+        batteryCapacity:
+          type: number
+          format: double
+          description: Battery capacity in kWh.
+          example: 52.0
         bodyType:
-          description: Shape of the vehicle body.
           allOf:
             - $ref: '#/components/schemas/BodyType'
           example: estate
-        certificationNumber:
-          type: string
-          description: Certification code (Typenschein) used to determine energy and environmental data.
-          example: ABC123
-        conditionType:
-          description: Condition type of the vehicle.
-          allOf:
-            - $ref: "#/components/schemas/ConditionType"
-          example: demonstration
+        certificationNumbers:
+          type: array
+          items:
+            type: string
+          description: Set of certification numbers used for emissions and energy classification.
+          example: [ "ABC123", "XYZ789" ]
+        co2Emission:
+          type: integer
+          format: int16
+          description: CO2 emissions in g/km.
+          example: 120
         consumptionCombined:
           type: number
           format: double
@@ -3438,66 +3481,121 @@ components:
           format: double
           description: Fuel consumption in urban conditions (l/100km).
           example: 6.4
+        cubicCapacity:
+          type: integer
+          format: int16
+          description: Engine displacement in cubic centimeters.
+          example: 1498
         cylinderArrangement:
-          description: Cylinder design type of the engine.
           allOf:
             - $ref: '#/components/schemas/CylinderArrangement'
           example: inline
-        driveSystem:
-          description: Transmission shaft or drivetrain mechanism.
-          allOf:
-            - $ref: '#/components/schemas/DriveSystem'
-          example: shaft
-        driveType:
-          description: Drive type of the vehicle.
-          allOf:
-            - $ref: '#/components/schemas/DriveType'
-          example: front
+        cylinders:
+          type: integer
+          format: int16
+          description: Number of engine cylinders.
+          example: 4
         doors:
           type: integer
           format: int16
           description: Number of doors.
           example: 5
+        driveSystem:
+          allOf:
+            - $ref: '#/components/schemas/DriveSystem'
+          example: shaft
+        driveType:
+          allOf:
+            - $ref: '#/components/schemas/DriveType'
+          example: front
         emissionStandard:
-          description: Emission standard classification.
           allOf:
             - $ref: '#/components/schemas/EmissionStandard'
           example: euro6
-        energyLabel:
-          description: Energy efficiency label of the vehicle.
+        externalMakeKey:
+          type: string
+          description: External key representing the make.
+          example: "vw"
+        externalModelKey:
+          type: string
+          description: External key representing the model.
+          example: "golf"
+        externalVehicleCategory:
           allOf:
-            - $ref: '#/components/schemas/EnergyLabel'
-          example: A
-        firstRegistrationMonth:
-          type: integer
-          format: int16
-          description: First month of vehicle operation.
-          example: 5
-        firstRegistrationYear:
-          type: integer
-          format: int16
-          description: First year of vehicle operation.
-          example: 2022
+            - $ref: '#/components/schemas/VehicleCategory'
+          example: m1
         fuelType:
-          description: Fuel type of the vehicle.
           allOf:
             - $ref: '#/components/schemas/FuelType'
           example: petrol
+        fullName:
+          type: string
+          description: Full name of the version.
+          example: Golf VIII 1.5 TSI ACT DSG Style
+        gasConsumptionCombined:
+          type: number
+          format: double
+          description: Combined gas consumption (kg/100km).
+          example: 4.3
+        gasConsumptionExtraUrban:
+          type: number
+          format: double
+          description: Extra urban gas consumption (kg/100km).
+          example: 3.9
+        gasConsumptionUrban:
+          type: number
+          format: double
+          description: Urban gas consumption (kg/100km).
+          example: 5.1
+        gears:
+          type: integer
+          format: int16
+          description: Number of transmission gears.
+          example: 7
+        height:
+          type: integer
+          format: int16
+          description: Height of the vehicle in mm.
+          example: 1450
+        horsePower:
+          type: integer
+          format: int16
+          description: Engine power in horsepower.
+          example: 150
+        hybridHorsePower:
+          type: integer
+          format: int16
+          description: Combined hybrid system horsepower.
+          example: 204
+        hybridKiloWatts:
+          type: integer
+          format: int16
+          description: Combined hybrid system power in kW.
+          example: 150
         id:
           type: integer
           format: int64
           description: Version ID.
           example: 123456
-        lastInspectionDate:
-          type: string
-          format: date
-          description: Last inspection date.
-          example: '2023-06-15'
+        kiloWatts:
+          type: integer
+          format: int16
+          description: Engine power in kilowatts.
+          example: 110
+        length:
+          type: integer
+          format: int16
+          description: Length of the vehicle in mm.
+          example: 4280
         licenseCategory:
-          description: Required driving license category.
           allOf:
             - $ref: '#/components/schemas/LicenseCategory'
           example: B
+        listPrice:
+          type: number
+          format: double
+          description: Manufacturer's suggested retail price.
+          example: 28990.00
         modelMonth:
           type: integer
           format: int16
@@ -3508,30 +3606,82 @@ components:
           format: int16
           description: Year of manufacture.
           example: 2021
+        payload:
+          type: integer
+          format: int16
+          description: Payload capacity (kg).
+          example: 500
+        powerConsumption:
+          type: number
+          format: double
+          description: Electric power consumption (kWh/100km).
+          example: 14.7
+        productionEndDate:
+          type: string
+          format: date
+          description: End date of production.
+          example: 2024-09-30
+        productionStartDate:
+          type: string
+          format: date
+          description: Start date of production.
+          example: 2020-03-01
+        providerExternalId:
+          type: string
+          description: External identifier from the provider.
+          example: "XYZ-123"
+        providerSource:
+          type: string
+          description: Source system of the version.
+          enum: [ auto-i, eurotax ]
+          example: eurotax
+        range:
+          type: integer
+          format: int16
+          description: Electric range in km (if applicable).
+          example: 450
+        ready:
+          type: boolean
+          description: Indicates whether the version is marked as ready for use.
+          example: true
         seats:
           type: integer
           format: int16
           description: Number of seats.
           example: 5
-        sellerVehicleId:
-          type: string
-          maxLength: 64
-          description: Unique identifier assigned by the seller to the vehicle (Wagen-Nr.).
-          example: A123XYZ
+        towingCapacityBraked:
+          type: integer
+          format: int32
+          description: Towing capacity with brakes (kg).
+          example: 1500
         transmissionType:
-          description: Transmission type of the vehicle.
           allOf:
             - $ref: '#/components/schemas/TransmissionType'
           example: automatic
-        fullName:
-          type: string
-          description: Full name of the version.
-          example: Golf VIII 1.5 TSI ACT DSG Style
-        vehicleIdentificationNumber:
-          type: string
-          pattern: '^\w{17}$'
-          description: Unique vehicle identification number (VIN).
-          example: 1HGCM82633A123456
+        vehicleCategory:
+          allOf:
+            - $ref: '#/components/schemas/VehicleCategory'
+          example: m1
+        weightCurb:
+          type: integer
+          format: int16
+          description: Curb weight of the vehicle in kg.
+          example: 1420
+        weightTotal:
+          type: integer
+          format: int16
+          description: Total permissible weight.
+          example: 1900
+        wheelbase:
+          type: integer
+          format: int16
+          description: Wheelbase of the vehicle in mm.
+          example: 2630
+        width:
+          type: integer
+          format: int16
+          description: Width of the vehicle in mm.
+          example: 1790
     VersionShared:
       description: Represents a shared set of fields for different Version objects.
       properties:

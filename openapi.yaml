@@ -614,10 +614,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Translation"
-  /public/v1/configurator/eurotax/sellers/{sellerId}/vehicle/vehicle-identification-number/{vehicleIdentificationNumber}:
+  /public/v1/configurator/eurotax/sellers/{sellerId}/versions/vehicle-identification-number/{vehicleIdentificationNumber}:
     get:
-      operationId: GetVehicleByVehicleIdentificationNumber
-      description: Returns vehicle information for the provided vehicle identification number.
+      operationId: GetVersionByVehicleIdentificationNumber
+      description: Returns version information for the provided vehicle identification number.
       tags:
         - Configurator
       parameters:
@@ -625,7 +625,7 @@ paths:
         - $ref: '#/components/parameters/vehicleIdentificationNumberPathParam'
       responses:
         "200":
-          description: Vehicle successfully returned.
+          description: Version successfully returned.
           content:
             application/json:
               schema:
@@ -672,8 +672,6 @@ paths:
       parameters:
         - $ref: '#/components/parameters/sellerIdPathParam'
         - $ref: '#/components/parameters/certificationNumberPathParam'
-        - $ref: '#/components/parameters/productionYearParam'
-        - $ref: '#/components/parameters/productionMonthParam'
       responses:
         "200":
           description: List of versions successfully returned.
@@ -690,8 +688,6 @@ paths:
       parameters:
         - $ref: '#/components/parameters/sellerIdPathParam'
         - $ref: '#/components/parameters/externalIdPathParam'
-        - $ref: '#/components/parameters/productionYearParam'
-        - $ref: '#/components/parameters/productionMonthParam'
         - $ref: '#/components/parameters/transmissionTypeParam'
         - $ref: '#/components/parameters/certificationNumberParam'
       responses:
@@ -710,8 +706,6 @@ paths:
       parameters:
         - $ref: '#/components/parameters/sellerIdPathParam'
         - $ref: '#/components/parameters/serialNumberPathParam'
-        - $ref: '#/components/parameters/productionYearParam'
-        - $ref: '#/components/parameters/productionMonthParam'
       responses:
         "200":
           description: List of versions successfully returned.
@@ -3349,7 +3343,7 @@ components:
       allOf:
         - $ref: '#/components/schemas/VersionEquipmentResponse'
     VehicleIdentificationNumberResponse:
-      description: Response object for vehicle by vehicle identification number search.
+      description: Response object for version by vehicle identification number search.
       properties:
         firstRegistrationMonth:
           type: integer
@@ -3380,7 +3374,7 @@ components:
           type: array
           description: A list of matching version for the vehicle.
           items:
-            $ref: '#/components/schemas/VersionObject'
+            $ref: '#/components/schemas/VersionIdObject'
     VersionBase:
       type: object
       description: Represents a base version of a vehicle with key specification details.
@@ -3488,7 +3482,7 @@ components:
         - vehicle-identification-number
         - none
       example: make-model
-    VersionObject:
+    VersionIdObject:
       type: object
       properties:
         id:

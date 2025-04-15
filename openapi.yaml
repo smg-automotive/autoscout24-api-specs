@@ -3371,10 +3371,10 @@ components:
           description: Unique vehicle identification number (VIN).
           example: 1HGCM82633A123456
         versions:
-          type: array
           description: A list of matching version for the vehicle.
-          items:
-            $ref: '#/components/schemas/VersionIdObject'
+          allOf:
+            - $ref: '#/components/schemas/VersionIdObject'
+          example: 123456
     VersionBase:
       type: object
       description: Represents a base version of a vehicle with key specification details.

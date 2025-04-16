@@ -1443,7 +1443,7 @@ components:
       type: object
       properties:
         id:
-          description: Geo location's.
+          description: Geo location's ID.
           type: string
           example: geo-city-zurich
         type:

@@ -3618,11 +3618,6 @@ components:
           allOf:
             - $ref: '#/components/schemas/EmissionStandard'
           example: euro-6
-        externalId:
-          description: External ID of the version, provided by a data provider as the key/identifier.
-          type: string
-          maxLength: 64
-          example: 100200401
         fastChargingPlugType:
           description: Type of the fast charging plug.
           allOf:
@@ -3782,11 +3777,6 @@ components:
           format: int16
           example: 2020
           description: Year the vehicle was produced.
-        source:
-          description: The source of the version data.
-          allOf:
-            - $ref: "#/components/schemas/VersionSource"
-          example: eurotax
         range:
           description: Range of the vehicle in km.
           type: integer

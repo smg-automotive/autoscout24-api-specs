@@ -688,8 +688,6 @@ paths:
       parameters:
         - $ref: '#/components/parameters/sellerIdPathParam'
         - $ref: '#/components/parameters/externalIdPathParam'
-        - $ref: '#/components/parameters/transmissionTypeParam'
-        - $ref: '#/components/parameters/certificationNumberParam'
       responses:
         "200":
           description: Version successfully returned.
@@ -715,15 +713,6 @@ paths:
                 $ref: '#/components/schemas/VersionBaseListResponse'
 components:
   parameters:
-    certificationNumberParam:
-      in: query
-      name: certificationNumber
-      description: The certification number.
-      required: false
-      schema:
-        type: string
-        pattern: '^\w{6}$'
-      example: 3VF943
     certificationNumberPathParam:
       in: path
       name: certificationNumber
@@ -843,14 +832,6 @@ components:
         maximum: 2000
         default: 20
       example: 20
-    transmissionTypeParam:
-      in: query
-      name: transmissionType
-      description: The transmission type of the vehicle.
-      required: false
-      schema:
-        allOf:
-          - $ref: "#/components/schemas/TransmissionType"
     vehicleCategoryQueryParam:
       in: query
       name: vehicleCategory
@@ -987,7 +968,7 @@ components:
       type: object
       properties:
         combined:
-          description: The combined fuel consumption of the vehicle in liters per 100 kilometers.
+          description: The combined fuel consumption of the vehicle in L/100km.
           type: number
           example: 8.55
       example: { "combined": 8.55 }
@@ -1559,7 +1540,7 @@ components:
             - $ref: "#/components/schemas/FuelType"
           example: petrol
         horsePower:
-          description: Horse power of the vehicle.
+          description: Horsepower of the vehicle.
           type: integer
           format: int16
           minimum: 1
@@ -1750,14 +1731,14 @@ components:
           maximum: 199.0
           example: 2.15
         chargingTime0To100:
-          description: Charging time from 0 to 100% in minutes.
+          description: Charging time from 0 to 100% in min.
           type: integer
           format: int32
           minimum: 1
           maximum: 9999
           example: 99
         chargingTime0To80:
-          description: Charging time from 0 to 80% in minutes.
+          description: Charging time from 0 to 80% in min.
           type: integer
           format: int32
           minimum: 1
@@ -1771,7 +1752,7 @@ components:
           maximum: 9999
           example: 42
         combustionEngineHorsePower:
-          description: Horse power of the combustion engine.
+          description: Horsepower of the combustion engine.
           type: integer
           format: int32
           minimum: 0
@@ -1787,17 +1768,17 @@ components:
           type: object
           properties:
             combined:
-              description: Total fuel consumption in l/100km.
+              description: Total fuel consumption in L/100km.
               type: number
               format: double
               example: 8.55
             extraUrban:
-              description: Extra urban fuel consumption in l/100km.
+              description: Extra urban fuel consumption in L/100km.
               type: number
               format: double
               example: 6.55
             urban:
-              description: Urban fuel consumption in l/100km.
+              description: Urban fuel consumption in L/100km.
               type: number
               format: double
               example: 10.55
@@ -1846,7 +1827,7 @@ components:
             - $ref: "#/components/schemas/DriveType"
           example: all
         electricMotorHorsePower:
-          description: Horse power of the electric motor.
+          description: Horsepower of the electric motor.
           type: integer
           format: int32
           minimum: 0
@@ -1875,14 +1856,14 @@ components:
           maximum: 999
           example: 50.55
         fastChargingTime0To100:
-          description: Fast charging time from 0 to 100% in minutes.
+          description: Fast charging time from 0 to 100% in min.
           type: integer
           format: int32
           minimum: 1
           maximum: 9999
           example: 28
         fastChargingTime0To80:
-          description: Fast charging time from 0 to 80% in minutes.
+          description: Fast charging time from 0 to 80% in min.
           type: integer
           format: int32
           minimum: 1
@@ -1956,7 +1937,7 @@ components:
           maximum: 29999
           example: 175
         horsePower:
-          description: Horse power of the vehicle.
+          description: Horsepower of the vehicle.
           type: integer
           format: int16
           minimum: 1
@@ -2004,7 +1985,7 @@ components:
           description: License category needed to operate the vehicle.
           allOf:
             - $ref: "#/components/schemas/LicenseCategory"
-          example: c
+          example: b
         listPrice:
           description: List price of the vehicle.
           type: number
@@ -2103,7 +2084,7 @@ components:
           type: string
           example: NEW NEW NEW
         towingCapacityBraked:
-          description: Towing capacity of the vehicle when braked, measured in kilograms.
+          description: Towing capacity of the vehicle when braked, in kg.
           type: integer
           format: int32
           minimum: 1
@@ -2148,7 +2129,7 @@ components:
               maximum: 199
               example: 24
             mileage:
-              description: The maximum mileage covered by the warranty in kilometers.
+              description: The maximum mileage covered by the warranty in km.
               type: integer
               format: int32
               minimum: 1
@@ -2165,21 +2146,21 @@ components:
                 - $ref: "#/components/schemas/WarrantyType"
               example: from-date
         weightCurb:
-          description: The curb weight of the vehicle, measured in kilograms, excluding passengers and cargo.
+          description: The curb weight of the vehicle in kg, excluding passengers and cargo.
           type: integer
           format: int16
           minimum: 1
           maximum: 29999
           example: 2000
         weightTotal:
-          description: The total weight of the vehicle, measured in kilograms, including all components.
+          description: The total weight of the vehicle in kg, including all components.
           type: integer
           format: int16
           minimum: 1
           maximum: 29999
           example: 2500
         width:
-          description: The width of the vehicle in centimeters, typically measured at the widest point.
+          description: The width of the vehicle in cm, typically measured at the widest point.
           type: integer
           format: int32
           minimum: 1
@@ -2464,12 +2445,12 @@ components:
           type: boolean
           example: true
         horsePowerFrom:
-          description: Filter listings by minimum horse power.
+          description: Filter listings by minimum horsepower.
           type: integer
           format: int32
           example: 150
         horsePowerTo:
-          description: Filter listings by maximum horse power.
+          description: Filter listings by maximum horsepower.
           type: integer
           format: int32
           example: 250
@@ -2944,7 +2925,7 @@ components:
               maximum: 9999
               example: 24
             mileage:
-              description: Maximum mileage covered by the warranty (in kilometers).
+              description: Maximum mileage covered by the warranty in km.
               type: integer
               format: int64
               example: 10000
@@ -3237,7 +3218,7 @@ components:
           maxLength: 64
           example: audi
         mileage:
-          description: The distance in kilometers that the vehicle has been driven.
+          description: The distance in km that the vehicle has been driven.
           type: integer
           format: int32
           minimum: 0
@@ -3415,7 +3396,7 @@ components:
           format: int16
           minimum: 1
           maximum: 9999
-          description: Horse power of the vehicle.
+          description: Horsepower of the vehicle.
           example: 150
         kiloWatts:
           description: Power the engine produces in kW.
@@ -3546,6 +3527,32 @@ components:
             type: string
           description: List of registration document numbers.
           example: [ 1AE899, XYZ789 ]
+        chargingPlugType:
+          description: Type of the charging plug.
+          allOf:
+            - $ref: "#/components/schemas/ChargingPlugType"
+          example: type-1
+        chargingPower:
+          description: Charging power in kW.
+          type: number
+          format: double
+          minimum: 1.0
+          maximum: 199.0
+          example: 11.0
+        chargingTime0To100:
+          description: Charging time from 0 to 100% in min.
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 9999
+          example: 99
+        chargingTime0To80:
+          description: Charging time from 0 to 80% in min.
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 9999
+          example: 72
         co2Emission:
           type: integer
           format: int16
@@ -3554,21 +3561,21 @@ components:
         consumptionCombined:
           type: number
           format: double
-          description: Combined fuel consumption (l/100km).
+          description: Combined fuel consumption in L/100km.
           example: 5.5
         consumptionExtraUrban:
           type: number
           format: double
           minimum: 0.1
           maximum: 999.0
-          description: Extra urban fuel consumption (L/100km).
+          description: Extra urban fuel consumption in L/100km.
           example: 4.8
         consumptionUrban:
           type: number
           format: double
           minimum: 0.1
           maximum: 999.0
-          description: Urban fuel consumption (L/100km).
+          description: Urban fuel consumption in L/100km.
           example: 6.4
         cubicCapacity:
           type: integer
@@ -3616,6 +3623,32 @@ components:
           type: string
           maxLength: 64
           example: 100200401
+        fastChargingPlugType:
+          description: Type of the fast charging plug.
+          allOf:
+            - $ref: "#/components/schemas/FastChargingPlugType"
+          example: ccs
+        fastChargingPower:
+          description: Fast charging power in kW.
+          type: number
+          format: double
+          minimum: 1.0
+          maximum: 999.0
+          example: 50.55
+        fastChargingTime0To100:
+          description: Fast charging time from 0 to 100% in min.
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 9999
+          example: 28
+        fastChargingTime0To80:
+          description: Fast charging time from 0 to 80% in min.
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 9999
+          example: 23
         fuelType:
           description: Emission standard of the vehicle.
           allOf:
@@ -3631,21 +3664,21 @@ components:
           format: double
           minimum: 0.1
           maximum: 99.0
-          description: The combined gas consumption in liters per 100 kilometers.
+          description: The combined gas consumption in L/100km.
           example: 4.3
         gasConsumptionExtraUrban:
           type: number
           format: double
           minimum: 0.1
           maximum: 99.0
-          description: The extra-urban gas consumption in liters per 100 kilometers.
+          description: The extra-urban gas consumption in L/100km.
           example: 3.9
         gasConsumptionUrban:
           type: number
           format: double
           minimum: 0.1
           maximum: 99.0
-          description: The urban gas consumption in liters per 100 kilometers.
+          description: The urban gas consumption in L/100km.
           example: 5.1
         gears:
           type: integer
@@ -3664,7 +3697,7 @@ components:
         horsePower:
           type: integer
           format: int16
-          description: Horse power of the vehicle.
+          description: Horsepower of the vehicle.
           minimum: 1
           maximum: 9999
           example: 150
@@ -3701,7 +3734,7 @@ components:
           description: License category needed to operate the vehicle.
           allOf:
             - $ref: '#/components/schemas/LicenseCategory'
-          example: c
+          example: b
         listPrice:
           description: List price of the vehicle.
           type: number
@@ -3722,12 +3755,12 @@ components:
         payload:
           type: integer
           format: int16
-          description: Payload capacity (kg).
+          description: Payload capacity in kg.
           example: 500
         powerConsumption:
           type: number
           format: double
-          description: Electric power consumption (kWh/100km).
+          description: Electric power consumption in kWh/100km.
           example: 14.7
         productionEndDate:
           type: string
@@ -3769,7 +3802,7 @@ components:
           description: Number of seats in the vehicle.
           example: 5
         towingCapacityBraked:
-          description: Towing capacity of the vehicle when braked, measured in kilograms.
+          description: Towing capacity of the vehicle when braked, in kg.
           type: integer
           format: int32
           minimum: 1
@@ -3786,14 +3819,14 @@ components:
             - $ref: '#/components/schemas/VehicleCategory'
           example: car
         weightCurb:
-          description: The curb weight of the vehicle, measured in kilograms, excluding passengers and cargo.
+          description: The curb weight of the vehicle in kg, excluding passengers and cargo.
           type: integer
           format: int16
           minimum: 1
           maximum: 29999
           example: 2000
         weightTotal:
-          description: The total weight of the vehicle, measured in kilograms, including all components.
+          description: The total weight of the vehicle in kg, including all components.
           type: integer
           format: int16
           minimum: 1
@@ -3992,7 +4025,7 @@ components:
           format: int16
           minimum: 0
           maximum: 9999
-          description: Horse power of the combustion engine.
+          description: Horsepower of the combustion engine.
           example: 150
         conditionType:
           description: Condition type of the vehicle.
@@ -4004,21 +4037,21 @@ components:
           format: double
           minimum: 0.1
           maximum: 999.0
-          description: Combined fuel consumption (L/100km).
+          description: Combined fuel consumption in L/100km.
           example: 4.5
         consumptionExtraUrban:
           type: number
           format: double
           minimum: 0.1
           maximum: 999.0
-          description: Extra urban fuel consumption (L/100km).
+          description: Extra urban fuel consumption in L/100km.
           example: 4.0
         consumptionUrban:
           type: number
           format: double
           minimum: 0.1
           maximum: 999.0
-          description: Urban fuel consumption (L/100km).
+          description: Urban fuel consumption in L/100km.
           example: 5.2
         cubicCapacity:
           type: integer
@@ -4066,7 +4099,7 @@ components:
             - $ref: "#/components/schemas/DriveType"
           example: all
         electricMotorHorsePower:
-          description: Horse power of the electric motor.
+          description: Horsepower of the electric motor.
           type: integer
           format: int16
           minimum: 0
@@ -4139,21 +4172,21 @@ components:
           format: double
           minimum: 0.1
           maximum: 99.0
-          description: The combined gas consumption in liters per 100 kilometers.
+          description: The combined gas consumption in L/100km.
           example: 8.5
         gasConsumptionExtraUrban:
           type: number
           format: double
           minimum: 0.1
           maximum: 99.0
-          description: The extra-urban gas consumption in liters per 100 kilometers.
+          description: The extra-urban gas consumption in L/100km.
           example: 6.5
         gasConsumptionUrban:
           type: number
           format: double
           minimum: 0.1
           maximum: 99.0
-          description: The urban gas consumption in liters per 100 kilometers.
+          description: The urban gas consumption in L/100km.
           example: 10.5
         gears:
           type: integer
@@ -4214,7 +4247,7 @@ components:
           format: int16
           minimum: 1
           maximum: 9999
-          description: Horse power of the vehicle.
+          description: Horsepower of the vehicle.
           example: 150
         inspected:
           description: Flag indicating if the vehicle has a valid vehicle technical inspection required by law - MFK.
@@ -4258,7 +4291,7 @@ components:
           description: License category needed to operate the vehicle.
           allOf:
             - $ref: "#/components/schemas/LicenseCategory"
-          example: c
+          example: b
         listPrice:
           description: List price of the vehicle.
           type: number
@@ -4355,7 +4388,7 @@ components:
           description: Short promotional text or teaser for the vehicle listing.
           example: "Limited edition Audi a6!"
         towingCapacityBraked:
-          description: Towing capacity of the vehicle when braked, measured in kilograms.
+          description: Towing capacity of the vehicle when braked, in kg.
           type: integer
           format: int32
           minimum: 1
@@ -4424,14 +4457,14 @@ components:
             - $ref: "#/components/schemas/WarrantyType"
           example: from-date
         weightCurb:
-          description: The curb weight of the vehicle, measured in kilograms, excluding passengers and cargo.
+          description: The curb weight of the vehicle in kg, excluding passengers and cargo.
           type: integer
           format: int16
           minimum: 1
           maximum: 29999
           example: 2000
         weightTotal:
-          description: The total weight of the vehicle, measured in kilograms, including all components.
+          description: The total weight of the vehicle in kg, including all components.
           type: integer
           format: int16
           minimum: 1

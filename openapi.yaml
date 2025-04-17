@@ -1497,7 +1497,7 @@ components:
           example: key1.jpg
         url:
           type: string
-          description: Absolute url of the image
+          description: Absolute URL of the image
           example: https://images.autoscout24.local/public/listing/key1.jpg
     ListingImageKey:
       type: object

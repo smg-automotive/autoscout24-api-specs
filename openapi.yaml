@@ -19,6 +19,7 @@ tags:
   - name: Listing Search & Exploration
   - name: Message Lead
   - name: Inventory Management
+  - name: Configurator
 paths:
   /public/v1/clients/oauth/token:
     post:
@@ -613,8 +614,123 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Translation"
+  /public/v1/configurator/eurotax/sellers/{sellerId}/versions/vehicle-identification-number/{vehicleIdentificationNumber}:
+    get:
+      operationId: GetVersionByVehicleIdentificationNumber
+      description: Returns version information for the provided vehicle identification number.
+      tags:
+        - Configurator
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/vehicleIdentificationNumberPathParam'
+      responses:
+        "200":
+          description: Version successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VersionVehicleIdentificationNumberResponse'
+  /public/v1/configurator/eurotax/sellers/{sellerId}/versions/vehicle-identification-number/{vehicleIdentificationNumber}/equipment:
+    get:
+      operationId: GetVersionEquipmentByVehicleIdentificationNumber
+      description: Returns version equipment information for the provided vehicle identification number.
+      tags:
+        - Configurator
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/vehicleIdentificationNumberPathParam'
+      responses:
+        "200":
+          description: Version equipment successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleIdentificationNumberEquipmentResponse'
+  /public/v1/configurator/eurotax/sellers/{sellerId}/versions/make-key/{makeKey}:
+    get:
+      operationId: GetVersionsByMakeAndModelKey
+      description: Returns a list of versions based on the make and model key.
+      tags:
+        - Configurator
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/makeKeyPathParam'
+        - $ref: '#/components/parameters/modelKeyParam'
+      responses:
+        "200":
+          description: List of versions successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VersionBaseListResponse'
+  /public/v1/configurator/eurotax/sellers/{sellerId}/versions/certification-number/{certificationNumber}:
+    get:
+      operationId: GetVersionsByCertificationNumber
+      description: Returns a list of versions based on the certification number and production date.
+      tags:
+        - Configurator
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/certificationNumberPathParam'
+      responses:
+        "200":
+          description: List of versions successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VersionBaseListResponse'
+  /public/v1/configurator/eurotax/sellers/{sellerId}/versions/external-id/{externalId}:
+    get:
+      operationId: GetVersionByExternalId
+      description: Returns a specific version based on the provided seller ID and external ID (eurotax nat code).
+      tags:
+        - Configurator
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/externalIdPathParam'
+      responses:
+        "200":
+          description: Version successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VersionResponse'
+  /public/v1/configurator/eurotax/sellers/{sellerId}/versions/serial-number/{serialNumber}:
+    get:
+      operationId: GetVersionBySerialNumber
+      description: Returns versions for a given serial number and production date.
+      tags:
+        - Configurator
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/serialNumberPathParam'
+      responses:
+        "200":
+          description: List of versions successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VersionBaseListResponse'
 components:
   parameters:
+    certificationNumberPathParam:
+      in: path
+      name: certificationNumber
+      description: The certification number.
+      required: true
+      schema:
+        type: string
+        pattern: '^\w{6}$'
+      example: 1AE899
+    externalIdPathParam:
+      in: path
+      name: externalId
+      description: The external ID.
+      required: true
+      schema:
+        type: integer
+        format: int64
+      example: 100200401
     languageParam:
       in: query
       name: language
@@ -631,6 +747,22 @@ components:
         type: integer
         format: int64
       example: 1620023
+    makeKeyPathParam:
+      in: path
+      name: makeKey
+      description: The make key.
+      required: true
+      schema:
+        type: string
+      example: Audi
+    modelKeyParam:
+      in: path
+      name: modelKey
+      description: The model key.
+      required: false
+      schema:
+        type: string
+      example: A6
     pageQueryParam:
       in: query
       name: page
@@ -647,7 +779,7 @@ components:
       in: query
       name: productionMonth
       description: The month of the production.
-      required: true
+      required: false
       schema:
         type: integer
         format: int16
@@ -656,7 +788,7 @@ components:
       in: query
       name: productionYear
       description: The year of the production.
-      required: true
+      required: false
       schema:
         type: integer
         format: int16
@@ -670,15 +802,6 @@ components:
         type: integer
         format: int64
       example: 601
-    externalIdPathParam:
-      in: path
-      name: externalId
-      description: The external ID.
-      required: true
-      schema:
-        type: integer
-        format: int64
-      example: 100200401
     sellerVehicleIdPathParam:
       in: path
       name: sellerVehicleId
@@ -688,6 +811,15 @@ components:
         type: integer
         format: int64
       example: 100200401
+    serialNumberPathParam:
+      in: query
+      name: serialNumber
+      description: The serial number of the vehicle.
+      required: true
+      schema:
+        type: string
+        pattern: '^\d{3}\.\d{3}\.\d{3}$'
+      example: 123.456.789
     sizeQueryParam:
       in: query
       name: size
@@ -707,6 +839,15 @@ components:
       required: true
       schema:
         $ref: "#/components/schemas/VehicleCategory"
+    vehicleIdentificationNumberPathParam:
+      in: path
+      name: vehicleIdentificationNumber
+      description: The vehicle identification number.
+      required: true
+      schema:
+        type: string
+        pattern: '^\w{17}$'
+      example: W0LPD2EC5CG042448
     versionIdPathParam:
       in: path
       name: versionId
@@ -827,7 +968,7 @@ components:
       type: object
       properties:
         combined:
-          description: The combined fuel consumption of the vehicle in liters per 100 kilometers.
+          description: The combined fuel consumption of the vehicle in L/100km.
           type: number
           example: 8.55
       example: { "combined": 8.55 }
@@ -928,7 +1069,7 @@ components:
       properties:
         id:
           type: integer
-          description: The unique identifier of the equipment item.
+          description: Equipment item's ID.
           example: 1502
         name:
           type: string
@@ -1182,7 +1323,7 @@ components:
         kiloWatts:
           description: Power the engine produces in kW.
           type: integer
-          format: int32
+          format: int16
           minimum: 1
           maximum: 9999
           example: 250
@@ -1192,7 +1333,7 @@ components:
           format: double
           minimum: 1.0
           maximum: 9999999.0
-          example: 65400
+          example: 65400.0
         live:
           description: Flag indicating if a listing is live.
           type: boolean
@@ -1250,7 +1391,7 @@ components:
             - $ref: "#/components/schemas/VehicleCategory"
           example: car
         versionFullName:
-          description: Full version name of the vehicle.
+          description: The full name of the vehicle’s version, including model and specifications.
           type: string
           maxLength: 128
           example: A6 3.0 55 TFSI quattro S-Tronic
@@ -1283,7 +1424,7 @@ components:
       type: object
       properties:
         id:
-          description: Key of the geo location.
+          description: Geo location's ID.
           type: string
           example: geo-city-zurich
         type:
@@ -1397,11 +1538,13 @@ components:
           description: Fuel type of the vehicle.
           allOf:
             - $ref: "#/components/schemas/FuelType"
-          example: hev-diesel
+          example: petrol
         horsePower:
-          description: Horse power of the vehicle.
+          description: Horsepower of the vehicle.
           type: integer
-          format: int32
+          format: int16
+          minimum: 1
+          maximum: 9999
           example: 199
         id:
           description: Listing's ID.
@@ -1416,7 +1559,9 @@ components:
         kiloWatts:
           description: Power the engine produces in kW.
           type: integer
-          format: int32
+          format: int16
+          minimum: 1
+          maximum: 9999
           example: 250
         make:
           $ref: "#/components/schemas/Make"
@@ -1438,10 +1583,12 @@ components:
         qualiLogo:
           $ref: "#/components/schemas/QualiLogo"
         range:
-          description: Range of the electric vehicle in km.
+          description: Range of the vehicle in km.
           type: integer
           format: int32
-          example: 500
+          minimum: 1
+          maximum: 9999
+          example: 650
         seller:
           $ref: "#/components/schemas/ListingBaseResponse_Seller"
         teaser:
@@ -1489,7 +1636,7 @@ components:
         id:
           type: integer
           format: int64
-          description: Unique identifier of the image.
+          description: Image's ID.
           example: 1201
         key:
           type: string
@@ -1529,7 +1676,7 @@ components:
           maximum: 6
           example: 2
         batteryCapacity:
-          description: Capacity of the battery in kWh.
+          description: Battery capacity in kWh.
           type: number
           format: double
           minimum: 1.0
@@ -1550,12 +1697,12 @@ components:
           type: object
           properties:
             height:
-              description: Height of the boot in cm.
+              description: Height of the boot in mm.
               type: integer
               format: int32
               example: 120
             length:
-              description: Length of the boot in cm.
+              description: Length of the boot in mm.
               type: integer
               format: int32
               example: 250
@@ -1589,14 +1736,14 @@ components:
           maximum: 199.0
           example: 2.15
         chargingTime0To100:
-          description: Charging time from 0 to 100% in minutes.
+          description: Charging time from 0 to 100% in min.
           type: integer
           format: int32
           minimum: 1
           maximum: 9999
           example: 99
         chargingTime0To80:
-          description: Charging time from 0 to 80% in minutes.
+          description: Charging time from 0 to 80% in min.
           type: integer
           format: int32
           minimum: 1
@@ -1610,7 +1757,7 @@ components:
           maximum: 9999
           example: 42
         combustionEngineHorsePower:
-          description: Horse power of the combustion engine.
+          description: Horsepower of the combustion engine.
           type: integer
           format: int32
           minimum: 0
@@ -1626,17 +1773,17 @@ components:
           type: object
           properties:
             combined:
-              description: Total fuel consumption in l/100km.
+              description: Total fuel consumption in L/100km.
               type: number
               format: double
               example: 8.55
             extraUrban:
-              description: Extra urban fuel consumption in l/100km.
+              description: Extra urban fuel consumption in L/100km.
               type: number
               format: double
               example: 6.55
             urban:
-              description: Urban fuel consumption in l/100km.
+              description: Urban fuel consumption in L/100km.
               type: number
               format: double
               example: 10.55
@@ -1685,7 +1832,7 @@ components:
             - $ref: "#/components/schemas/DriveType"
           example: all
         electricMotorHorsePower:
-          description: Horse power of the electric motor.
+          description: Horsepower of the electric motor.
           type: integer
           format: int32
           minimum: 0
@@ -1714,14 +1861,14 @@ components:
           maximum: 999
           example: 50.55
         fastChargingTime0To100:
-          description: Fast charging time from 0 to 100% in minutes.
+          description: Fast charging time from 0 to 100% in min.
           type: integer
           format: int32
           minimum: 1
           maximum: 9999
           example: 28
         fastChargingTime0To80:
-          description: Fast charging time from 0 to 80% in minutes.
+          description: Fast charging time from 0 to 80% in min.
           type: integer
           format: int32
           minimum: 1
@@ -1743,7 +1890,7 @@ components:
           description: Fuel type of the vehicle.
           allOf:
             - $ref: "#/components/schemas/FuelType"
-          example: hev-diesel
+          example: petrol
         furnitureTransporter:
           description: Flag indicating if a vehicle is a furniture transporter.
           type: boolean
@@ -1788,21 +1935,21 @@ components:
           type: boolean
           example: true
         height:
-          description: Height of the vehicle in cm.
+          description: Height of the vehicle in mm.
           type: integer
           format: int32
           minimum: 1
           maximum: 29999
           example: 175
         horsePower:
-          description: Horse power of the vehicle.
+          description: Horsepower of the vehicle.
           type: integer
-          format: int32
+          format: int16
           minimum: 1
           maximum: 9999
           example: 199
         id:
-          description: Unique identifier of the listing.
+          description: Listing's ID.
           type: integer
           format: int64
           example: 1923
@@ -1823,32 +1970,34 @@ components:
         kiloWatts:
           description: Power the engine produces in kW.
           type: integer
-          format: int32
+          format: int16
           minimum: 1
           maximum: 9999
-          example: 40
+          example: 250
         lastInspectionDate:
           description: Date of the last inspection.
           type: string
           format: date
           example: '2020-12-15'
         length:
-          description: Length of the vehicle in cm.
+          description: Length of the vehicle in mm.
           type: integer
-          format: int32
+          format: int16
+          minimum: 1
+          maximum: 29999
           example: 480
         licenseCategory:
           description: License category needed to operate the vehicle.
           allOf:
             - $ref: "#/components/schemas/LicenseCategory"
-          example: c
+          example: b
         listPrice:
-          description: Price of the vehicle when it was new.
+          description: List price of the vehicle.
           type: number
           format: double
           minimum: 1.0
           maximum: 9999999.0
-          example: 65400
+          example: 65400.0
         make:
           $ref: "#/components/schemas/Make"
         metallic:
@@ -1940,14 +2089,14 @@ components:
           type: string
           example: NEW NEW NEW
         towingCapacityBraked:
-          description: Towing capacity of the vehicle when braked, measured in kilograms.
+          description: Towing capacity of the vehicle when braked, in kg.
           type: integer
           format: int32
           minimum: 1
           maximum: 99999
           example: 1000
         transmissionType:
-          description: The type of transmission in the vehicle (e.g., automatic, manual).
+          description: The type of transmission in the vehicle.
           allOf:
             - $ref: "#/components/schemas/TransmissionType"
           example: automatic
@@ -1960,7 +2109,7 @@ components:
           type: boolean
           example: false
         vehicleCategory:
-          description: The category or type of the vehicle (e.g., car, truck, SUV).
+          description: Category of the vehicle.
           allOf:
             - $ref: "#/components/schemas/VehicleCategory"
           example: car
@@ -1985,7 +2134,7 @@ components:
               maximum: 199
               example: 24
             mileage:
-              description: The maximum mileage covered by the warranty in kilometers.
+              description: The maximum mileage covered by the warranty in km.
               type: integer
               format: int32
               minimum: 1
@@ -2002,21 +2151,21 @@ components:
                 - $ref: "#/components/schemas/WarrantyType"
               example: from-date
         weightCurb:
-          description: The curb weight of the vehicle, measured in kilograms, excluding passengers and cargo.
+          description: The curb weight of the vehicle in kg, excluding passengers and cargo.
           type: integer
-          format: int32
+          format: int16
           minimum: 1
           maximum: 29999
           example: 2000
         weightTotal:
-          description: The total weight of the vehicle, measured in kilograms, including all components.
+          description: The total weight of the vehicle in kg, including all components.
           type: integer
-          format: int32
+          format: int16
           minimum: 1
           maximum: 29999
           example: 2500
         width:
-          description: The width of the vehicle in centimeters, typically measured at the widest point.
+          description: The width of the vehicle in cm, typically measured at the widest point.
           type: integer
           format: int32
           minimum: 1
@@ -2301,12 +2450,12 @@ components:
           type: boolean
           example: true
         horsePowerFrom:
-          description: Filter listings by minimum horse power.
+          description: Filter listings by minimum horsepower.
           type: integer
           format: int32
           example: 150
         horsePowerTo:
-          description: Filter listings by maximum horse power.
+          description: Filter listings by maximum horsepower.
           type: integer
           format: int32
           example: 250
@@ -2412,7 +2561,7 @@ components:
       type: object
       properties:
         id:
-          description: Key of the geo location.
+          description: Geo location's ID.
           type: string
           example: geo-city-zurich
         radius:
@@ -2578,7 +2727,7 @@ components:
       properties:
         id:
           type: integer
-          description: ID of the equipment option.
+          description: Equipment option's ID.
         packageItems:
           type: array
           description: Package items included in the option.
@@ -2781,7 +2930,7 @@ components:
               maximum: 9999
               example: 24
             mileage:
-              description: Maximum mileage covered by the warranty (in kilometers).
+              description: Maximum mileage covered by the warranty in km.
               type: integer
               format: int64
               example: 10000
@@ -2866,7 +3015,7 @@ components:
       type: object
       properties:
         id:
-          description: Unique identifier of the listing.
+          description: Listing's ID.
           type: integer
           format: int64
           example: 1923
@@ -2931,7 +3080,7 @@ components:
       description: Represents a set of fields for Seller object.
       properties:
         id:
-          description: Unique identifier of the seller.
+          description: Seller's ID.
           type: integer
           format: int64
           example: 1923
@@ -2951,7 +3100,7 @@ components:
           type: string
           example: "Zurich"
         id:
-          description: Unique identifier of the seller.
+          description: Seller's ID.
           type: integer
           format: int64
           example: 1923
@@ -2990,7 +3139,7 @@ components:
           minLength: 6
           maxLength: 6
           pattern: '^\w{6}$'
-          example: "1AE899"
+          example: 1AE899
         conditionType:
           description: Condition type of the vehicle.
           allOf:
@@ -3040,7 +3189,7 @@ components:
             - $ref: "#/components/schemas/FuelType"
           example: petrol
         id:
-          description: Unique identifier for the listing.
+          description: Listing's ID.
           type: integer
           format: int64
           example: 1620023
@@ -3050,9 +3199,9 @@ components:
           items:
             $ref: "#/components/schemas/Image"
         kiloWatts:
-          description: Power produced by the engine in kilowatts (kW).
+          description: Power the engine produces in kW.
           type: integer
-          format: int32
+          format: int16
           minimum: 1
           maximum: 9999
           example: 250
@@ -3062,19 +3211,19 @@ components:
           format: double
           minimum: 1.0
           maximum: 9999999.0
-          example: 65400
+          example: 65400.0
         live:
           description: Flag indicating if the listing is currently live.
           type: boolean
           example: true
         makeKey:
-          description: Unique key for the vehicle's make.
+          description: Vehicle make key.
           type: string
           minLength: 1
           maxLength: 64
           example: audi
         mileage:
-          description: The distance in kilometers that the vehicle has been driven.
+          description: The distance in km that the vehicle has been driven.
           type: integer
           format: int32
           minimum: 0
@@ -3115,12 +3264,12 @@ components:
           type: boolean
           example: false
         vehicleCategory:
-          description: Category of the vehicle (e.g., car, truck, motorcycle).
+          description: Category of the vehicle.
           allOf:
             - $ref: "#/components/schemas/VehicleCategory"
           example: car
         versionFullName:
-          description: Full version name of the vehicle.
+          description: The full name of the vehicle’s version, including model and specifications.
           type: string
           maxLength: 128
           example: A6 3.0 55 TFSI quattro S-Tronic
@@ -3183,6 +3332,111 @@ components:
         - camper
         - trailer
       example: car
+    VehicleIdentificationNumberEquipmentResponse:
+      description: Represents the response structure for get version equipment by vehicle identification number.
+      allOf:
+        - $ref: '#/components/schemas/VersionEquipmentResponse'
+    VersionVehicleIdentificationNumberResponse:
+      description: Represents the response structure for version by vehicle identification number search.
+      properties:
+        firstRegistrationMonth:
+          type: integer
+          format: int32
+          example: 5
+          description: Month of the vehicle's first registration.
+        firstRegistrationYear:
+          type: integer
+          format: int32
+          example: 2021
+          description: Year of the vehicle's first registration.
+        productionMonth:
+          type: integer
+          format: int32
+          example: 3
+          description: Month the vehicle was produced.
+        productionYear:
+          type: integer
+          format: int32
+          example: 2020
+          description: Year the vehicle was produced.
+        vehicleIdentificationNumber:
+          type: string
+          pattern: '^\w{17}$'
+          description: Unique vehicle identification number (VIN).
+          example: 1HGCM82633A123456
+        version:
+          description: Version object.
+          allOf:
+            - $ref: '#/components/schemas/VersionIdObject'
+          example: 123456
+    VersionBase:
+      type: object
+      description: Represents a base version of a vehicle with key specification details.
+      properties:
+        bodyType:
+          description: Shape of the vehicle body.
+          allOf:
+            - $ref: "#/components/schemas/BodyType"
+          example: estate
+        certificationNumbers:
+          type: array
+          description: List of registration document numbers.
+          items:
+            type: string
+            example: [ 1AE899, XYZ789 ]
+        doors:
+          type: integer
+          format: int16
+          description: Number of doors on the vehicle.
+          minimum: 1
+          maximum: 9
+          example: 5
+        driveType:
+          description: Drive type of the vehicle.
+          allOf:
+            - $ref: "#/components/schemas/DriveType"
+          example: all
+        horsePower:
+          type: integer
+          format: int16
+          minimum: 1
+          maximum: 9999
+          description: Horsepower of the vehicle.
+          example: 150
+        kiloWatts:
+          description: Power the engine produces in kW.
+          type: integer
+          format: int16
+          minimum: 1
+          maximum: 9999
+          example: 250
+        vehicleCategory:
+          description: Category of the vehicle.
+          allOf:
+            - $ref: "#/components/schemas/VehicleCategory"
+          example: car
+        seats:
+          type: integer
+          format: int16
+          minimum: 1
+          maximum: 199
+          description: Number of seats in the vehicle.
+          example: 5
+        transmissionType:
+          description: Transmission type of the vehicle.
+          allOf:
+            - $ref: "#/components/schemas/TransmissionType"
+          example: automatic
+        versionFullName:
+          type: string
+          description: The full name of the vehicle’s version, including model and specifications.
+          maxLength: 128
+          example: A6 3.0 55 TFSI quattro S-Tronic
+    VersionBaseListResponse:
+      type: array
+      description: Represents the response structure for versions returned by the configurator.
+      items:
+        $ref: '#/components/schemas/VersionBase'
     VersionEquipmentOption:
       type: object
       description: Equipment option with localized name and optional package items.
@@ -3193,7 +3447,7 @@ components:
         id:
           type: integer
           format: int64
-          description: Unique identifier of the equipment option.
+          description: Equipment option's ID.
           example: 1002
         name:
           type: string
@@ -3227,6 +3481,14 @@ components:
         - vehicle-identification-number
         - none
       example: make-model
+    VersionIdObject:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 123456
+          description: Version's ID.
     VersionPackageItem:
       type: object
       description: Item included in an version equipment package.
@@ -3250,6 +3512,333 @@ components:
           "key": "adaptive-cruise-control",
           "name": "Adaptive Cruise Control"
         }
+    VersionResponse:
+      type: object
+      description: Represents the version details response structure.
+      properties:
+        batteryCapacity:
+          type: number
+          format: double
+          description: Battery capacity in kWh.
+          example: 52.0
+        bodyType:
+          description: Shape of the vehicle body.
+          allOf:
+            - $ref: '#/components/schemas/BodyType'
+          example: estate
+        certificationNumbers:
+          type: array
+          items:
+            type: string
+          description: List of registration document numbers.
+          example: [ 1AE899, XYZ789 ]
+        chargingPlugType:
+          description: Type of the charging plug.
+          allOf:
+            - $ref: "#/components/schemas/ChargingPlugType"
+          example: type-1
+        chargingPower:
+          description: Charging power in kW.
+          type: number
+          format: double
+          minimum: 1.0
+          maximum: 199.0
+          example: 11.0
+        chargingTime0To100:
+          description: Charging time from 0 to 100% in min.
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 9999
+          example: 99
+        chargingTime0To80:
+          description: Charging time from 0 to 80% in min.
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 9999
+          example: 72
+        co2Emission:
+          type: integer
+          format: int16
+          description: CO2 emissions in g/km.
+          example: 120
+        consumptionCombined:
+          type: number
+          format: double
+          description: Combined fuel consumption in L/100km.
+          example: 5.5
+        consumptionExtraUrban:
+          type: number
+          format: double
+          minimum: 0.1
+          maximum: 999.0
+          description: Extra urban fuel consumption in L/100km.
+          example: 4.8
+        consumptionUrban:
+          type: number
+          format: double
+          minimum: 0.1
+          maximum: 999.0
+          description: Urban fuel consumption in L/100km.
+          example: 6.4
+        cubicCapacity:
+          type: integer
+          format: int16
+          minimum: 1
+          maximum: 29999
+          description: Engine cubic capacity in cc.
+          example: 1498
+        cylinderArrangement:
+          description: Arrangement of the cylinders.
+          allOf:
+            - $ref: '#/components/schemas/CylinderArrangement'
+          example: v
+        cylinders:
+          type: integer
+          format: int16
+          minimum: 1
+          maximum: 99
+          description: Number of cylinders of the engine.
+          example: 4
+        doors:
+          type: integer
+          format: int16
+          description: Number of doors on the vehicle.
+          minimum: 1
+          maximum: 9
+          example: 5
+        driveSystem:
+          description: Drive system of the vehicle.
+          allOf:
+            - $ref: '#/components/schemas/DriveSystem'
+          example: belt
+        driveType:
+          description: Drive type of the vehicle.
+          allOf:
+            - $ref: '#/components/schemas/DriveType'
+          example: all
+        emissionStandard:
+          description: Emission standard of the vehicle.
+          allOf:
+            - $ref: '#/components/schemas/EmissionStandard'
+          example: euro-6
+        fastChargingPlugType:
+          description: Type of the fast charging plug.
+          allOf:
+            - $ref: "#/components/schemas/FastChargingPlugType"
+          example: ccs
+        fastChargingPower:
+          description: Fast charging power in kW.
+          type: number
+          format: double
+          minimum: 1.0
+          maximum: 999.0
+          example: 50.55
+        fastChargingTime0To100:
+          description: Fast charging time from 0 to 100% in min.
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 9999
+          example: 28
+        fastChargingTime0To80:
+          description: Fast charging time from 0 to 80% in min.
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 9999
+          example: 23
+        fuelType:
+          description: Emission standard of the vehicle.
+          allOf:
+            - $ref: '#/components/schemas/FuelType'
+          example: petrol
+        fullName:
+          type: string
+          maxLength: 128
+          description: The full name of the vehicle’s version, including model and specifications.
+          example: A6 3.0 55 TFSI quattro S-Tronic
+        gasConsumptionCombined:
+          type: number
+          format: double
+          minimum: 0.1
+          maximum: 99.0
+          description: The combined gas consumption in L/100km.
+          example: 4.3
+        gasConsumptionExtraUrban:
+          type: number
+          format: double
+          minimum: 0.1
+          maximum: 99.0
+          description: The extra-urban gas consumption in L/100km.
+          example: 3.9
+        gasConsumptionUrban:
+          type: number
+          format: double
+          minimum: 0.1
+          maximum: 99.0
+          description: The urban gas consumption in L/100km.
+          example: 5.1
+        gears:
+          type: integer
+          format: int16
+          minimum: 1
+          maximum: 99
+          description: Number of gears of the vehicle.
+          example: 7
+        height:
+          type: integer
+          format: int16
+          minimum: 1
+          maximum: 29999
+          description: Height of the vehicle in mm.
+          example: 1450
+        horsePower:
+          type: integer
+          format: int16
+          description: Horsepower of the vehicle.
+          minimum: 1
+          maximum: 9999
+          example: 150
+        hybridHorsePower:
+          type: integer
+          format: int16
+          description: Combined hybrid system horsepower.
+          example: 204
+        hybridKiloWatts:
+          type: integer
+          format: int16
+          description: Combined hybrid system power in kW.
+          example: 150
+        id:
+          type: integer
+          format: int64
+          description: Version's ID.
+          example: 123456
+        kiloWatts:
+          description: Power the engine produces in kW.
+          type: integer
+          format: int16
+          minimum: 1
+          maximum: 9999
+          example: 250
+        length:
+          type: integer
+          format: int16
+          description: Length of the vehicle in mm.
+          minimum: 1
+          maximum: 29999
+          example: 4280
+        licenseCategory:
+          description: License category needed to operate the vehicle.
+          allOf:
+            - $ref: '#/components/schemas/LicenseCategory'
+          example: b
+        listPrice:
+          description: List price of the vehicle.
+          type: number
+          format: double
+          minimum: 1.0
+          maximum: 9999999.0
+          example: 65400.0
+        makeKey:
+          type: string
+          maxLength: 255
+          description: Vehicle make key.
+          example: audi
+        modelKey:
+          type: string
+          maxLength: 255
+          description: Vehicle model key.
+          example: a6
+        payload:
+          type: integer
+          format: int16
+          description: Payload capacity in kg.
+          example: 500
+        powerConsumption:
+          type: number
+          format: double
+          description: Electric power consumption in kWh/100km.
+          example: 14.7
+        productionEndDate:
+          type: string
+          format: date
+          description: End date of production.
+          example: 2024-09-30
+        productionMonth:
+          type: integer
+          format: int16
+          description: Month the vehicle was produced.
+          example: 3
+        productionStartDate:
+          type: string
+          format: date
+          description: Start date of production.
+          example: 2020-03-01
+        productionYear:
+          type: integer
+          format: int16
+          example: 2020
+          description: Year the vehicle was produced.
+        range:
+          description: Range of the vehicle in km.
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 9999
+          example: 650
+        seats:
+          type: integer
+          format: int16
+          minimum: 1
+          maximum: 199
+          description: Number of seats in the vehicle.
+          example: 5
+        towingCapacityBraked:
+          description: Towing capacity of the vehicle when braked, in kg.
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 99999
+          example: 1000
+        transmissionType:
+          description: Transmission type of the vehicle.
+          allOf:
+            - $ref: '#/components/schemas/TransmissionType'
+          example: automatic
+        vehicleCategory:
+          description: Category of the vehicle.
+          allOf:
+            - $ref: '#/components/schemas/VehicleCategory'
+          example: car
+        weightCurb:
+          description: The curb weight of the vehicle in kg, excluding passengers and cargo.
+          type: integer
+          format: int16
+          minimum: 1
+          maximum: 29999
+          example: 2000
+        weightTotal:
+          description: The total weight of the vehicle in kg, including all components.
+          type: integer
+          format: int16
+          minimum: 1
+          maximum: 29999
+          example: 2500
+        wheelbase:
+          type: integer
+          format: int16
+          minimum: 1
+          maximum: 9999
+          description: Distance between the front and rear axles in millimeters.
+          example: 2700
+        width:
+          type: integer
+          format: int16
+          description: Width of the vehicle in mm.
+          example: 1790
     VersionShared:
       description: Represents a shared set of fields for different Version objects.
       properties:
@@ -3424,14 +4013,14 @@ components:
           format: int16
           minimum: 0
           maximum: 9999
-          description: CO2 emissions (g/km).
+          description: CO2 emission in g/km.
           example: 120
         combustionEngineHorsePower:
           type: integer
           format: int16
           minimum: 0
           maximum: 9999
-          description: Horse power of the combustion engine.
+          description: Horsepower of the combustion engine.
           example: 150
         conditionType:
           description: Condition type of the vehicle.
@@ -3443,21 +4032,21 @@ components:
           format: double
           minimum: 0.1
           maximum: 999.0
-          description: Combined fuel consumption (L/100km).
+          description: Combined fuel consumption in L/100km.
           example: 4.5
         consumptionExtraUrban:
           type: number
           format: double
           minimum: 0.1
           maximum: 999.0
-          description: Extra urban fuel consumption (L/100km).
+          description: Extra urban fuel consumption in L/100km.
           example: 4.0
         consumptionUrban:
           type: number
           format: double
           minimum: 0.1
           maximum: 999.0
-          description: Urban fuel consumption (L/100km).
+          description: Urban fuel consumption in L/100km.
           example: 5.2
         cubicCapacity:
           type: integer
@@ -3476,7 +4065,7 @@ components:
           format: int16
           minimum: 1
           maximum: 99
-          description: Number of cylinders.
+          description: Number of cylinders of the engine.
           example: 4
         description:
           type: string
@@ -3492,7 +4081,7 @@ components:
           format: int16
           minimum: 1
           maximum: 9
-          description: Number of doors.
+          description: Number of doors on the vehicle.
           example: 4
         driveSystem:
           description: Drive system of the vehicle.
@@ -3505,7 +4094,7 @@ components:
             - $ref: "#/components/schemas/DriveType"
           example: all
         electricMotorHorsePower:
-          description: Horse power of the electric motor.
+          description: Horsepower of the electric motor.
           type: integer
           format: int16
           minimum: 0
@@ -3578,28 +4167,28 @@ components:
           format: double
           minimum: 0.1
           maximum: 99.0
-          description: The combined gas consumption in liters per 100 kilometers.
+          description: The combined gas consumption in L/100km.
           example: 8.5
         gasConsumptionExtraUrban:
           type: number
           format: double
           minimum: 0.1
           maximum: 99.0
-          description: The extra-urban gas consumption in liters per 100 kilometers.
+          description: The extra-urban gas consumption in L/100km.
           example: 6.5
         gasConsumptionUrban:
           type: number
           format: double
           minimum: 0.1
           maximum: 99.0
-          description: The urban gas consumption in liters per 100 kilometers.
+          description: The urban gas consumption in L/100km.
           example: 10.5
         gears:
           type: integer
           format: int16
           minimum: 1
           maximum: 99
-          description: Number of gears in the vehicle's transmission.
+          description: Number of gears of the vehicle.
           example: 6
         hadAccident:
           type: boolean
@@ -3646,14 +4235,14 @@ components:
           format: int16
           minimum: 1
           maximum: 29999
-          description: Vehicle height in millimeters.
+          description: Vehicle height in mm.
           example: 1850
         horsePower:
           type: integer
           format: int16
           minimum: 1
           maximum: 9999
-          description: Vehicle horse power in kW.
+          description: Horsepower of the vehicle.
           example: 150
         inspected:
           description: Flag indicating if the vehicle has a valid vehicle technical inspection required by law - MFK.
@@ -3670,7 +4259,7 @@ components:
           description: Additional text for interior color.
           example: Metallic Blue
         kiloWatts:
-          description: Power produced by the engine in kilowatts (kW).
+          description: Power the engine produces in kW.
           type: integer
           format: int16
           minimum: 1
@@ -3697,14 +4286,14 @@ components:
           description: License category needed to operate the vehicle.
           allOf:
             - $ref: "#/components/schemas/LicenseCategory"
-          example: c
+          example: b
         listPrice:
-          description: Last price of the vehicle.
+          description: List price of the vehicle.
           type: number
           format: double
-          minimum: 0.1
+          minimum: 1.0
           maximum: 9999999.0
-          example: 47000.0
+          example: 65400.0
         metallic:
           description: Flag indicating if a vehicle has a metallic paint.
           type: boolean
@@ -3742,9 +4331,9 @@ components:
           type: boolean
           example: true
         range:
-          description: Range of the vehicle in km for electrical vehicles.
+          description: Range of the vehicle in km.
           type: integer
-          format: int16
+          format: int32
           minimum: 1
           maximum: 9999
           example: 650
@@ -3769,7 +4358,7 @@ components:
           format: int16
           minimum: 1
           maximum: 199
-          description: Number of seats.
+          description: Number of seats in the vehicle.
           example: 5
         sellerVehicleId:
           type: string
@@ -3794,12 +4383,12 @@ components:
           description: Short promotional text or teaser for the vehicle listing.
           example: "Limited edition Audi a6!"
         towingCapacityBraked:
+          description: Towing capacity of the vehicle when braked, in kg.
           type: integer
           format: int32
           minimum: 1
           maximum: 99999
-          description: Maximum towing capacity of the vehicle when braked (kg).
-          example: 3500
+          example: 1000
         transmissionType:
           description: Transmission type of the vehicle.
           allOf:
@@ -3824,7 +4413,7 @@ components:
           description: Unique vehicle identification number (VIN).
           example: 1HGCM82633A123456
         versionFullName:
-          description: Full version name of the vehicle.
+          description: The full name of the vehicle’s version, including model and specifications.
           type: string
           maxLength: 128
           example: A6 3.0 55 TFSI quattro S-Tronic
@@ -3863,14 +4452,14 @@ components:
             - $ref: "#/components/schemas/WarrantyType"
           example: from-date
         weightCurb:
-          description: The curb weight of the vehicle, measured in kilograms, excluding passengers and cargo.
+          description: The curb weight of the vehicle in kg, excluding passengers and cargo.
           type: integer
           format: int16
           minimum: 1
           maximum: 29999
           example: 2000
         weightTotal:
-          description: The total weight of the vehicle, measured in kilograms, including all components.
+          description: The total weight of the vehicle in kg, including all components.
           type: integer
           format: int16
           minimum: 1

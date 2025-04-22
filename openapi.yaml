@@ -3364,11 +3364,11 @@ components:
           pattern: '^\w{17}$'
           description: Unique vehicle identification number (VIN).
           example: 1HGCM82633A123456
-        versions:
-          description: A list of matching version for the vehicle.
+        version:
+          description: Version object.
           allOf:
             - $ref: '#/components/schemas/VersionIdObject'
-          example: {123456}
+          example: 123456
     VersionBase:
       type: object
       description: Represents a base version of a vehicle with key specification details.

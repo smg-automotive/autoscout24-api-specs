@@ -629,7 +629,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/VehicleIdentificationNumberResponse'
+                $ref: '#/components/schemas/VersionVehicleIdentificationNumberResponse'
   /public/v1/configurator/eurotax/sellers/{sellerId}/versions/vehicle-identification-number/{vehicleIdentificationNumber}/equipment:
     get:
       operationId: GetVersionEquipmentByVehicleIdentificationNumber
@@ -3331,7 +3331,7 @@ components:
       description: Represents the response structure for get version equipment by vehicle identification number.
       allOf:
         - $ref: '#/components/schemas/VersionEquipmentResponse'
-    VehicleIdentificationNumberResponse:
+    VersionVehicleIdentificationNumberResponse:
       description: Represents the response structure for version by vehicle identification number search.
       properties:
         firstRegistrationMonth:

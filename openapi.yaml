@@ -1630,6 +1630,7 @@ components:
       required:
         - id
         - key
+        - url
       description: Image associated with a seller's listing.
       properties:
         id:
@@ -1641,6 +1642,10 @@ components:
           type: string
           description: Image storage key or reference.
           example: key1.jpg
+        url:
+          type: string
+          description: Absolute URL of the image
+          example: https://images.autoscout24.local/public/listing/key1.jpg
     ListingImageKey:
       type: object
       description: Image key used to associate an image with the listing.

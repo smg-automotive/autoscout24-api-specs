@@ -30,7 +30,21 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/FinanceScout24Listing"
-
+  /fs24/v1/sellers/{sellerId}:
+    get:
+      operationId: GetFinanceScout24SellersSellerId
+      description: Returns a FinanceScout24 seller for the specified seller ID.
+      tags:
+        - Seller
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+      responses:
+        "200":
+          description: Seller returned.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/FinanceScout24Seller"
 components:
   parameters:
     listingIdPathParam:
@@ -42,6 +56,15 @@ components:
         type: integer
         format: int64
       example: 1620023
+    sellerIdPathParam:
+      in: path
+      name: sellerId
+      description: The ID of the seller.
+      required: true
+      schema:
+        type: integer
+        format: int64
+      example: 60601
   schemas:
     BodyType:
       type: string
@@ -327,4 +350,89 @@ components:
           type: integer
           format: int64
           example: 100201
-      description: A representation of a listing object from FinanceScout24 containing various attributes of the vehicle such as fuel type, body type, and pricing information.
+      description: A representation of a listing object, containing various attributes of the vehicle such as fuel type, body type, and pricing information.
+    FinanceScout24Seller:
+      description: Represents a seller object containing various attributes such as address, name, phone number, and more.
+      properties:
+        address:
+          description: The seller's address.
+          type: string
+          example: "Bahnhofstrasse 123b"
+        city:
+          description: The city where the seller is located.
+          type: string
+          example: "Zurich"
+        countryCode:
+          description: The country code where the seller is located.
+          type: string
+          example: "CH"
+        groups:
+          description: The list of groups the seller belongs to.
+          type: array
+          items:
+            type: string
+          example: [ "456", "789" ]
+        id:
+          description: Unique identifier of the seller.
+          type: integer
+          format: int64
+          example: 1923
+        name:
+          description: The name of the seller.
+          type: string
+          example: "John Seller LLC"
+        language:
+          description: The language used by the seller.
+          allOf:
+            - $ref: '#/components/schemas/Language'
+          example: de
+        notificationRecipients:
+          description: A list of recipients who will receive notifications such as leads or expressions of interest.
+          type: array
+          items:
+            $ref: "#/components/schemas/NotificationRecipient"
+        logoUrl:
+          description: URL of the seller's logo.
+          type: string
+          format: uri
+          example: https://images.autoscout24.ch/sellerlogos/0.jpg
+        phoneNumber:
+          description: The seller's primary phone number.
+          type: string
+          example: "+41761234567"
+        type:
+          description: The type of seller.
+          allOf:
+            - $ref: '#/components/schemas/SellerType'
+          example: "professional"
+        website:
+          description: The seller's website.
+          type: string
+          example: "https://www.autoscout24.ch"
+        zipCode:
+          description: The postal code of the seller’s location.
+          type: string
+          example: "8080"
+    Language:
+      description: The language used by the seller. Valid options are German (de), French (fr), or Italian (it).
+      type: string
+      enum:
+        - de
+        - fr
+        - it
+      example: de
+    NotificationRecipient:
+      description: A recipient designated to receive notifications such as leads or other interests.
+      properties:
+        email:
+          description: The recipient’s email address.
+          type: string
+          example: "johndoe@autoscout24.ch"
+    SellerType:
+      description: The type of seller. Can be either professional or private.
+      type: string
+      enum:
+        - professional
+        - private
+      example: professional
+

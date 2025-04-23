@@ -2077,6 +2077,10 @@ components:
           type: integer
           format: int64
           example: 601
+        sellerVehicleId:
+          description: Unique identifier of the seller's vehicle.
+          type: string
+          example: SVID_123
         sleepingBerths:
           description: Number of sleeping berths of the vehicle.
           type: integer

@@ -436,4 +436,9 @@ components:
         - professional
         - private
       example: professional
-
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: auth-scheme
+      description: "Bearer HTTP authentication (Authorization: Bearer <access_token>)"
+      scheme: bearer
+      type: http

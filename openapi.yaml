@@ -2695,11 +2695,9 @@ components:
         client_id:
           description: Client ID.
           type: string
-          example: "X9h7b23DkLmNq45pYzA0F6UvT"
         client_secret:
           description: Client secret.
           type: string
-          example: "3sD4h5JkLmNqWXYzA9b0P8R6T1V2F7Uv"
         audience:
           description: Audience.
           type: string

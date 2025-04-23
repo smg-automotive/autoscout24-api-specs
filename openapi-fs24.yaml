@@ -370,8 +370,9 @@ components:
           description: The list of groups the seller belongs to.
           type: array
           items:
-            type: string
-          example: [ "456", "789" ]
+            type: integer
+            format: int64
+          example: [ 456, 789 ]
         id:
           description: Unique identifier of the seller.
           type: integer

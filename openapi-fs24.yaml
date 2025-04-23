@@ -247,7 +247,7 @@ components:
           description: First registration date of the vehicle.
           type: string
           format: date
-          example: '2020-12-15'
+          example: 2020-12-15
         firstRegistrationYear:
           description: Year when the vehicle was first registered.
           type: integer
@@ -357,15 +357,15 @@ components:
         address:
           description: The seller's address.
           type: string
-          example: "Bahnhofstrasse 123b"
+          example: Bahnhofstrasse 123b
         city:
           description: The city where the seller is located.
           type: string
-          example: "Zurich"
+          example: Zurich
         countryCode:
           description: The country code where the seller is located.
           type: string
-          example: "CH"
+          example: CH
         groups:
           description: The list of groups the seller belongs to.
           type: array
@@ -381,7 +381,7 @@ components:
         name:
           description: The name of the seller.
           type: string
-          example: "John Seller LLC"
+          example: John Seller LLC
         language:
           description: The language used by the seller.
           allOf:
@@ -400,12 +400,12 @@ components:
         phoneNumber:
           description: The seller's primary phone number.
           type: string
-          example: "+41761234567"
+          example: +41761234567
         type:
           description: The type of seller.
           allOf:
             - $ref: '#/components/schemas/SellerType'
-          example: "professional"
+          example: professional
         website:
           description: The seller's website.
           type: string
@@ -413,7 +413,7 @@ components:
         zipCode:
           description: The postal code of the seller’s location.
           type: string
-          example: "8080"
+          example: 8080
     Language:
       description: The language used by the seller. Valid options are German (de), French (fr), or Italian (it).
       type: string
@@ -428,7 +428,7 @@ components:
         email:
           description: The recipient’s email address.
           type: string
-          example: "johndoe@autoscout24.ch"
+          example: johndoe@autoscout24.ch
     SellerType:
       description: The type of seller. Can be either professional or private.
       type: string

@@ -3446,10 +3446,16 @@ components:
             - $ref: "#/components/schemas/TransmissionType"
           example: automatic
     VersionBaseListResponse:
-      type: array
       description: Represents the response structure for versions returned by the configurator.
-      items:
-        $ref: '#/components/schemas/VersionBase'
+      allOf:
+        - $ref: "#/components/schemas/Page"
+        - type: object
+          properties:
+            content:
+              description: List of version entries on the current page.
+              type: array
+              items:
+                $ref: '#/components/schemas/VersionBase'
     VersionEquipmentOption:
       type: object
       description: Equipment option with localized name and optional package items.

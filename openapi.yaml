@@ -656,6 +656,8 @@ paths:
         - $ref: '#/components/parameters/sellerIdPathParam'
         - $ref: '#/components/parameters/makeKeyPathParam'
         - $ref: '#/components/parameters/modelKeyParam'
+        - $ref: "#/components/parameters/pageQueryParam"
+        - $ref: "#/components/parameters/sizeQueryParam"
       responses:
         "200":
           description: List of versions successfully returned.
@@ -672,6 +674,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/sellerIdPathParam'
         - $ref: '#/components/parameters/certificationNumberPathParam'
+        - $ref: "#/components/parameters/pageQueryParam"
+        - $ref: "#/components/parameters/sizeQueryParam"
       responses:
         "200":
           description: List of versions successfully returned.
@@ -704,6 +708,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/sellerIdPathParam'
         - $ref: '#/components/parameters/serialNumberPathParam'
+        - $ref: "#/components/parameters/pageQueryParam"
+        - $ref: "#/components/parameters/sizeQueryParam"
       responses:
         "200":
           description: List of versions successfully returned.
@@ -3398,6 +3404,11 @@ components:
           allOf:
             - $ref: "#/components/schemas/DriveType"
           example: all
+        fullName:
+          type: string
+          description: The full name of the vehicle’s version, including model and specifications.
+          maxLength: 128
+          example: A6 3.0 55 TFSI quattro S-Tronic
         horsePower:
           type: integer
           format: int16
@@ -3405,6 +3416,11 @@ components:
           maximum: 9999
           description: Horsepower of the vehicle.
           example: 150
+        id:
+          type: integer
+          format: int64
+          description: Version's ID.
+          example: 1234567
         kiloWatts:
           description: Power the engine produces in kW.
           type: integer
@@ -3429,11 +3445,6 @@ components:
           allOf:
             - $ref: "#/components/schemas/TransmissionType"
           example: automatic
-        versionFullName:
-          type: string
-          description: The full name of the vehicle’s version, including model and specifications.
-          maxLength: 128
-          example: A6 3.0 55 TFSI quattro S-Tronic
     VersionBaseListResponse:
       type: array
       description: Represents the response structure for versions returned by the configurator.

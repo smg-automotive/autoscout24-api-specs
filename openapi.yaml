@@ -579,7 +579,7 @@ paths:
       operationId: GetVehicleEnergyEfficiency
       description: Returns detected vehicle energy efficiency.
       tags:
-        - Vehicle energy efficiency
+        - Configurator
       requestBody:
         content:
           application/json:

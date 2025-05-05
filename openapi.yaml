@@ -574,6 +574,25 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/VehicleCategoriesResponse"
+  /public/v1/vehicle-energy-efficiency/detect:
+    post:
+      operationId: GetVehicleEnergyEfficiency
+      description: Returns detected vehicle energy efficiency.
+      tags:
+        - Configurator
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VehicleEnergyEfficiencyRequest"
+        required: true
+      responses:
+        "200":
+          description: Vehicle energy efficiency successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VehicleEnergyEfficiencyResponse"
   /public/v1/reference-data:
     get:
       operationId: GetReferenceData
@@ -3858,6 +3877,51 @@ components:
           format: int16
           description: Width of the vehicle in mm.
           example: 1790
+    VehicleEnergyEfficiencyRequest:
+      description:  Represents the request structure for detecting vehicle energy efficiency.
+      properties:
+        certificationNumber:
+          type: string
+          pattern: '^\w{6}$'
+          description: Registration document number; in Swiss market known as Typenscheinnummer.
+          example: 1AE899
+        transmissionTypeGroup:
+          description: Transmission type group of the vehicle.
+          allOf:
+            - $ref: "#/components/schemas/TransmissionTypeGroup"
+          example: automatic
+        serialNumber:
+          type: string
+          pattern: '^\d{3}\.\d{3}\.\d{3}$'
+          description: Serial number of the vehicle; in Swiss market known as Stammnummer.
+          example: 123.456.789
+    VehicleEnergyEfficiencyResponse:
+      description: Represents the vehicle energy efficiency response structure.
+      properties:
+        co2Emission:
+          type: integer
+          format: int16
+          description: CO2 emissions in g/km.
+          example: 120
+        consumptionCombined:
+          type: number
+          format: double
+          minimum: 0.1
+          maximum: 999.0
+          description: Combined fuel consumption in L/100km.
+          example: 4.5
+        energyLabel:
+          description: Energy label of the vehicle.
+          allOf:
+            - $ref: "#/components/schemas/EnergyLabel"
+          example: a
+        powerConsumption:
+          description: Power consumption of the vehicle in kWh.
+          type: number
+          format: double
+          minimum: 0.1
+          maximum: 199.0
+          example: 27.55
     VersionShared:
       description: Represents a shared set of fields for different Version objects.
       properties:

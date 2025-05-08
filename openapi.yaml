@@ -1210,6 +1210,20 @@ components:
         - seat-covers
         - towbar
       example: "headlights"
+    ExtraSearchableAttributes:
+      type: string
+      description: Represents extra equipment features that can be searched for in a vehicle.
+      enum:
+        - additional-set-of-tires
+        - crane
+        - furniture-transporter
+        - new-tires
+        - refrigerator
+        - school-bus
+        - tail-lift
+        - tarpaulin
+        - transporter
+        - winch
     Facet:
       type: string
       enum:
@@ -3012,6 +3026,11 @@ components:
             nullable: true
           example:
             "xenon-headlights": "headlights"
+        extraSearchableAttributes:
+          description: Vehicle equipment extra search attributes.
+          type: array
+          items:
+            $ref: "#/components/schemas/ExtraSearchableAttributes"
         fuelTypes:
           description: Vehicle fuel types.
           type: array

@@ -3026,7 +3026,7 @@ components:
             nullable: true
           example:
             "xenon-headlights": "headlights"
-        extraSearchableAttributes:
+        extraSearchableAttribute:
           description: Vehicle equipment extra search attributes.
           type: array
           items:

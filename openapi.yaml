@@ -767,7 +767,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/AutoscoutEquipmentSetRequest"
+              $ref: "#/components/schemas/EurotaxAutoscoutEquipmentSetRequest"
         required: true
       responses:
         "204":
@@ -919,20 +919,6 @@ components:
         format: int64
       example: 1923
   schemas:
-    AutoscoutEquipmentSetRequest:
-      type: object
-      description: Represents the eurotax request structure in autoscout format for setting the seller listing equipment.
-      properties:
-        standard:
-          type: array
-          description: Standard eurotax option.
-          items:
-            $ref: '#/components/schemas/EurotaxOption'
-        optional:
-          type: array
-          description: Optional eurotax option.
-          items:
-            $ref: '#/components/schemas/EurotaxOption'
     BodyType:
       type: string
       description: Defines the body type of the vehicle, indicating the general structure and form.
@@ -1260,6 +1246,20 @@ components:
         - seat-covers
         - towbar
       example: "headlights"
+    EurotaxAutoscoutEquipmentSetRequest:
+      type: object
+      description: Represents the eurotax request structure in autoscout format for setting the seller listing equipment.
+      properties:
+        standard:
+          type: array
+          description: Standard eurotax option.
+          items:
+            $ref: '#/components/schemas/EurotaxAutoscoutOption'
+        optional:
+          type: array
+          description: Optional eurotax option.
+          items:
+            $ref: '#/components/schemas/EurotaxAutoscoutOption'
     EurotaxEquipment:
       description: Eurotax
       type: object
@@ -1306,7 +1306,7 @@ components:
             $ref: '#/components/schemas/EurotaxEquipment'
       required:
         - eurotaxEquipments
-    EurotaxOption:
+    EurotaxAutoscoutOption:
       type: object
       description: Eurotax equipment option.
       properties:

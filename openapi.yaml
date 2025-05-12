@@ -753,7 +753,7 @@ paths:
         required: true
       responses:
         "204":
-          description: Eurotax equipment set successfully.
+          description: Seller listing eurotax equipment set successfully.
 components:
   parameters:
     certificationNumberPathParam:
@@ -1233,11 +1233,11 @@ components:
       type: object
       properties:
         label:
-          description: Equipment name in de, fr and it.
+          description: Eurotax equipment name in de, fr and it.
           allOf:
             - $ref: "#/components/schemas/Label"
         price:
-          description: Price for the equipment.
+          description: Price for the eurotax equipment.
           type: number
           format: double
           minimum: 0.0
@@ -1250,11 +1250,11 @@ components:
           format: int64
           example: 1049983
         checked:
-          description: Flag that indicates if option is checked.
+          description: Flag that indicates if eurotax option is checked.
           type: boolean
           example: true
         groupId:
-          description: Parent option id for the package item, or null if it's not package item.
+          description: Parent eurotax option id for the package item, or null if it's not package item.
           type: number
           format: int64
           example: 4819592

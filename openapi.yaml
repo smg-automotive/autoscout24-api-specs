@@ -757,7 +757,7 @@ paths:
   /api/public/v1/configurator/autoi/sellers/{sellerId}/listings/{listingId}/equipment:
     put:
       operationId: SetEquipmentWithAutoIFormat
-      description: Sets equipment provided in autoi format for the specified seller ID and listing ID.
+      description: Sets equipment provided in auto-i format for the specified seller ID and listing ID.
       tags:
         - Configurator
       parameters:
@@ -771,7 +771,7 @@ paths:
         required: true
       responses:
         "204":
-          description: Seller listing autoi equipment set successfully.
+          description: Seller listing auto-i equipment set successfully.
 components:
   parameters:
     certificationNumberPathParam:
@@ -920,15 +920,15 @@ components:
       example: 1923
   schemas:
     AutoIEquipment:
-      description: AutoI equipment.
+      description: Auto-i equipment.
       type: object
       properties:
         label:
-          description: AutoI equipment name in de, fr and it.
+          description: Auto-i equipment name in de, fr and it.
           allOf:
             - $ref: "#/components/schemas/Label"
         price:
-          description: Price for the autoi equipment.
+          description: Price for the auto-i equipment.
           type: number
           format: double
           minimum: 0.0
@@ -936,31 +936,31 @@ components:
           example: 6540.0
           nullable: true
         id:
-          description: AutoI option's ID.
+          description: Auto-i option's ID.
           type: number
           format: int64
           example: 1049983
         checked:
-          description: Flag that indicates if autoi option is checked.
+          description: Flag that indicates if auto-i option is checked.
           type: boolean
           example: true
         groupId:
-          description: Parent autoi option id for the package item, or null if it's not package item.
+          description: Parent auto-i option id for the package item, or null if it's not package item.
           type: number
           format: int64
           example: 4819592
           nullable: true
         isStandard:
-          description: Flag that indicates if autoi option is standard.
+          description: Flag that indicates if auto-i option is standard.
           type: boolean
           example: true
     AutoIEquipmentSetRequest:
-      description: Represents the autoi request structure for setting the seller listing equipment.
+      description: Represents the auto-i request structure for setting the seller listing equipment.
       type: object
       properties:
         autoIEquipments:
           type: array
-          description: List of equipment items provided in AutoI format.
+          description: List of equipment items provided in auto-i format.
           items:
             $ref: '#/components/schemas/AutoIEquipment'
       required:

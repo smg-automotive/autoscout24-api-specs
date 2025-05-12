@@ -1605,15 +1605,15 @@ components:
       properties:
         de:
           type: string
-          description: Label in German.
+          description: Equipment name in German.
           example: ABS, EBD elektronische Bremskraftverteilung
         fr:
           type: string
-          description: Label in French.
+          description: Equipment name in French.
           example: ABS, EBD répartiteur électronique de la force de freinage
         it:
           type: string
-          description: Label in Italian.
+          description: Equipment name in Italian.
           example: ABS, EBD ripartizione elettronica della forza frenante
     Language:
       type: string

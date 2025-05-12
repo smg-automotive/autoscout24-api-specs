@@ -27,7 +27,7 @@ paths:
       description: Obtains client access token for the specified grant type, client ID, secret and audience.
       tags:
         - Client Authentication
-      security: []
+      security: [ ]
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -754,6 +754,24 @@ paths:
       responses:
         "204":
           description: Seller listing eurotax equipment set successfully.
+  /api/public/v1/configurator/autoi-autoscout/sellers/{sellerId}/listings/{listingId}/equipment:
+    put:
+      operationId: SetAutoIEquipmentWithAutoscoutFormat
+      description: Sets autoi equipment provided in autoscout format for the specified seller ID and listing ID.
+      tags:
+        - Configurator
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/listingIdPathParam'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AutoIAutoscoutEquipmentSetRequest"
+        required: true
+      responses:
+        "204":
+          description: Seller listing autoi equipment set successfully.
 components:
   parameters:
     certificationNumberPathParam:
@@ -901,6 +919,35 @@ components:
         format: int64
       example: 1923
   schemas:
+    AutoIAutoscoutEquipmentSetRequest:
+      type: object
+      description: Represents the autoi request structure in autoscout format for setting the seller listing equipment.
+      properties:
+        standard:
+          type: array
+          description: Standard autoi option.
+          items:
+            $ref: '#/components/schemas/AutoIOption'
+        optional:
+          type: array
+          description: Optional autoi option.
+          items:
+            $ref: '#/components/schemas/AutoIOption'
+    AutoIOption:
+      type: object
+      description: AutoI equipment option.
+      properties:
+        id:
+          type: integer
+          description: AutoI equipment option's ID.
+        packageItems:
+          type: array
+          description: AutoI package items external ids included in the option.
+          items:
+            type: string
+          nullable: true
+      example:
+        { "id": 423423, "packageItems": [ "forfait-confort", "licht-fernlicht-assistent" ] }
     BodyType:
       type: string
       description: Defines the body type of the vehicle, indicating the general structure and form.
@@ -1124,7 +1171,7 @@ components:
           nullable: true
           items:
             type: string
-          example: ["forfait-confort", "licht-fernlicht-assistent"]
+          example: [ "forfait-confort", "licht-fernlicht-assistent" ]
     EquipmentSearchAttribute:
       type: string
       description: Represents specific equipment features that can be searched for in a vehicle.
@@ -3985,7 +4032,7 @@ components:
           description: Width of the vehicle in mm.
           example: 1790
     VehicleEnergyEfficiencyRequest:
-      description:  Represents the request structure for detecting vehicle energy efficiency.
+      description: Represents the request structure for detecting vehicle energy efficiency.
       properties:
         certificationNumber:
           type: string
@@ -4709,7 +4756,7 @@ components:
           items:
             $ref: '#/components/schemas/Option'
           example:
-            [ {"id": 1502, "packageItems": ["forfait-confort", "licht-fernlicht-assistent"]} ]
+            [ { "id": 1502, "packageItems": [ "forfait-confort", "licht-fernlicht-assistent" ] } ]
         optional:
           type: array
           description: Optional equipment options.
@@ -4723,7 +4770,7 @@ components:
           items:
             $ref: '#/components/schemas/EquipmentSearchAttribute'
           example:
-            ["abs", "isofix"]
+            [ "abs", "isofix" ]
     SellerListingUpdateRequest:
       allOf:
         - $ref: '#/components/schemas/SellerListingSharedRequest'

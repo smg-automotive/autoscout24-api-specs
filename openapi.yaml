@@ -756,7 +756,7 @@ paths:
           description: Seller listing eurotax equipment set successfully.
   /api/public/v1/configurator/eurotax-autoscout/sellers/{sellerId}/listings/{listingId}/equipment:
     put:
-      operationId: SetEquipmentWithAutoscoutFormat
+      operationId: SetEurotaxEquipmentWithAutoscoutFormat
       description: Sets eurotax equipment provided in autoscout format for the specified seller ID and listing ID.
       tags:
         - Configurator

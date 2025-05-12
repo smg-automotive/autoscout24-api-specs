@@ -1278,16 +1278,24 @@ components:
       type: string
       description: Represents extra equipment features that can be searched for in a vehicle.
       enum:
+        - availableForExchange
+        - furnitureTransporter
+        - handicappedAccessible
         - hasAdditionalSetOfTires
         - hasCrane
-        - furnitureTransporter
         - hasNewTires
-        - refrigerator
-        - schoolBus
+        - hasRestrictorKit25Kw
+        - hasRestrictorKit35Kw
         - hasTailLift
         - hasTarpaulin
-        - transporter
         - hasWinch
+        - racingVehicle
+        - refrigerator
+        - restrictorKit25KwApplicable
+        - restrictorKit35KwApplicable
+        - schoolBus
+        - transporter
+        - tuned
     Facet:
       type: string
       enum:

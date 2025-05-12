@@ -736,6 +736,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/VersionBaseListResponse'
+  /api/public/v1/configurator/eurotax/sellers/{sellerId}/listings/{listingId}/equipment:
+    put:
+      operationId: SetEquipmentWithEurotaxFormat
+      description: Sets equipment provided in eurotax format for the specified seller ID and listing ID.
+      tags:
+        - Configurator
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/listingIdPathParam'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EurotaxEquipmentSetRequest"
+        required: true
+      responses:
+        "204":
+          description: Eurotax equipment set successfully.
 components:
   parameters:
     certificationNumberPathParam:
@@ -1210,20 +1228,66 @@ components:
         - seat-covers
         - towbar
       example: "headlights"
-    ExtraSearchableAttributes:
+    EurotaxEquipment:
+      description: Eurotax
+      type: object
+      properties:
+        label:
+          description: Equipment name in de, fr and it.
+          allOf:
+            - $ref: "#/components/schemas/Label"
+        price:
+          description: Price for the equipment.
+          type: number
+          format: double
+          minimum: 0.0
+          maximum: 9999999.0
+          example: 6540.0
+          nullable: true
+        id:
+          description: Eurotax option's ID.
+          type: number
+          format: int64
+          example: 1049983
+        checked:
+          description: Flag that indicates if option is checked.
+          type: boolean
+          example: true
+        groupId:
+          description: Parent option id for the package item, or null if it's not package item.
+          type: number
+          format: int64
+          example: 4819592
+          nullable: true
+        isStandard:
+          description: Flag that indicates if option is standard.
+          type: boolean
+          example: true
+    EurotaxEquipmentSetRequest:
+      description: Represents the eurotax request structure for setting the seller listing equipment.
+      type: object
+      properties:
+        eurotaxEquipments:
+          type: array
+          description: List of equipment items provided in Eurotax format.
+          items:
+            $ref: '#/components/schemas/EurotaxEquipment'
+      required:
+        - eurotaxEquipments
+    ExtrasSearchAttributes:
       type: string
       description: Represents extra equipment features that can be searched for in a vehicle.
       enum:
-        - additional-set-of-tires
-        - crane
-        - furniture-transporter
-        - new-tires
+        - hasAdditionalSetOfTires
+        - hasCrane
+        - furnitureTransporter
+        - hasNewTires
         - refrigerator
-        - school-bus
-        - tail-lift
-        - tarpaulin
+        - schoolBus
+        - hasTailLift
+        - hasTarpaulin
         - transporter
-        - winch
+        - hasWinch
     Facet:
       type: string
       enum:
@@ -1527,6 +1591,22 @@ components:
           format: uri
           example: https://images.autoscout24.ch/853/11878853/0.jpg
       description: Represents an image, containing an absolute URL to the image file.
+    Label:
+      type: object
+      description: Represents equipment name in de, fr and it.
+      properties:
+        de:
+          type: string
+          description: Label in German.
+          example: ABS, EBD elektronische Bremskraftverteilung
+        fr:
+          type: string
+          description: Label in French.
+          example: ABS, EBD répartiteur électronique de la force de freinage
+        it:
+          type: string
+          description: Label in Italian.
+          example: ABS, EBD ripartizione elettronica della forza frenante
     Language:
       type: string
       enum:
@@ -3026,11 +3106,11 @@ components:
             nullable: true
           example:
             "xenon-headlights": "headlights"
-        extraSearchableAttribute:
+        extrasSearchAttribute:
           description: Vehicle equipment extra search attributes.
           type: array
           items:
-            $ref: "#/components/schemas/ExtraSearchableAttributes"
+            $ref: "#/components/schemas/ExtrasSearchAttributes"
         fuelTypes:
           description: Vehicle fuel types.
           type: array

@@ -1315,7 +1315,7 @@ components:
           description: Eurotax equipment option's ID.
         packageItems:
           type: array
-          description: Eurotax package items ids included in the option.
+          description: Eurotax package items external ids included in the option.
           items:
             type: number
             format: int64

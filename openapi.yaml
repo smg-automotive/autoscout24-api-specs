@@ -757,7 +757,7 @@ paths:
   /api/public/v1/configurator/autoi-autoscout/sellers/{sellerId}/listings/{listingId}/equipment:
     put:
       operationId: SetAutoIEquipmentWithAutoscoutFormat
-      description: Sets autoi equipment provided in autoscout format for the specified seller ID and listing ID.
+      description: Sets auto-i equipment provided in autoscout format for the specified seller ID and listing ID.
       tags:
         - Configurator
       parameters:
@@ -771,7 +771,7 @@ paths:
         required: true
       responses:
         "204":
-          description: Seller listing autoi equipment set successfully.
+          description: Seller listing auto-i equipment set successfully.
 components:
   parameters:
     certificationNumberPathParam:
@@ -921,28 +921,28 @@ components:
   schemas:
     AutoIAutoscoutEquipmentSetRequest:
       type: object
-      description: Represents the autoi request structure in autoscout format for setting the seller listing equipment.
+      description: Represents the auto-i request structure in autoscout format for setting the seller listing equipment.
       properties:
         standard:
           type: array
-          description: Standard autoi option.
+          description: Standard auto-i option.
           items:
             $ref: '#/components/schemas/AutoIOption'
         optional:
           type: array
-          description: Optional autoi option.
+          description: Optional auto-i option.
           items:
             $ref: '#/components/schemas/AutoIOption'
     AutoIOption:
       type: object
-      description: AutoI equipment option.
+      description: Auto-i equipment option.
       properties:
         id:
           type: integer
-          description: AutoI equipment option's ID.
+          description: Auto-i equipment option's ID.
         packageItems:
           type: array
-          description: AutoI package items external ids included in the option.
+          description: Auto-i package items names included in the option.
           items:
             type: string
           nullable: true

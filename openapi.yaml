@@ -27,7 +27,7 @@ paths:
       description: Obtains client access token for the specified grant type, client ID, secret and audience.
       tags:
         - Client Authentication
-      security: []
+      security: [ ]
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -754,6 +754,24 @@ paths:
       responses:
         "204":
           description: Seller listing eurotax equipment set successfully.
+  /api/public/v1/configurator/eurotax-autoscout/sellers/{sellerId}/listings/{listingId}/equipment:
+    put:
+      operationId: SetEquipmentWithAutoscoutFormat
+      description: Sets eurotax equipment provided in autoscout format for the specified seller ID and listing ID.
+      tags:
+        - Configurator
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/listingIdPathParam'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AutoscoutEquipmentSetRequest"
+        required: true
+      responses:
+        "204":
+          description: Seller listing eurotax equipment set successfully.
 components:
   parameters:
     certificationNumberPathParam:
@@ -901,6 +919,20 @@ components:
         format: int64
       example: 1923
   schemas:
+    AutoscoutEquipmentSetRequest:
+      type: object
+      description: Represents the eurotax request structure in autoscout format for setting the seller listing equipment.
+      properties:
+        standard:
+          type: array
+          description: Standard eurotax option.
+          items:
+            $ref: '#/components/schemas/EurotaxOption'
+        optional:
+          type: array
+          description: Optional eurotax option.
+          items:
+            $ref: '#/components/schemas/EurotaxOption'
     BodyType:
       type: string
       description: Defines the body type of the vehicle, indicating the general structure and form.
@@ -1124,7 +1156,7 @@ components:
           nullable: true
           items:
             type: string
-          example: ["forfait-confort", "licht-fernlicht-assistent"]
+          example: [ "forfait-confort", "licht-fernlicht-assistent" ]
     EquipmentSearchAttribute:
       type: string
       description: Represents specific equipment features that can be searched for in a vehicle.
@@ -1274,6 +1306,22 @@ components:
             $ref: '#/components/schemas/EurotaxEquipment'
       required:
         - eurotaxEquipments
+    EurotaxOption:
+      type: object
+      description: Eurotax equipment option.
+      properties:
+        id:
+          type: integer
+          description: Eurotax equipment option's ID.
+        packageItems:
+          type: array
+          description: Eurotax package items ids included in the option.
+          items:
+            type: number
+            format: int64
+          nullable: true
+      example:
+        { "id": 423423, "packageItems": [ 423, 434 ] }
     ExtrasSearchAttributes:
       type: string
       description: Represents extra equipment features that can be searched for in a vehicle.
@@ -3985,7 +4033,7 @@ components:
           description: Width of the vehicle in mm.
           example: 1790
     VehicleEnergyEfficiencyRequest:
-      description:  Represents the request structure for detecting vehicle energy efficiency.
+      description: Represents the request structure for detecting vehicle energy efficiency.
       properties:
         certificationNumber:
           type: string
@@ -4709,7 +4757,7 @@ components:
           items:
             $ref: '#/components/schemas/Option'
           example:
-            [ {"id": 1502, "packageItems": ["forfait-confort", "licht-fernlicht-assistent"]} ]
+            [ { "id": 1502, "packageItems": [ "forfait-confort", "licht-fernlicht-assistent" ] } ]
         optional:
           type: array
           description: Optional equipment options.
@@ -4723,7 +4771,7 @@ components:
           items:
             $ref: '#/components/schemas/EquipmentSearchAttribute'
           example:
-            ["abs", "isofix"]
+            [ "abs", "isofix" ]
     SellerListingUpdateRequest:
       allOf:
         - $ref: '#/components/schemas/SellerListingSharedRequest'

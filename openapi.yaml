@@ -1252,12 +1252,12 @@ components:
       properties:
         standard:
           type: array
-          description: Standard eurotax option.
+          description: Standard eurotax options.
           items:
             $ref: '#/components/schemas/EurotaxAutoscoutOption'
         optional:
           type: array
-          description: Optional eurotax option.
+          description: Optional eurotax options.
           items:
             $ref: '#/components/schemas/EurotaxAutoscoutOption'
     EurotaxEquipment:

@@ -736,7 +736,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/VersionBaseListResponse'
-  /api/public/v1/configurator/eurotax/sellers/{sellerId}/listings/{listingId}/equipment:
+  /public/v1/configurator/eurotax/sellers/{sellerId}/listings/{listingId}/equipment:
     put:
       operationId: SetEquipmentWithEurotaxFormat
       description: Sets equipment provided in eurotax format for the specified seller ID and listing ID.
@@ -754,7 +754,7 @@ paths:
       responses:
         "204":
           description: Seller listing eurotax equipment set successfully.
-  /api/public/v1/configurator/eurotax-autoscout/sellers/{sellerId}/listings/{listingId}/equipment:
+  /public/v1/configurator/eurotax-autoscout/sellers/{sellerId}/listings/{listingId}/equipment:
     put:
       operationId: SetEurotaxEquipmentWithAutoscoutFormat
       description: Sets eurotax equipment provided in autoscout format for the specified seller ID and listing ID.
@@ -772,7 +772,7 @@ paths:
       responses:
         "204":
           description: Seller listing eurotax equipment set successfully.
-  /api/public/v1/configurator/autoi/sellers/{sellerId}/listings/{listingId}/equipment:
+  /public/v1/configurator/autoi/sellers/{sellerId}/listings/{listingId}/equipment:
     put:
       operationId: SetEquipmentWithAutoIFormat
       description: Sets equipment provided in auto-i format for the specified seller ID and listing ID.
@@ -786,6 +786,24 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/AutoIEquipmentSetRequest"
+        required: true
+      responses:
+        "204":
+          description: Seller listing auto-i equipment set successfully.
+  /public/v1/configurator/autoi-autoscout/sellers/{sellerId}/listings/{listingId}/equipment:
+    put:
+      operationId: SetAutoIEquipmentWithAutoscoutFormat
+      description: Sets auto-i equipment provided in autoscout format for the specified seller ID and listing ID.
+      tags:
+        - Configurator
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/listingIdPathParam'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AutoIAutoscoutEquipmentSetRequest"
         required: true
       responses:
         "204":
@@ -937,6 +955,35 @@ components:
         format: int64
       example: 1923
   schemas:
+    AutoIAutoscoutEquipmentSetRequest:
+      type: object
+      description: Represents the auto-i request structure in autoscout format for setting the seller listing equipment.
+      properties:
+        standard:
+          type: array
+          description: Standard auto-i option.
+          items:
+            $ref: '#/components/schemas/AutoIOption'
+        optional:
+          type: array
+          description: Optional auto-i option.
+          items:
+            $ref: '#/components/schemas/AutoIOption'
+    AutoIOption:
+      type: object
+      description: Auto-i equipment option.
+      properties:
+        id:
+          type: integer
+          description: Auto-i equipment option's ID.
+        packageItems:
+          type: array
+          description: Auto-i package items names included in the option.
+          items:
+            type: string
+          nullable: true
+      example:
+        { "id": 423423, "packageItems": [ "forfait-confort", "licht-fernlicht-assistent" ] }
     AutoIEquipment:
       description: Auto-i equipment.
       type: object

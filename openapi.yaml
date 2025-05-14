@@ -736,7 +736,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/VersionBaseListResponse'
-  /api/public/v1/configurator/eurotax/sellers/{sellerId}/listings/{listingId}/equipment:
+  /public/v1/configurator/eurotax/sellers/{sellerId}/listings/{listingId}/equipment:
     put:
       operationId: SetEquipmentWithEurotaxFormat
       description: Sets equipment provided in eurotax format for the specified seller ID and listing ID.
@@ -754,7 +754,7 @@ paths:
       responses:
         "204":
           description: Seller listing eurotax equipment set successfully.
-  /api/public/v1/configurator/eurotax-autoscout/sellers/{sellerId}/listings/{listingId}/equipment:
+  /public/v1/configurator/eurotax-autoscout/sellers/{sellerId}/listings/{listingId}/equipment:
     put:
       operationId: SetEurotaxEquipmentWithAutoscoutFormat
       description: Sets eurotax equipment provided in autoscout format for the specified seller ID and listing ID.
@@ -772,7 +772,7 @@ paths:
       responses:
         "204":
           description: Seller listing eurotax equipment set successfully.
-  /api/public/v1/configurator/autoi/sellers/{sellerId}/listings/{listingId}/equipment:
+  /public/v1/configurator/autoi/sellers/{sellerId}/listings/{listingId}/equipment:
     put:
       operationId: SetEquipmentWithAutoIFormat
       description: Sets equipment provided in auto-i format for the specified seller ID and listing ID.
@@ -790,7 +790,7 @@ paths:
       responses:
         "204":
           description: Seller listing auto-i equipment set successfully.
-  /api/public/v1/configurator/autoi-autoscout/sellers/{sellerId}/listings/{listingId}/equipment:
+  /public/v1/configurator/autoi-autoscout/sellers/{sellerId}/listings/{listingId}/equipment:
     put:
       operationId: SetAutoIEquipmentWithAutoscoutFormat
       description: Sets auto-i equipment provided in autoscout format for the specified seller ID and listing ID.

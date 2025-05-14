@@ -754,6 +754,42 @@ paths:
       responses:
         "204":
           description: Seller listing eurotax equipment set successfully.
+  /api/public/v1/configurator/eurotax-autoscout/sellers/{sellerId}/listings/{listingId}/equipment:
+    put:
+      operationId: SetEurotaxEquipmentWithAutoscoutFormat
+      description: Sets eurotax equipment provided in autoscout format for the specified seller ID and listing ID.
+      tags:
+        - Configurator
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/listingIdPathParam'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EurotaxAutoscoutEquipmentSetRequest"
+        required: true
+      responses:
+        "204":
+          description: Seller listing eurotax equipment set successfully.
+  /api/public/v1/configurator/autoi/sellers/{sellerId}/listings/{listingId}/equipment:
+    put:
+      operationId: SetEquipmentWithAutoIFormat
+      description: Sets equipment provided in auto-i format for the specified seller ID and listing ID.
+      tags:
+        - Configurator
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/listingIdPathParam'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AutoIEquipmentSetRequest"
+        required: true
+      responses:
+        "204":
+          description: Seller listing auto-i equipment set successfully.
   /api/public/v1/configurator/autoi-autoscout/sellers/{sellerId}/listings/{listingId}/equipment:
     put:
       operationId: SetAutoIEquipmentWithAutoscoutFormat
@@ -948,6 +984,52 @@ components:
           nullable: true
       example:
         { "id": 423423, "packageItems": [ "forfait-confort", "licht-fernlicht-assistent" ] }
+    AutoIEquipment:
+      description: Auto-i equipment.
+      type: object
+      properties:
+        label:
+          description: Auto-i equipment name in de, fr and it.
+          allOf:
+            - $ref: "#/components/schemas/Label"
+        price:
+          description: Price for the auto-i equipment.
+          type: number
+          format: double
+          minimum: 0.0
+          maximum: 9999999.0
+          example: 6540.0
+          nullable: true
+        id:
+          description: Auto-i option's ID.
+          type: number
+          format: int64
+          example: 1049983
+        checked:
+          description: Flag that indicates if auto-i option is checked.
+          type: boolean
+          example: true
+        groupId:
+          description: Parent auto-i option id for the package item, or null if it's not package item.
+          type: number
+          format: int64
+          example: 4819592
+          nullable: true
+        isStandard:
+          description: Flag that indicates if auto-i option is standard.
+          type: boolean
+          example: true
+    AutoIEquipmentSetRequest:
+      description: Represents the auto-i request structure for setting the seller listing equipment.
+      type: object
+      properties:
+        autoIEquipments:
+          type: array
+          description: List of equipment items provided in auto-i format.
+          items:
+            $ref: '#/components/schemas/AutoIEquipment'
+      required:
+        - autoIEquipments
     BodyType:
       type: string
       description: Defines the body type of the vehicle, indicating the general structure and form.
@@ -1275,8 +1357,22 @@ components:
         - seat-covers
         - towbar
       example: "headlights"
+    EurotaxAutoscoutEquipmentSetRequest:
+      type: object
+      description: Represents the eurotax request structure in autoscout format for setting the seller listing equipment.
+      properties:
+        standard:
+          type: array
+          description: Standard eurotax options.
+          items:
+            $ref: '#/components/schemas/EurotaxAutoscoutOption'
+        optional:
+          type: array
+          description: Optional eurotax options.
+          items:
+            $ref: '#/components/schemas/EurotaxAutoscoutOption'
     EurotaxEquipment:
-      description: Eurotax
+      description: Eurotax equipment.
       type: object
       properties:
         label:
@@ -1307,7 +1403,7 @@ components:
           example: 4819592
           nullable: true
         isStandard:
-          description: Flag that indicates if option is standard.
+          description: Flag that indicates if eurotax option is standard.
           type: boolean
           example: true
     EurotaxEquipmentSetRequest:
@@ -1321,6 +1417,22 @@ components:
             $ref: '#/components/schemas/EurotaxEquipment'
       required:
         - eurotaxEquipments
+    EurotaxAutoscoutOption:
+      type: object
+      description: Eurotax equipment option.
+      properties:
+        id:
+          type: integer
+          description: Eurotax equipment option's ID.
+        packageItems:
+          type: array
+          description: Eurotax package items external ids included in the option.
+          items:
+            type: number
+            format: int64
+          nullable: true
+      example:
+        { "id": 423423, "packageItems": [ 423, 434 ] }
     ExtrasSearchAttributes:
       type: string
       description: Represents extra equipment features that can be searched for in a vehicle.

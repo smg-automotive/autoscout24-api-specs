@@ -825,8 +825,7 @@ components:
       description: The external ID.
       required: true
       schema:
-        type: integer
-        format: int64
+        type: string
       example: 100200401
     languageParam:
       in: query
@@ -905,8 +904,7 @@ components:
       description: The ID of the seller vehicle.
       required: true
       schema:
-        type: integer
-        format: int64
+        type: string
       example: 100200401
     serialNumberPathParam:
       in: query

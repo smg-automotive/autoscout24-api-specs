@@ -826,7 +826,7 @@ components:
       required: true
       schema:
         type: string
-      example: 100200401
+      example: 289D20046226
     languageParam:
       in: query
       name: language
@@ -905,7 +905,7 @@ components:
       required: true
       schema:
         type: string
-      example: 100200401
+      example: A123XYZ
     serialNumberPathParam:
       in: query
       name: serialNumber

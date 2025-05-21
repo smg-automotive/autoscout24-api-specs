@@ -739,7 +739,7 @@ paths:
   /public/v1/configurator/eurotax/sellers/{sellerId}/listings/{listingId}/equipment:
     put:
       operationId: SetEquipmentWithEurotaxFormat
-      description: Sets equipment provided in eurotax format for the specified seller ID and listing ID.
+      description: Sets equipment provided in Eurotax format for the specified seller ID and listing ID.
       tags:
         - Configurator
       parameters:
@@ -753,11 +753,11 @@ paths:
         required: true
       responses:
         "204":
-          description: Seller listing eurotax equipment set successfully.
+          description: Seller listing Eurotax equipment set successfully.
   /public/v1/configurator/eurotax-autoscout/sellers/{sellerId}/listings/{listingId}/equipment:
     put:
       operationId: SetEurotaxEquipmentWithAutoscoutFormat
-      description: Sets eurotax equipment provided in autoscout format for the specified seller ID and listing ID.
+      description: Sets Eurotax equipment provided in Autoscout format for the specified seller ID and listing ID.
       tags:
         - Configurator
       parameters:
@@ -771,11 +771,11 @@ paths:
         required: true
       responses:
         "204":
-          description: Seller listing eurotax equipment set successfully.
+          description: Seller listing Eurotax equipment set successfully.
   /public/v1/configurator/autoi/sellers/{sellerId}/listings/{listingId}/equipment:
     put:
       operationId: SetEquipmentWithAutoIFormat
-      description: Sets equipment provided in auto-i format for the specified seller ID and listing ID.
+      description: Sets equipment provided in Autoi format for the specified seller ID and listing ID.
       tags:
         - Configurator
       parameters:
@@ -789,11 +789,11 @@ paths:
         required: true
       responses:
         "204":
-          description: Seller listing auto-i equipment set successfully.
+          description: Seller listing Autoi equipment set successfully.
   /public/v1/configurator/autoi-autoscout/sellers/{sellerId}/listings/{listingId}/equipment:
     put:
       operationId: SetAutoIEquipmentWithAutoscoutFormat
-      description: Sets auto-i equipment provided in autoscout format for the specified seller ID and listing ID.
+      description: Sets Autoi equipment provided in Autoscout format for the specified seller ID and listing ID.
       tags:
         - Configurator
       parameters:
@@ -807,7 +807,7 @@ paths:
         required: true
       responses:
         "204":
-          description: Seller listing auto-i equipment set successfully.
+          description: Seller listing Autoi equipment set successfully.
 components:
   parameters:
     certificationNumberPathParam:
@@ -850,7 +850,7 @@ components:
       required: true
       schema:
         type: string
-      example: Audi
+      example: audi
     modelKeyParam:
       in: path
       name: modelKey
@@ -858,7 +858,7 @@ components:
       required: false
       schema:
         type: string
-      example: A6
+      example: a6
     pageQueryParam:
       in: query
       name: page
@@ -955,43 +955,43 @@ components:
   schemas:
     AutoIAutoscoutEquipmentSetRequest:
       type: object
-      description: Represents the auto-i request structure in autoscout format for setting the seller listing equipment.
+      description: Represents the Autoi request structure in Autoscout format for setting the seller listing equipment.
       properties:
         standard:
           type: array
-          description: Standard auto-i option.
+          description: Standard Autoi option.
           items:
             $ref: '#/components/schemas/AutoIOption'
         optional:
           type: array
-          description: Optional auto-i option.
+          description: Optional Autoi option.
           items:
             $ref: '#/components/schemas/AutoIOption'
     AutoIOption:
       type: object
-      description: Auto-i equipment option.
+      description: Autoi equipment option.
       properties:
         id:
           type: integer
-          description: Auto-i equipment option's ID.
+          description: Autoi equipment option's ID.
         packageItems:
           type: array
-          description: Auto-i package items names included in the option.
+          description: Autoi package items names included in the option.
           items:
             type: string
           nullable: true
       example:
         { "id": 423423, "packageItems": [ "forfait-confort", "licht-fernlicht-assistent" ] }
     AutoIEquipment:
-      description: Auto-i equipment.
+      description: Autoi equipment.
       type: object
       properties:
         label:
-          description: Auto-i equipment name in de, fr and it.
+          description: Autoi equipment name in de, fr and it.
           allOf:
             - $ref: "#/components/schemas/Label"
         price:
-          description: Price for the auto-i equipment.
+          description: Price for the Autoi equipment.
           type: number
           format: double
           minimum: 0.0
@@ -999,31 +999,31 @@ components:
           example: 6540.0
           nullable: true
         id:
-          description: Auto-i option's ID.
+          description: Autoi option's ID.
           type: number
           format: int64
           example: 1049983
         checked:
-          description: Flag that indicates if auto-i option is checked.
+          description: Flag that indicates if Autoi option is checked.
           type: boolean
           example: true
         groupId:
-          description: Parent auto-i option id for the package item, or null if it's not package item.
+          description: Parent Autoi option id for the package item, or null if it's not package item.
           type: number
           format: int64
           example: 4819592
           nullable: true
         isStandard:
-          description: Flag that indicates if auto-i option is standard.
+          description: Flag that indicates if Autoi option is standard.
           type: boolean
           example: true
     AutoIEquipmentSetRequest:
-      description: Represents the auto-i request structure for setting the seller listing equipment.
+      description: Represents the Autoi request structure for setting the seller listing equipment.
       type: object
       properties:
         autoIEquipments:
           type: array
-          description: List of equipment items provided in auto-i format.
+          description: List of equipment items provided in Autoi format.
           items:
             $ref: '#/components/schemas/AutoIEquipment'
       required:
@@ -1357,16 +1357,16 @@ components:
       example: "headlights"
     EurotaxAutoscoutEquipmentSetRequest:
       type: object
-      description: Represents the eurotax request structure in autoscout format for setting the seller listing equipment.
+      description: Represents the Eurotax request structure in Autoscout format for setting the seller listing equipment.
       properties:
         standard:
           type: array
-          description: Standard eurotax options.
+          description: Standard Eurotax options.
           items:
             $ref: '#/components/schemas/EurotaxAutoscoutOption'
         optional:
           type: array
-          description: Optional eurotax options.
+          description: Optional Eurotax options.
           items:
             $ref: '#/components/schemas/EurotaxAutoscoutOption'
     EurotaxEquipment:
@@ -1378,7 +1378,7 @@ components:
           allOf:
             - $ref: "#/components/schemas/Label"
         price:
-          description: Price for the eurotax equipment.
+          description: Price for the Eurotax equipment.
           type: number
           format: double
           minimum: 0.0
@@ -1391,21 +1391,21 @@ components:
           format: int64
           example: 1049983
         checked:
-          description: Flag that indicates if eurotax option is checked.
+          description: Flag that indicates if Eurotax option is checked.
           type: boolean
           example: true
         groupId:
-          description: Parent eurotax option id for the package item, or null if it's not package item.
+          description: Parent Eurotax option id for the package item, or null if it's not package item.
           type: number
           format: int64
           example: 4819592
           nullable: true
         isStandard:
-          description: Flag that indicates if eurotax option is standard.
+          description: Flag that indicates if Eurotax option is standard.
           type: boolean
           example: true
     EurotaxEquipmentSetRequest:
-      description: Represents the eurotax request structure for setting the seller listing equipment.
+      description: Represents the Eurotax request structure for setting the seller listing equipment.
       type: object
       properties:
         eurotaxEquipments:
@@ -1424,11 +1424,10 @@ components:
           description: Eurotax equipment option's ID.
         packageItems:
           type: array
-          description: Eurotax package items external ids included in the option.
+          description: Eurotax package items external ids included in the option. Empty list should be provided if there are no package items.
           items:
             type: number
             format: int64
-          nullable: true
       example:
         { "id": 423423, "packageItems": [ 423, 434 ] }
     ExtrasSearchAttributes:

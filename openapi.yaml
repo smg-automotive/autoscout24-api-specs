@@ -875,7 +875,7 @@ components:
       in: query
       name: productionMonth
       description: The month of the production.
-      required: false
+      required: true
       schema:
         type: integer
         format: int16
@@ -884,7 +884,7 @@ components:
       in: query
       name: productionYear
       description: The year of the production.
-      required: false
+      required: true
       schema:
         type: integer
         format: int16

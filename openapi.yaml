@@ -1896,11 +1896,23 @@ components:
     ListingBaseResponse_Seller:
       type: object
       properties:
+        city:
+          description: The city where the seller is located.
+          type: string
+          example: "Zurich"
         id:
           description: Seller's ID.
           type: integer
           format: int64
           example: 1923
+        name:
+          description: Name of the seller.
+          type: string
+          example: "John Seller LLC"
+        zipCode:
+          description: Postal code of the seller's location.
+          type: string
+          example: "8080"
       description: Represents the data for a seller, including the seller's unique identifier.
     ListingCount:
       description: Represents the request structure for counting listings.

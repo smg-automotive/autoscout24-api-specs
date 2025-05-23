@@ -3398,7 +3398,7 @@ components:
           description: Name of the seller.
           type: string
           example: "John Seller LLC"
-        phone:
+        phoneNumber:
           description: Primary phone number of the seller.
           type: string
           example: "+41761234567"

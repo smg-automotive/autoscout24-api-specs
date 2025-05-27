@@ -971,17 +971,35 @@ components:
       type: object
       description: Autoi equipment option.
       properties:
-        id:
-          type: integer
-          description: Autoi equipment option's ID.
+        label:
+          allOf:
+            - $ref: "#/components/schemas/Label"
         packageItems:
           type: array
-          description: Autoi package items names included in the option.
+          description: Autoi package items labels included in the option.
           items:
-            type: string
+            $ref: "#/components/schemas/Label"
           nullable: true
       example:
-        { "id": 423423, "packageItems": [ "forfait-confort", "licht-fernlicht-assistent" ] }
+        {
+          "label": {
+            "de": "Sicherheitspaket",
+            "fr": "Paquet De Sécurité",
+            "it": "Pacchetto Sicurezza"
+          },
+          "packageItems": [
+            {
+              "de": "Licht: Fernlicht-Assistent",
+              "fr": "Lumière: assistant de feux de route",
+              "it": "Luce: assistente abbagliante"
+            },
+            {
+              "de": "Technologie Paket",
+              "fr": "Paquet Technologique",
+              "it": "Pacchetto Tecnologico"
+            }
+          ]
+        }
     AutoIEquipment:
       description: Autoi equipment.
       type: object

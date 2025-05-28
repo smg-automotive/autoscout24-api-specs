@@ -983,20 +983,20 @@ components:
       example:
         {
           "label": {
-            "de": "Sicherheitspaket",
-            "fr": "Paquet De Sécurité",
-            "it": "Pacchetto Sicurezza"
+            "de": "Paket: PACK CITY CHASSIS",
+            "fr": "Pack: PACK CITY CHASSIS",
+            "it": "Pacchetto: PACK CITY CHASSIS"
           },
           "packageItems": [
             {
-              "de": "Licht: Fernlicht-Assistent",
-              "fr": "Lumière: assistant de feux de route",
-              "it": "Luce: assistente abbagliante"
+              "de": "Digitaler Innenrückspiegel",
+              "fr": "Rétroviseur intérieur numérique",
+              "it": "Specchietto retrovisore interno digitale",
             },
             {
-              "de": "Technologie Paket",
-              "fr": "Paquet Technologique",
-              "it": "Pacchetto Tecnologico"
+              "de": "Aussenspiegel elektrisch einklappbar",
+              "fr": "Rétroviseurs extérieurs rabattables par commande électr.",
+              "it": "Specchietti retrovisori esterni ribaltabili elettricamente",
             }
           ]
         }

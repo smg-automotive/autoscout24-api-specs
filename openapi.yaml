@@ -2853,11 +2853,21 @@ components:
         sellerIds:
           description: Filter listings by seller IDs.
           uniqueItems: true
+          maxItems: 512
           type: array
           items:
             type: integer
             format: int64
           example: [ 601 ]
+        sellerGroups:
+            description: Filter listings by seller groups.
+            uniqueItems: true
+            maxItems: 32
+            type: array
+            items:
+              type: integer
+              format: int64
+            example: [ 701 ]
         transmissionTypes:
           description: Filter listings by transmission types.
           uniqueItems: true

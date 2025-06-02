@@ -2858,6 +2858,14 @@ components:
             type: integer
             format: int64
           example: [ 601 ]
+        sellerGroups:
+            description: Filter listings by seller groups.
+            uniqueItems: true
+            type: array
+            items:
+              type: integer
+              format: int64
+            example: [ 701 ]
         transmissionTypes:
           description: Filter listings by transmission types.
           uniqueItems: true

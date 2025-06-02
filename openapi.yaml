@@ -2853,6 +2853,7 @@ components:
         sellerIds:
           description: Filter listings by seller IDs.
           uniqueItems: true
+          maxItems: 512
           type: array
           items:
             type: integer
@@ -2861,6 +2862,7 @@ components:
         sellerGroups:
             description: Filter listings by seller groups.
             uniqueItems: true
+            maxItems: 32
             type: array
             items:
               type: integer

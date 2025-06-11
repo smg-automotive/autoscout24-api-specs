@@ -10,6 +10,9 @@ info:
 
 servers:
   - url: "https://api.autoscout24.ch"
+    description: Production
+  - url: "https://api.preprod.autoscout24.dev"
+    description: Pre-Production
 
 security:
   - BearerAuth: [ ]

@@ -9,9 +9,9 @@ info:
   version: 1.0.1
 
 servers:
-  - url: https://api.autoscout24.ch
+  - url: "https://api.autoscout24.ch"
     description: Production
-  - url: https://api.preprod.autoscout24.dev
+  - url: "https://api.preprod.autoscout24.dev"
     description: Pre-Production
 
 security:

@@ -1486,26 +1486,14 @@ components:
         - equipmentSearchAttributeGroups
         - fuelTypes
         - hadNoAccidentOnly
-        - handicappedAccessibleOnly
-        - hasAdditionalSetOfTiresOnly
-        - hasCraneOnly
-        - hasNewTiresOnly
-        - hasRestrictorKit25KwOnly
-        - hasRestrictorKit35KwOnly
-        - hasTailLiftOnly
-        - hasTarpaulinOnly
         - hasWarrantyOnly
-        - hasWinchOnly
         - inspectedOnly
         - interiorColors
         - licenseCategories
         - makeKeys
         - modelGroupKeys
         - modelKeys
-        - racingVehicleOnly
-        - transmissionTypeGroups
         - transmissionTypes
-        - tunedOnly
         - vehicleCategories
       description: A list of possible facet categories used for filtering or sorting listings.
     FacetsResponse:

@@ -829,7 +829,7 @@ components:
       required: true
       schema:
         type: string
-      example: 289D20046226
+      example: EID_12345
     languageParam:
       in: query
       name: language
@@ -3958,7 +3958,7 @@ components:
           type: string
           maxLength: 64
           description: External ID of the version, provided by a data provider as the key/identifier
-          example: "1AA753"
+          example: EID_12345
         fastChargingPlugType:
           description: Type of the fast charging plug.
           allOf:
@@ -4344,7 +4344,7 @@ components:
           type: string
           maxLength: 64
           description: External ID of the version.
-          example: 1AA753
+          example: EID_12345
         fastChargingPower:
           description: Fast charging power in kW.
           type: number
@@ -4832,7 +4832,7 @@ components:
           description: Listing's external ID, usually provided and used by a data provider as the listing's key/identificator in the origin system.
           type: string
           maxLength: 64
-          example: 289D20046226
+          example: EID_12345
         fastChargingPlugType:
           description: Type of the fast charging plug.
           allOf:

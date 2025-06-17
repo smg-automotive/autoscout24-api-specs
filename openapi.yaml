@@ -4327,6 +4327,11 @@ components:
           minimum: 1
           maximum: 199
           example: 5
+        status:
+          description: Status of the listing.
+          allOf:
+            - $ref: "#/components/schemas/ListingStatus"
+          example: activated
         sellerId:
           description: Unique identifier for the seller of the listing.
           type: integer

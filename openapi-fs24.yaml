@@ -200,11 +200,32 @@ components:
           description: Flag indicating if the listing is available for leasing.
           type: boolean
           example: false
+        batteryCapacity:
+          description: Battery capacity in kWh.
+          type: number
+          format: double
+          minimum: 1.0
+          maximum: 999.0
+          example: 150.55
+        bodyColor:
+          description: Color of the vehicle body.
+          allOf:
+            - $ref: "#/components/schemas/Color"
+          example: blue
         bodyType:
           description: Shape of the vehicle body.
           allOf:
             - $ref: "#/components/schemas/BodyType"
           example: estate
+        boot:
+          description: Boot dimensions.
+          type: object
+          properties:
+            volume:
+              description: Volume of the boot in liters.
+              type: number
+              format: double
+              example: 800.55
         certificationNumber:
           description: Registration document number; in Swiss market known as Typenscheinnummer.
           type: string
@@ -212,11 +233,42 @@ components:
           maxLength: 6
           pattern: '^\w{6}$'
           example: 1AE899
+        co2Emission:
+          description: CO2 emission in g/km.
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 9999
+          example: 42
         conditionType:
           description: Condition type of the vehicle.
           allOf:
             - $ref: "#/components/schemas/ConditionType"
           example: demonstration
+        consumption:
+          description: Fuel consumption data for the vehicle.
+          type: object
+          properties:
+            combined:
+              description: Total fuel consumption in L/100km.
+              type: number
+              format: double
+              example: 8.55
+            extraUrban:
+              description: Extra urban fuel consumption in L/100km.
+              type: number
+              format: double
+              example: 6.55
+            urban:
+              description: Urban fuel consumption in L/100km.
+              type: number
+              format: double
+              example: 10.55
+        createdDate:
+          description: Creation date of the listing.
+          type: string
+          format: date-time
+          example: "2025-06-01T12:00:00Z"
         cubicCapacity:
           description: Volume of the engine's cylinders in cubic centimeters.
           type: integer
@@ -231,6 +283,10 @@ components:
           minimum: 1
           maximum: 99
           example: 6
+        directImport:
+          description: Flag indicating if the vehicle was imported by the official seller.
+          type: boolean
+          example: true
         doors:
           description: Number of doors of the vehicle.
           type: integer
@@ -260,6 +316,28 @@ components:
           allOf:
             - $ref: "#/components/schemas/FuelType"
           example: petrol
+        gears:
+          description: Number of gears of the vehicle.
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 99
+          example: 6
+        hadAccident:
+          description: Flag indicating if a vehicle had an accident.
+          type: boolean
+          example: true
+        hasAdditionalSetOfTires:
+          description: Flag indicating if a vehicle has an additional set of tires.
+          type: boolean
+          example: true
+        horsePower:
+          description: Horsepower of the vehicle.
+          type: integer
+          format: int16
+          minimum: 1
+          maximum: 9999
+          example: 199
         id:
           description: Listing's ID.
           type: integer
@@ -270,6 +348,15 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Image"
+        inspected:
+          description: Flag indicating if a vehicle was inspected.
+          type: boolean
+          example: true
+        interiorColor:
+          description: Color of the vehicle interior.
+          allOf:
+            - $ref: "#/components/schemas/Color"
+          example: red
         kiloWatts:
           description: Power the engine produces in kW.
           type: integer
@@ -277,6 +364,16 @@ components:
           minimum: 1
           maximum: 9999
           example: 250
+        lastInspectionDate:
+          description: Date of the last inspection.
+          type: string
+          format: date
+          example: '2020-12-15'
+        lastModifiedDate:
+          description: Last modification date of the listing.
+          type: string
+          format: date-time
+          example: "2025-06-01T12:00:00Z"
         listPrice:
           description: List price of the vehicle.
           type: number
@@ -294,6 +391,10 @@ components:
           minLength: 1
           maxLength: 64
           example: audi
+        metallic:
+          description: Flag indicating if a vehicle has a metallic paint.
+          type: boolean
+          example: true
         mileage:
           description: Distance in km that the vehicle has run.
           type: integer
@@ -314,6 +415,10 @@ components:
           minimum: 1.0
           maximum: 9999999.0
           example: 47000
+        racingVehicle:
+          description: Flag indicating if a vehicle is a racing vehicle.
+          type: boolean
+          example: true
         seats:
           description: Number of seats of the vehicle.
           type: integer
@@ -340,6 +445,11 @@ components:
           allOf:
             - $ref: "#/components/schemas/VehicleCategory"
           example: car
+        vehicleIdentificationNumber:
+          description: Identification number of the vehicle.
+          type: string
+          pattern: '^\w{17}$'
+          example: W0LPD2EC5CG042448
         versionFullName:
           description: Full version name of the vehicle.
           type: string
@@ -350,6 +460,31 @@ components:
           type: integer
           format: int64
           example: 100201
+        warranty:
+          description: Details about the vehicle’s warranty, including terms and conditions.
+          type: object
+          properties:
+            duration:
+              description: The duration of the warranty in months.
+              type: integer
+              format: int32
+              minimum: 1
+              maximum: 199
+              example: 24
+        weightCurb:
+          description: The curb weight of the vehicle in kg, excluding passengers and cargo.
+          type: integer
+          format: int16
+          minimum: 1
+          maximum: 29999
+          example: 2000
+        weightTotal:
+          description: The total weight of the vehicle in kg, including all components.
+          type: integer
+          format: int16
+          minimum: 1
+          maximum: 29999
+          example: 2500
       description: A representation of a listing object, containing various attributes of the vehicle such as fuel type, body type, and pricing information.
     FinanceScout24Seller:
       description: Represents a seller object containing various attributes such as address, name, phone number, and more.
@@ -414,6 +549,30 @@ components:
           description: The postal code of the seller’s location.
           type: string
           example: 8080
+    Color:
+      type: string
+      description: The color of the vehicle or its components.
+      enum:
+        - anthracite
+        - beige
+        - black
+        - blue
+        - bordeaux
+        - brown
+        - gray
+        - gold
+        - green
+        - multicolored
+        - orange
+        - pink
+        - red
+        - silver
+        - turquoise
+        - violet
+        - white
+        - yellow
+        - other
+      example: "blue"
     Language:
       description: The language used by the seller. Valid options are German (de), French (fr), or Italian (it).
       type: string

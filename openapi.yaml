@@ -1800,70 +1800,6 @@ components:
         - f
         - m
       description: A list of possible vehicle license categories based on the driver's license type.
-    ListingDataSource:
-      type: string
-      enum:
-        - app-android
-        - app-ipad
-        - app-iphone
-        - api-3rd-parties-swiftcourt-digital-contracts
-        - api-carauktion
-        - api-dms
-        - api-dms-amag
-        - api-dms-ass
-        - api-dms-auto-welt-von-rotz-ag
-        - api-dms-autoscout24-test-account
-        - api-dms-bantam
-        - api-dms-binelli-group
-        - api-dms-bme-ag
-        - api-dms-bmw-moto
-        - api-dms-clickon
-        - api-dms-efag
-        - api-dms-gartenmann
-        - api-dms-generic
-        - api-dms-phyron
-        - api-dms-pixelconcept
-        - api-dms-tcar-rrg
-        - api-webapp-responsive-web-api
-        - file-import-auto-i-dat
-        - file-import-autowert-eurotax
-        - file-import-bmw-countdown-aktion
-        - file-import-bmw-moto-new
-        - file-import-bmw-vkl
-        - file-import-bsi-software
-        - file-import-bymycar-ch
-        - file-import-clickon
-        - file-import-databike-new
-        - file-import-databike-xml
-        - file-import-dealer-car-manager
-        - file-import-ducati
-        - file-import-ernst-ruckstuhl-ag
-        - file-import-garage-helbling-ag
-        - file-import-loco-soft
-        - file-import-moto-i
-        - file-import-motowert-eurotax
-        - file-import-new-sommer-software-baleri-and-strickler
-        - file-import-opel
-        - file-import-pixelconcept
-        - file-import-porsche
-        - file-import-psa
-        - file-import-msgm-ch
-        - file-import-stieger-moto
-        - file-import-tcar-rrg
-        - file-import-visual-sales-stieger-software
-        - file-import-vogels-offroads
-        - file-import-webmobil-auto-kunz-ag
-        - unknown
-        - web-desktop
-        - web-mobile
-        - web-pricefinding
-      description: The source of the listing data, indicating where the listing originated from.
-    ListingSource:
-      type: string
-      enum:
-        - manual
-        - import
-      description: The source of the listing, indicating if listing is manually created or imported.
     ListingStatus:
         type: string
         enum:
@@ -1872,14 +1808,6 @@ components:
           - removed
           - draft
         description: The status of the listing.
-    VerificationStatus:
-        type: string
-        enum:
-            - not-submitted
-            - submitted
-            - verified
-            - rejected
-        description: The verification status of the listing
     ListingBaseResponse:
       type: object
       properties:
@@ -3679,6 +3607,11 @@ components:
           maximum: 999.0
           description: Urban fuel consumption in L/100km.
           example: 5.2
+        createdDate:
+          type: string
+          format: date-time
+          description: The date and time when the listing was created.
+          example: '2024-01-01T12:00:00Z'
         cubicCapacity:
           type: integer
           format: int16
@@ -3698,15 +3631,6 @@ components:
           maximum: 99
           description: Number of cylinders of the engine.
           example: 4
-        dataSource:
-          description: Data source of the listing.
-          allOf:
-              - $ref: "#/components/schemas/ListingDataSource"
-          example: api-dms
-        dataSourceDetails:
-          description: Additional details about the data source.
-          type: string
-          example: "Mozilla/5.0 (Linux; Android 10) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.5993.65 Mobile Safari/537.36"
         description:
           type: string
           maxLength: 9999
@@ -3750,13 +3674,6 @@ components:
           allOf:
             - $ref: "#/components/schemas/EnergyLabel"
           example: a
-        equipmentSearchAttributes:
-          description: Filter listings by specific equipment attributes.
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/EquipmentSearchAttribute'
-          example: [ "abs", "air-condition", "adaptive-cruise-control" ]
         externalId:
           description: Listing's external ID, usually provided and used by a data provider as the listing's key/identificator in the origin system.
           type: string
@@ -3896,15 +3813,6 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Image"
-        initialDataSource:
-          description: Initial data source of the listing.
-          allOf:
-            - $ref: "#/components/schemas/ListingDataSource"
-          example: web-desktop
-        initialDataSourceDetails:
-          description: Additional details about the initial data source.
-          type: string
-          example: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36"
         inspected:
           description: Flag indicating if the vehicle has a valid vehicle technical inspection required by law - MFK.
           type: boolean
@@ -3936,6 +3844,11 @@ components:
           type: string
           format: date
           example: '2020-12-15'
+        lastModifiedDate:
+            type: string
+            format: date-time
+            description: The date and time when the listing was last modified.
+            example: '2024-01-01T12:00:00Z'
         length:
           description: Length of the vehicle in mm.
           type: integer
@@ -4057,11 +3970,6 @@ components:
           maximum: 9
           description: Number of sleeping berths in the vehicle.
           example: 4
-        source:
-            description: Source of the listing.
-            allOf:
-                - $ref: "#/components/schemas/ListingSource"
-            example: manual
         status:
             description: Status of the listing.
             allOf:
@@ -4112,16 +4020,6 @@ components:
           pattern: '^\w{17}$'
           description: Unique vehicle identification number (VIN).
           example: 1HGCM82633A123456
-        verificationDate:
-            type: string
-            format: date-time
-            description: Date and time when the vehicle was verified.
-            example: '2024-01-01T12:00:00Z'
-        verificationStatus:
-            description: Verification status of the vehicle.
-            allOf:
-                - $ref: "#/components/schemas/VerificationStatus"
-            example: verified
         versionFullName:
           description: The full name of the vehicle’s version, including model and specifications.
           type: string
@@ -4194,11 +4092,6 @@ components:
           minimum: 1
           maximum: 29999
           example: 180
-        createdDate:
-            type: string
-            format: date-time
-            description: The date and time when the listing was created.
-            example: '2024-01-01T12:00:00Z'
     SellerListing:
       description: Represents a set of fields for Seller's Listing objects.
       properties:

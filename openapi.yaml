@@ -3617,7 +3617,7 @@ components:
           format: int16
           minimum: 1
           maximum: 29999
-          description: Engine cubic capacity in cc.
+          description: Volume of the engine's cylinders in cubic centimeters.
           example: 1600
         cylinderArrangement:
           description: Arrangement of the cylinders.
@@ -4574,7 +4574,7 @@ components:
           format: int16
           minimum: 1
           maximum: 29999
-          description: Engine cubic capacity in cc.
+          description: Volume of the engine's cylinders in cubic centimeters.
           example: 1498
         cylinderArrangement:
           description: Arrangement of the cylinders.
@@ -4960,7 +4960,7 @@ components:
           format: int16
           minimum: 1
           maximum: 29999
-          description: Engine cubic capacity in cm.
+          description: Volume of the engine's cylinders in cubic centimeters.
           example: 1498
         cylinderArrangement:
           description: Arrangement of the cylinders.
@@ -5427,7 +5427,7 @@ components:
           format: int16
           minimum: 1
           maximum: 29999
-          description: Engine cubic capacity in cc.
+          description: Volume of the engine's cylinders in cubic centimeters.
           example: 1600
         cylinderArrangement:
           description: Arrangement of the cylinders.

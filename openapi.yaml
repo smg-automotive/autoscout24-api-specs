@@ -3290,6 +3290,11 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/DriveType"
+        emissionStandards:
+          description: Vehicle emission standards.
+          type: array
+          items:
+            $ref: "#/components/schemas/EmissionStandard"
         equipmentSearchAttributes:
           description: Vehicle equipment search attributes.
           type: array
@@ -3328,6 +3333,11 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/TransmissionType"
+        warrantyTypes:
+          description: Vehicle warranty types.
+          type: array
+          items:
+            $ref: "#/components/schemas/WarrantyType"
     SellerListingDetailsResponse:
       description: Represents a page of Listing entities.
       allOf:

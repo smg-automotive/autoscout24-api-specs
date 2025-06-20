@@ -655,7 +655,7 @@ paths:
   /public/v1/configurator/eurotax/sellers/{sellerId}/versions/vehicle-identification-number/{vehicleIdentificationNumber}/equipment:
     get:
       operationId: GetVersionEquipmentByVehicleIdentificationNumber
-      description: Returns version equipment information for the provided vehicle identification number.
+      description: Returns version equipment information for the provided vehicle identification number. **There will be a fee to obtain equipment by VIN.**
       tags:
         - Configurator
       parameters:
@@ -788,14 +788,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/AutoIEquipmentSetRequest"
+              $ref: "#/components/schemas/AutoiEquipmentSetRequest"
         required: true
       responses:
         "204":
           description: Seller listing Autoi equipment set successfully.
   /public/v1/autoi-autoscout/sellers/{sellerId}/listings/{listingId}/equipment:
     put:
-      operationId: SetAutoIEquipmentWithAutoscoutFormat
+      operationId: SetAutoiEquipmentWithAutoscoutFormat
       description: Sets Autoi equipment provided in Autoscout format for the specified seller ID and listing ID.
       tags:
         - Inventory Management
@@ -970,6 +970,12 @@ components:
           description: Optional Autoi option.
           items:
             $ref: '#/components/schemas/AutoIOption'
+        searchAttributes:
+          type: array
+          description: Equipment search attributes. Empty list should be provided if there are no equipment search attributes.
+          allOf:
+            - $ref: "#/components/schemas/EquipmentSearchAttribute"
+          example: [ "abs", "air-condition", "adaptive-cruise-control" ]
     AutoIOption:
       type: object
       description: Autoi equipment option.
@@ -1002,7 +1008,7 @@ components:
             }
           ]
         }
-    AutoIEquipment:
+    AutoiEquipment:
       description: Autoi equipment.
       type: object
       properties:
@@ -1037,17 +1043,23 @@ components:
           description: Flag that indicates if Autoi option is standard.
           type: boolean
           example: true
-    AutoIEquipmentSetRequest:
+    AutoiEquipmentSetRequest:
       description: Represents the Autoi request structure for setting the seller listing equipment.
       type: object
       properties:
-        autoIEquipments:
+        autoiEquipments:
           type: array
           description: List of equipment items provided in Autoi format.
           items:
-            $ref: '#/components/schemas/AutoIEquipment'
+            $ref: '#/components/schemas/AutoiEquipment'
+        searchAttributes:
+          type: array
+          description: Equipment search attributes. Empty list should be provided if there are no equipment search attributes.
+          allOf:
+            - $ref: "#/components/schemas/EquipmentSearchAttribute"
+          example: [ "abs", "air-condition", "adaptive-cruise-control" ]
       required:
-        - autoIEquipments
+        - autoiEquipments
     BodyType:
       type: string
       description: Defines the body type of the vehicle, indicating the general structure and form.
@@ -1449,7 +1461,7 @@ components:
             type: number
             format: int64
       example:
-        { "id": 423423, "packageItems": [ 423, 434 ] }
+        { "id": 4384464, "packageItems": [ 4384132, 4383708, 4383814, 4382803, 1043482, 4382698 ] }
     ExtrasSearchAttributes:
       type: string
       description: Represents extra equipment features that can be searched for in a vehicle.

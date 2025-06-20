@@ -739,12 +739,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/VersionBaseListResponse'
-  /public/v1/configurator/eurotax/sellers/{sellerId}/listings/{listingId}/equipment:
+  /public/v1/eurotax/sellers/{sellerId}/listings/{listingId}/equipment:
     put:
       operationId: SetEquipmentWithEurotaxFormat
       description: Sets equipment provided in Eurotax format for the specified seller ID and listing ID.
       tags:
-        - Configurator
+        - Inventory Management
       parameters:
         - $ref: '#/components/parameters/sellerIdPathParam'
         - $ref: '#/components/parameters/listingIdPathParam'
@@ -757,12 +757,12 @@ paths:
       responses:
         "204":
           description: Seller listing Eurotax equipment set successfully.
-  /public/v1/configurator/eurotax-autoscout/sellers/{sellerId}/listings/{listingId}/equipment:
+  /public/v1/eurotax-autoscout/sellers/{sellerId}/listings/{listingId}/equipment:
     put:
       operationId: SetEurotaxEquipmentWithAutoscoutFormat
       description: Sets Eurotax equipment provided in Autoscout format for the specified seller ID and listing ID.
       tags:
-        - Configurator
+        - Inventory Management
       parameters:
         - $ref: '#/components/parameters/sellerIdPathParam'
         - $ref: '#/components/parameters/listingIdPathParam'
@@ -775,12 +775,12 @@ paths:
       responses:
         "204":
           description: Seller listing Eurotax equipment set successfully.
-  /public/v1/configurator/autoi/sellers/{sellerId}/listings/{listingId}/equipment:
+  /public/v1/autoi/sellers/{sellerId}/listings/{listingId}/equipment:
     put:
       operationId: SetEquipmentWithAutoIFormat
       description: Sets equipment provided in Autoi format for the specified seller ID and listing ID.
       tags:
-        - Configurator
+        - Inventory Management
       parameters:
         - $ref: '#/components/parameters/sellerIdPathParam'
         - $ref: '#/components/parameters/listingIdPathParam'
@@ -793,12 +793,12 @@ paths:
       responses:
         "204":
           description: Seller listing Autoi equipment set successfully.
-  /public/v1/configurator/autoi-autoscout/sellers/{sellerId}/listings/{listingId}/equipment:
+  /public/v1/autoi-autoscout/sellers/{sellerId}/listings/{listingId}/equipment:
     put:
       operationId: SetAutoIEquipmentWithAutoscoutFormat
       description: Sets Autoi equipment provided in Autoscout format for the specified seller ID and listing ID.
       tags:
-        - Configurator
+        - Inventory Management
       parameters:
         - $ref: '#/components/parameters/sellerIdPathParam'
         - $ref: '#/components/parameters/listingIdPathParam'

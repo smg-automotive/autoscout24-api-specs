@@ -655,7 +655,7 @@ paths:
   /public/v1/configurator/eurotax/sellers/{sellerId}/versions/vehicle-identification-number/{vehicleIdentificationNumber}/equipment:
     get:
       operationId: GetVersionEquipmentByVehicleIdentificationNumber
-      description: Returns version equipment information for the provided vehicle identification number.
+      description: Returns version equipment information for the provided vehicle identification number. **There will be a fee to obtain equipment by VIN.**
       tags:
         - Configurator
       parameters:

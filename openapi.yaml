@@ -2749,16 +2749,16 @@ components:
           items:
             $ref: '#/components/schemas/EquipmentSearchAttribute'
           example: [ "abs", "air-condition", "adaptive-cruise-control" ]
-        firstRegistrationDateFrom:
-          description: Filter listings by the earliest first registration date.
-          type: string
-          format: date
-          example: '2020-12-15'
-        firstRegistrationDateTo:
-          description: Filter listings by the latest first registration date.
-          type: string
-          format: date
-          example: '2021-12-15'
+        firstRegistrationYearFrom:
+          description: Filter listings by the earliest first registration year.
+          type: integer
+          format: int16
+          example: 2020
+        firstRegistrationYearTo:
+          description: Filter listings by the latest first registration year.
+          type: integer
+          format: int16
+          example: 2021
         fuelTypes:
           description: Filter listings by fuel types.
           uniqueItems: true

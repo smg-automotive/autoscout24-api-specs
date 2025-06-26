@@ -5,7 +5,7 @@ info:
     name: AutoScout24 Engineering Team
     url: https://developers.autoscout24.ch
   description: Explore the versatile AutoScout24 REST API for seamless integration.
-  title: AutoScout24 API for cross listing
+  title: AutoScout24 API for listing distribution
   version: 1.0.1
 
 servers:

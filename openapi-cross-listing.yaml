@@ -1,0 +1,313 @@
+openapi: 3.0.3
+info:
+  contact:
+    email: info@autoscout24.ch
+    name: AutoScout24 Engineering Team
+    url: https://developers.autoscout24.ch
+  description: Explore the versatile AutoScout24 REST API for seamless integration.
+  title: AutoScout24 API for cross listing
+  version: 1.0.1
+
+servers:
+  - url: "https://api.autoscout24.ch"
+
+security:
+  - BearerAuth: [ ]
+
+paths:
+  /cross-listing/v1/listings/non-live:
+    get:
+      operationId: GetNonLiveListings
+      description: Returns a list of non-live listings.
+      tags:
+        - Listing
+      parameters:
+        - $ref: "#/components/parameters/modifiedSinceQueryParam"
+        - $ref: "#/components/parameters/vehicleCategory"
+        - $ref: "#/components/parameters/pageQueryParam"
+        - $ref: "#/components/parameters/sizeQueryParam"
+      responses:
+        "200":
+          description: Listings returned.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/NonLiveListingsResponse"
+components:
+  parameters:
+    modifiedSinceQueryParam:
+      in: query
+      description: The date and time when the listing's liveness was modified.
+      schema:
+        type: string
+        format: date-time
+        example: '2025-01-01T12:00:00Z'
+    vehicleCategoryQueryParam:
+      in: query
+      name: vehicleCategory
+      description: The vehicle category for which data should be retrieved.
+      required: true
+      schema:
+        $ref: "#/components/schemas/VehicleCategory"
+    pageQueryParam:
+      in: query
+      name: page
+      description: The page number for data retrieval (defaults to 0).
+      required: false
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+        maximum: 999999
+        default: 0
+      example: 0
+    sizeQueryParam:
+      in: query
+      name: size
+      description: The number of records per page (defaults to 20, maximum 2000).
+      required: false
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 2000
+        default: 20
+      example: 20
+  schemas:
+    NonLiveListingsResponse:
+      description: Represents a page of non live listing entities.
+      allOf:
+        - $ref: "#/components/schemas/Page"
+        - type: object
+          properties:
+            content:
+              description: List of non live listing entries on the current page.
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    description: Listing's ID.
+                    type: integer
+                    format: int64
+                    example: 1923
+    Page:
+      type: object
+      properties:
+        empty:
+          description: Indicates if the page is empty.
+          type: boolean
+          example: false
+        numberOfElements:
+          description: Actual number of elements in a page.
+          type: integer
+          format: int32
+          example: 18
+        size:
+          description: Size of a page.
+          type: integer
+          format: int32
+          example: 20
+        totalElements:
+          description: Total number of elements.
+          type: integer
+          format: int64
+          example: 138
+        first:
+          description: Indicates if it's the first page.
+          type: boolean
+          example: false
+        last:
+          description: Indicates if it's the last page.
+          type: boolean
+          example: true
+        number:
+          description: Page number.
+          type: integer
+          format: int32
+          example: 6
+        totalPages:
+          description: Total number of pages.
+          type: integer
+          format: int32
+          example: 7
+    BodyType:
+      type: string
+      description: Defines the body type of the vehicle, indicating the general structure and form.
+      enum:
+        - alcove
+        - atv-quad
+        - boat-trailer
+        - box
+        - box-double-cab
+        - box-glazed
+        - bridge
+        - bridge-double-cab
+        - bus
+        - cab-over
+        - cabin
+        - cabriolet
+        - car
+        - caravan
+        - car-trailer
+        - car-transporter
+        - chassis-cab
+        - chopper
+        - construction-trailer
+        - coupe
+        - custom-bike
+        - e-bike
+        - estate
+        - horse-trailer
+        - integrated
+        - livestock-trailer
+        - low-bed-trailer
+        - minivan
+        - moped
+        - motocross-bike
+        - motorcycle-trailer
+        - motorhome
+        - naked-bike
+        - off-road-bike
+        - other
+        - pickup
+        - platform
+        - reefer
+        - sales-trailer
+        - saloon
+        - sanitary-trailer
+        - scooter
+        - semi-integrated
+        - semi-trailer
+        - sidecar
+        - small-car
+        - snowmobile
+        - special-vehicles-trailer
+        - street-bike
+        - suitcase
+        - supermoto
+        - suv
+        - tank-body
+        - tipper
+        - touring
+        - trailer
+        - trike
+        - uploader
+        - wood-transporter
+      example: "car"
+    ConditionType:
+      type: string
+      description: Specifies the condition of the vehicle, whether it's new, used, or other categories.
+      enum:
+        - new
+        - used
+        - demonstration
+        - oldtimer
+        - pre-registered
+      example: "new"
+    DriveType:
+      type: string
+      description: The type of drive that determines how the vehicle's wheels are powered.
+      enum:
+        - rear
+        - front
+        - all
+      example: "rear"
+    FuelType:
+      type: string
+      description: A list of possible fuel types that a vehicle can use.
+      enum:
+        - cng-petrol
+        - diesel
+        - electric
+        - ethanol-petrol
+        - hev-diesel
+        - hev-petrol
+        - hydrogen
+        - lpg-petrol
+        - mhev-diesel
+        - mhev-petrol
+        - petrol
+        - phev-diesel
+        - phev-petrol
+        - two-stroke-mixture
+    Image:
+      properties:
+        url:
+          description: URL of the image.
+          type: string
+          format: uri
+          example: https://images.autoscout24.ch/853/11878853/0.jpg
+      description: Represents an image, containing an absolute URL to the image file.
+    TransmissionType:
+      type: string
+      description: Type of transmission in the vehicle.
+      enum:
+        - automatic
+        - automatic-stepless
+        - semi-automatic
+        - manual
+      example: automatic
+    VehicleCategory:
+      type: string
+      description: Represents the category or type of a vehicle.
+      enum:
+        - car
+        - utility
+        - motorcycle
+        - truck
+        - camper
+        - trailer
+      example: car
+    Color:
+      type: string
+      description: The color of the vehicle or its components.
+      enum:
+        - anthracite
+        - beige
+        - black
+        - blue
+        - bordeaux
+        - brown
+        - gray
+        - gold
+        - green
+        - multicolored
+        - orange
+        - pink
+        - red
+        - silver
+        - turquoise
+        - violet
+        - white
+        - yellow
+        - other
+      example: "blue"
+    Language:
+      description: The language used by the seller. Valid options are German (de), French (fr), or Italian (it).
+      type: string
+      enum:
+        - de
+        - fr
+        - it
+      example: de
+    NotificationRecipient:
+      description: A recipient designated to receive notifications such as leads or other interests.
+      properties:
+        email:
+          description: The recipient’s email address.
+          type: string
+          example: johndoe@autoscout24.ch
+    SellerType:
+      description: The type of seller. Can be either professional or private.
+      type: string
+      enum:
+        - professional
+        - private
+      example: professional
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: auth-scheme
+      description: "Bearer HTTP authentication (Authorization: Bearer <access_token>)"
+      scheme: bearer
+      type: http

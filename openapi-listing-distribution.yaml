@@ -23,7 +23,7 @@ paths:
         - Listing
       parameters:
         - $ref: "#/components/parameters/modifiedSinceQueryParam"
-        - $ref: "#/components/parameters/vehicleCategory"
+        - $ref: "#/components/parameters/vehicleCategoryQueryParam"
         - $ref: "#/components/parameters/pageQueryParam"
         - $ref: "#/components/parameters/sizeQueryParam"
       responses:
@@ -37,6 +37,7 @@ components:
   parameters:
     modifiedSinceQueryParam:
       in: query
+      name: modifiedSince
       description: The date and time when the listing's liveness was modified.
       schema:
         type: string

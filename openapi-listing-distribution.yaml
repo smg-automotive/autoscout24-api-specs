@@ -287,7 +287,7 @@ components:
         - it
       example: de
     ListingsResponse:
-      description: Represent a page of live listing entities.
+      description: Represents a page of live listing entities.
       allOf:
         - $ref: "#/components/schemas/Page"
         - type: object
@@ -299,7 +299,7 @@ components:
                 $ref: '#/components/schemas/LiveListing'
     LiveListing:
       type: object
-      description: Represent the object of a live listing.
+      description: Represents the object of a live listing.
       properties:
         bodyColor:
           description: Color of the vehicle body.

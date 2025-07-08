@@ -2440,6 +2440,11 @@ components:
           allOf:
             - $ref: "#/components/schemas/VehicleCategory"
           example: car
+        vehicleIdentificationNumber:
+          type: string
+          pattern: '^\w{17}$'
+          description: Unique vehicle identification number (VIN).
+          example: 1HGCM82633A123456
         versionFullName:
           description: The full name of the vehicle’s version, including model and specifications.
           type: string

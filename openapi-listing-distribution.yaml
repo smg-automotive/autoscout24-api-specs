@@ -412,11 +412,10 @@ components:
           format: int64
           example: 601
         images:
-          description: URLs of listing images.
+          description: Listing images.
           type: array
           items:
-            type: string
-            format: uri
+            $ref: "#/components/schemas/Image"
         kiloWatts:
           description: Power in kilowatts.
           type: integer

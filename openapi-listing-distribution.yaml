@@ -468,10 +468,6 @@ components:
           example: 5
         seller:
           $ref: "#/components/schemas/Seller"
-        sellerId:
-          description: ID of the seller as provided by the system.
-          type: string
-          example: 1101
         sellerVehicleId:
           description: ID of the vehicle assigned by the seller.
           type: string

@@ -15,7 +15,7 @@ security:
   - BearerAuth: [ ]
 
 paths:
-  /api/cross-listing/v1/listings:
+  /cross-listing/v1/listings:
     get:
       operationId: GetLiveListings
       description: Returns a list of live listings.

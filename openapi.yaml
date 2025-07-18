@@ -1823,6 +1823,11 @@ components:
     ListingBaseResponse:
       type: object
       properties:
+        bodyType:
+          description: Shape of the vehicle body.
+          allOf:
+            - $ref: "#/components/schemas/BodyType"
+          example: coupe
         conditionType:
           description: Condition type of the vehicle.
           allOf:
@@ -1830,6 +1835,11 @@ components:
           example: demonstration
         consumption:
           $ref: "#/components/schemas/Consumption"
+        driveType:
+          description: Drive type of the vehicle.
+          allOf:
+            - $ref: "#/components/schemas/DriveType"
+          example: all
         features:
           description: Listing features.
           type: array

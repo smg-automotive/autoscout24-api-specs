@@ -52,6 +52,27 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/NonLiveListingsResponse"
+  /cross-listing/v1/listings/{listingId}/equipment:
+    get:
+      operationId: GetListingEquipment
+      description: Returns localized equipment details for the specified listing ID.
+      tags:
+        - Listing Search & Exploration
+      parameters:
+        - name: listingId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - $ref: "#/components/parameters/languageQueryParam"
+      responses:
+        "200":
+          description: Listing equipment successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListingEquipmentResponse'
 components:
   parameters:
     languageQueryParam:
@@ -627,6 +648,148 @@ components:
         - camper
         - trailer
       example: car
+    ListingEquipmentResponse:
+      type: object
+      properties:
+        standard:
+          type: array
+          description: List of standard equipment of the vehicle.
+          items:
+            $ref: '#/components/schemas/Equipment'
+          example:
+            - name: "abs"
+        optional:
+          type: array
+          description: List of optional equipment aof the vehicle.
+          items:
+            $ref: '#/components/schemas/Equipment'
+          example:
+            - name: "Assistance Package"
+              packageItems:
+                - name: "Adaptive Cruise Control"
+        searchAttributes:
+          type: array
+          description: List of search attributes for filtering the vehicle equipment.
+          items:
+            $ref: '#/components/schemas/EquipmentSearchAttribute'
+    Equipment:
+      type: object
+      description: Represents an equipment item or package included in the vehicle.
+      properties:
+        name:
+          type: string
+          description: The name of the equipment item or package.
+          example: "ABS"
+        packageItems:
+          type: array
+          description: A list of equipment items included in the package, if any.
+          items:
+            $ref: '#/components/schemas/PackageItem'
+          nullable: true
+      example:
+        name: "ABS"
+        packageItems:
+          - { "name": "ABS Module" }
+    PackageItem:
+      type: object
+      properties:
+        name:
+          description: Name of the equipment item.
+          type: string
+          example: Adaptive Cruise Control
+    EquipmentSearchAttribute:
+      type: string
+      description: Represents specific equipment features that can be searched for in a vehicle.
+      enum:
+        - abs
+        - active-brake-assistant
+        - adaptive-cruise-control
+        - adaptive-headlights
+        - additional-instrumentation
+        - air-condition
+        - air-suspension
+        - alarm-system
+        - alcantara
+        - alloy-wheels
+        - android-auto
+        - anti-theft-device
+        - apple-carplay
+        - assisted-parking
+        - audio-system
+        - automatic-air-condition
+        - auxiliary-heating
+        - backrest
+        - blind-spot-system
+        - bluetooth-interface
+        - 360-camera
+        - catalytic-converter
+        - chrome-parts
+        - cloth-seats
+        - cover
+        - crash-bar
+        - cruise-control
+        - custom-exhaust
+        - custom-handlebar
+        - dab-radio
+        - detachable-towbar
+        - differential-locking
+        - double-disc-brake
+        - double-seat
+        - electric-seat
+        - electric-tailgate
+        - esp
+        - fast-charging
+        - floorboard
+        - full-partial-casing
+        - hands-free-set
+        - hardtop
+        - head-up-display
+        - heated-grips
+        - heated-seats
+        - hydraulic-system
+        - isofix
+        - keyless
+        - kitchen
+        - lane-assistant
+        - laser-headlights
+        - leather-seats
+        - led
+        - liftgate
+        - luggage-rack
+        - navigation
+        - panorama-roof
+        - parking-sensor-front
+        - parking-sensor-rear
+        - partial-leather-seats
+        - portable-navigation-system
+        - rear-camera
+        - reinforced-suspension
+        - retarder-intarder
+        - retractable-towbar
+        - saddlebag
+        - shower
+        - sliding-door
+        - solo-seat
+        - speaker
+        - special-paint
+        - spoked-wheels
+        - sport-seats
+        - start-stop-system
+        - suitcase
+        - sunroof
+        - tank-bag
+        - toilet
+        - top-case
+        - towbar
+        - traction-control
+        - tv
+        - twin-headlights
+        - ventilated-seats
+        - windshield
+        - wing-doors
+        - xenon-headlights
+        - electric-windows
+      example: "abs"
   securitySchemes:
     BearerAuth:
       bearerFormat: auth-scheme

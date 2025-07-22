@@ -687,9 +687,10 @@ components:
             $ref: '#/components/schemas/PackageItem'
           nullable: true
       example:
-        name: "ABS"
+        name: "Paket: Premiumpaket"
         packageItems:
-          - { "name": "ABS Module" }
+          - name: Dachhimmel in Alcantara schwarz
+          - name: "Türen: Servoschliessung für Türen"
     PackageItem:
       type: object
       properties:
@@ -701,6 +702,7 @@ components:
       type: string
       description: Represents specific equipment features that can be searched for in a vehicle.
       enum:
+        - 360-camera
         - abs
         - active-brake-assistant
         - adaptive-cruise-control
@@ -721,7 +723,6 @@ components:
         - backrest
         - blind-spot-system
         - bluetooth-interface
-        - 360-camera
         - catalytic-converter
         - chrome-parts
         - cloth-seats
@@ -737,6 +738,7 @@ components:
         - double-seat
         - electric-seat
         - electric-tailgate
+        - electric-windows
         - esp
         - fast-charging
         - floorboard
@@ -788,7 +790,6 @@ components:
         - windshield
         - wing-doors
         - xenon-headlights
-        - electric-windows
       example: "abs"
   securitySchemes:
     BearerAuth:

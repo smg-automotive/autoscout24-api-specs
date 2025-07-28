@@ -57,7 +57,7 @@ paths:
       operationId: GetListingEquipment
       description: Returns localized equipment details for the specified listing ID.
       tags:
-        - Listing Search & Exploration
+        - Listing
       parameters:
         - name: listingId
           in: path

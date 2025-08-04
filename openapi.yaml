@@ -260,13 +260,26 @@ paths:
       tags:
         - Message Lead
       parameters:
-        - name: qualiLogoId
+        - name: sellerId
           in: path
           required: true
           schema:
             type: integer
             format: int64
-        - $ref: "#/components/parameters/languageParam"
+        - name: createdDateFrom
+          in: query
+          description: Filter by created date from.
+          required: false
+          schema:
+              type: string
+              format: date-time
+        - name: createdDateTo
+          in: query
+          description: Filter by created date to.
+          required: false
+          schema:
+              type: string
+              format: date-time
       responses:
         "200":
           description: Message Leads successfully returned.

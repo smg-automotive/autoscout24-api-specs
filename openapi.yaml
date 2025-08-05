@@ -255,8 +255,8 @@ paths:
               schema:
                 type: string
     get:
-      operationId: GetMessageLead
-      description: Returns a Message Leads.
+      operationId: GetSellerMessageLeads
+      description: Returns message leads for the specified seller ID.
       tags:
         - Message Lead
       parameters:
@@ -280,6 +280,13 @@ paths:
           schema:
               type: string
               format: date-time
+        - name: sort
+          in: query
+          description: Sorting criteria in the format (id|createdDate,asc|desc).
+          required: false
+          schema:
+            type: string
+            example: id,asc
       responses:
         "200":
           description: Message Leads successfully returned.
@@ -1964,56 +1971,6 @@ components:
           type: string
           example: A6 3.0 55 TFSI quattro S-Tronic
       description: The base response for vehicle listings, including key attributes such as fuel type, price, mileage, and more.
-    MessageLeadListingDetails:
-      type: object
-      properties:
-        bodyType:
-          description: Shape of the vehicle body.
-          allOf:
-            - $ref: "#/components/schemas/BodyType"
-          example: coupe
-        conditionType:
-            description: Condition type of the vehicle.
-            allOf:
-                - $ref: "#/components/schemas/ConditionType"
-            example: used
-        id:
-          description: ID of the listing.
-          type: integer
-          format: int64
-          example: 1620023
-        make:
-          deprecated: true
-          description: Name of the make.
-          type: string
-          example: audi
-        makeName:
-          description: Name of the make.
-          type: string
-          example: audi
-        model:
-          deprecated: true
-          description: Name of the model.
-          type: string
-          example: a6
-        modelName:
-          description: Name of the model.
-          type: string
-          example: a6
-        vehicleCategory:
-            description: Category of the vehicle.
-            allOf:
-                - $ref: "#/components/schemas/VehicleCategory"
-            example: car
-        versionFull:
-          deprecated: true
-          description: Version full name of a listing.
-          type: string
-          example: A6 3.0 55 TFSI quattro S-Tronic
-        versionFullName:
-          description: Version full name of the listing.
-          type: string
-          example: A6 3.0 55 TFSI quattro S-Tronic
     ListingBaseResponse_Seller:
       type: object
       properties:
@@ -3142,6 +3099,41 @@ components:
           example: +41761234567
         testDrive:
           $ref: '#/components/schemas/TestDrive'
+    MessageLeadListingDetails:
+      type: object
+      properties:
+        bodyType:
+          description: Shape of the vehicle body.
+          allOf:
+            - $ref: "#/components/schemas/BodyType"
+          example: coupe
+        conditionType:
+          description: Condition type of the vehicle.
+          allOf:
+            - $ref: "#/components/schemas/ConditionType"
+          example: used
+        id:
+          description: ID of the listing.
+          type: integer
+          format: int64
+          example: 1620023
+        makeName:
+          description: Name of the make.
+          type: string
+          example: audi
+        modelName:
+          description: Name of the model.
+          type: string
+          example: a6
+        vehicleCategory:
+          description: Category of the vehicle.
+          allOf:
+            - $ref: "#/components/schemas/VehicleCategory"
+          example: car
+        versionFullName:
+          description: Version full name of the listing.
+          type: string
+          example: A6 3.0 55 TFSI quattro S-Tronic
     Model:
       description: Represents the data for the Model entity.
       type: object
@@ -4440,22 +4432,22 @@ components:
         description: Represents a test drive request for a vehicle.
         type: object
         properties:
-            firstName:
+          firstName:
             type: string
             maxLength: 64
             description: First name of the person requesting the test drive.
             example: John
-            lastName:
+          lastName:
             type: string
             maxLength: 64
             description: Last name of the person requesting the test drive.
             example: Doe
-            email:
+          email:
             type: string
             format: email
             maxLength: 128
             description: Email address of the person requesting the test drive.
-            example:
+            example: john.doe@example.com
     SellerListingPage:
       description: Represents a page of Listing entities.
       allOf:

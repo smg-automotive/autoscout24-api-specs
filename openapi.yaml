@@ -3039,12 +3039,6 @@ components:
           example: +41761234567
     MessageLeadResponse:
       description: Represents the response structure for a message lead.
-      required:
-        - email
-        - firstName
-        - lastName
-        - message
-        - phone
       type: object
       properties:
         anonymised:

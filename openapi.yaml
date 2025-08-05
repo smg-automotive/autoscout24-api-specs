@@ -283,9 +283,11 @@ paths:
           schema:
             type: string
             example: id,asc
+        - $ref: "#/components/parameters/pageQueryParam"
+        - $ref: "#/components/parameters/sizeQueryParam"
       responses:
         "200":
-          description: Message Leads successfully returned.
+          description: Seller message leads successfully returned.
           content:
             application/json:
               schema:
@@ -4422,19 +4424,11 @@ components:
         description: Represents a test drive request for a vehicle.
         type: object
         properties:
-          firstName:
+          date:
             type: string
-            description: First name of the person requesting the test drive.
-            example: John
-          lastName:
-            type: string
-            description: Last name of the person requesting the test drive.
-            example: Doe
-          email:
-            type: string
-            format: email
-            description: Email address of the person requesting the test drive.
-            example: john.doe@example.com
+            format: date-time
+            description: The date and time of the requested test drive.
+            example: '2024-01-01T10:00:00Z'
     SellerListingPage:
       description: Represents a page of Listing entities.
       allOf:

@@ -254,6 +254,44 @@ paths:
               description: Relative path to the newly created resource.
               schema:
                 type: string
+  /public/v1/sellers/{sellerId}/message-leads:
+    get:
+      operationId: GetSellerMessageLeads
+      description: Returns message leads for the specified seller ID.
+      tags:
+        - Message Lead
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - name: createdDateFrom
+          in: query
+          description: Filter by created date from.
+          required: false
+          schema:
+              type: string
+              format: date-time
+        - name: createdDateTo
+          in: query
+          description: Filter by created date to.
+          required: false
+          schema:
+              type: string
+              format: date-time
+        - name: sort
+          in: query
+          description: Sorting criteria in the format (id|createdDate,asc|desc).
+          required: false
+          schema:
+            type: string
+            example: id,asc
+        - $ref: "#/components/parameters/pageQueryParam"
+        - $ref: "#/components/parameters/sizeQueryParam"
+      responses:
+        "200":
+          description: Seller message leads successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SellerMessageLeadResponse"
   /public/v1/sellers/{sellerId}/listings:
     get:
       operationId: GetSellerListings
@@ -1927,7 +1965,7 @@ components:
             - $ref: "#/components/schemas/VehicleCategory"
           example: car
         versionFullName:
-          description: Full version name of the vehicle.
+          description: The full name of the vehicle’s version, including model and specifications.
           type: string
           example: A6 3.0 55 TFSI quattro S-Tronic
       description: The base response for vehicle listings, including key attributes such as fuel type, price, mileage, and more.
@@ -2997,6 +3035,97 @@ components:
           minLength: 0
           type: string
           example: +41761234567
+    SellerMessageLeadResponse:
+      description: Represents the response structure for a message lead.
+      type: object
+      properties:
+        anonymised:
+          description: Indicates if the lead is anonymised.
+          type: boolean
+          example: false
+        createdDate:
+          description: Date when the lead was created.
+          type: string
+          format: date-time
+          example: '2023-10-01T12:00:00Z'
+        email:
+          description: Email address.
+          type: string
+          example: info@autoscout24.ch
+        firstName:
+          description: First name.
+          type: string
+          example: John
+        lastName:
+          description: Last name.
+          type: string
+          example: Doe
+        id:
+          description: Unique identifier of the lead.
+          type: integer
+          format: int64
+          example: 123456789
+        interestedInFinancing:
+          description: Indicates if the lead is interested in financing options.
+          type: boolean
+          example: true
+        interestedInInsurance:
+            description: Indicates if the lead is interested in insurance options.
+            type: boolean
+            example: false
+        interestedInLeasing:
+            description: Indicates if the lead is interested in leasing options.
+            type: boolean
+            example: true
+        language:
+          $ref: '#/components/schemas/Language'
+        listing:
+          $ref: '#/components/schemas/SellerMessageLeadListingDetails'
+        message:
+          description: Message content.
+          type: string
+          example: I am interested in your car.
+        phone:
+          description: Phone number.
+          type: string
+          example: +41761234567
+        testDrive:
+          $ref: '#/components/schemas/TestDrive'
+    SellerMessageLeadListingDetails:
+      type: object
+      properties:
+        bodyType:
+          description: Shape of the vehicle body.
+          allOf:
+            - $ref: "#/components/schemas/BodyType"
+          example: coupe
+        conditionType:
+          description: Condition type of the vehicle.
+          allOf:
+            - $ref: "#/components/schemas/ConditionType"
+          example: used
+        id:
+          description: ID of the listing.
+          type: integer
+          format: int64
+          example: 1620023
+        makeName:
+          description: Name of the make.
+          type: string
+          example: audi
+        modelName:
+          description: Name of the model.
+          type: string
+          example: a6
+        vehicleCategory:
+          description: Category of the vehicle.
+          allOf:
+            - $ref: "#/components/schemas/VehicleCategory"
+          example: car
+        versionFullName:
+          description: The full name of the vehicle’s version, including model and specifications.
+          type: string
+          example: A6 3.0 55 TFSI quattro S-Tronic
     Model:
       description: Represents the data for the Model entity.
       type: object
@@ -4291,6 +4420,15 @@ components:
           type: integer
           format: int64
           example: 100201
+    TestDrive:
+        description: Represents a test drive interest for a vehicle.
+        type: object
+        properties:
+          date:
+            type: string
+            format: date-time
+            description: The date and time of the requested test drive.
+            example: '2024-01-01T10:00:00Z'
     SellerListingPage:
       description: Represents a page of Listing entities.
       allOf:

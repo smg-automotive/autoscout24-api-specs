@@ -4421,7 +4421,7 @@ components:
           format: int64
           example: 100201
     TestDrive:
-        description: Represents a test drive request for a vehicle.
+        description: Represents a test drive interest for a vehicle.
         type: object
         properties:
           date:

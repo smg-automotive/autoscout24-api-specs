@@ -724,7 +724,7 @@ paths:
   /public/v1/configurator/autoi/sellers/{sellerId}/versions/external-id/{externalId}:
     get:
       operationId: GetVersionByExternalId
-      description: Returns a specific version based on the provided seller ID and external ID (autoi nat code).
+      description: Returns a specific version based on the provided seller ID and external ID (autoi fzkey).
       tags:
         - Configurator
       parameters:

@@ -481,8 +481,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/versionIdPathParam'
         - $ref: "#/components/parameters/languageParam"
-        - $ref: '#/components/parameters/productionMonthParam'
-        - $ref: '#/components/parameters/productionYearParam'
+        - $ref: '#/components/parameters/productionMonthQueryParam'
+        - $ref: '#/components/parameters/productionYearQueryParam'
       responses:
         "200":
           description: Version equipment details successfully returned.
@@ -716,6 +716,8 @@ paths:
         - $ref: '#/components/parameters/sellerIdPathParam'
         - $ref: '#/components/parameters/makeKeyPathParam'
         - $ref: '#/components/parameters/modelKeyQueryParam'
+        - $ref: '#/components/parameters/productionYearQueryParam'
+        - $ref: '#/components/parameters/productionMonthQueryParam'
         - $ref: "#/components/parameters/pageQueryParam"
         - $ref: "#/components/parameters/sizeQueryParam"
       responses:
@@ -734,6 +736,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/sellerIdPathParam'
         - $ref: '#/components/parameters/certificationNumberPathParam'
+        - $ref: '#/components/parameters/productionYearQueryParam'
+        - $ref: '#/components/parameters/productionMonthQueryParam'
         - $ref: "#/components/parameters/pageQueryParam"
         - $ref: "#/components/parameters/sizeQueryParam"
       responses:
@@ -928,7 +932,7 @@ components:
         maximum: 999999
         default: 0
       example: 0
-    productionMonthParam:
+    productionMonthQueryParam:
       in: query
       name: productionMonth
       description: The month of the production.
@@ -937,7 +941,7 @@ components:
         type: integer
         format: int16
       example: 5
-    productionYearParam:
+    productionYearQueryParam:
       in: query
       name: productionYear
       description: The year of the production.

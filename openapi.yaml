@@ -705,10 +705,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/VersionBaseListResponse'
-  /public/v1/configurator/eurotax/sellers/{sellerId}/versions/external-id/{externalId}:
+  /public/v1/configurator/autoi/sellers/{sellerId}/versions/external-id/{externalId}:
     get:
       operationId: GetVersionByExternalId
-      description: Returns a specific version based on the provided seller ID and external ID (eurotax nat code).
+      description: Returns a specific version based on the provided seller ID and external ID (autoi fzkey).
       tags:
         - Configurator
       parameters:
@@ -721,10 +721,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/VersionResponse'
-  /public/v1/configurator/autoi/sellers/{sellerId}/versions/external-id/{externalId}:
+  /public/v1/configurator/eurotax/sellers/{sellerId}/versions/external-id/{externalId}:
     get:
       operationId: GetVersionByExternalId
-      description: Returns a specific version based on the provided seller ID and external ID (autoi fzkey).
+      description: Returns a specific version based on the provided seller ID and external ID (eurotax nat code).
       tags:
         - Configurator
       parameters:

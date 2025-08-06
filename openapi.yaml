@@ -743,6 +743,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/VersionBaseListResponse'
+  /public/v1/configurator/autoi/sellers/{sellerId}/versions/external-id/{externalId}:
+    get:
+      operationId: GetVersionByExternalId
+      description: Returns a specific version based on the provided seller ID and external ID (autoi fzkey).
+      tags:
+        - Configurator
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/externalIdPathParam'
+      responses:
+        "200":
+          description: Version successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VersionResponse'
   /public/v1/configurator/eurotax/sellers/{sellerId}/versions/external-id/{externalId}:
     get:
       operationId: GetVersionByExternalId

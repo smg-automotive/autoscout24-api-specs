@@ -327,8 +327,8 @@ components:
           description: Flag indicating if a vehicle had an accident.
           type: boolean
           example: true
-        hasAdditionalSetOfTires:
-          description: Flag indicating if a vehicle has an additional set of tires.
+        handicappedAccessible:
+          description: Flag indicating if a vehicle is equipped for handicapped accessibility.
           type: boolean
           example: true
         horsePower:
@@ -431,6 +431,11 @@ components:
           type: integer
           format: int64
           example: 1923
+        serialNumber:
+          type: string
+          pattern: '^\d{3}\.\d{3}\.\d{3}$'
+          description: Serial number of the vehicle; in Swiss market known as Stammnummer.
+          example: 123.456.789
         transmissionType:
           description: Transmission type of the vehicle.
           allOf:

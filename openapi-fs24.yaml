@@ -391,6 +391,12 @@ components:
           minLength: 1
           maxLength: 64
           example: audi
+        makeName:
+          description: Name of the make.
+          type: string
+          minLength: 1
+          maxLength: 255
+          example: audi
         metallic:
           description: Flag indicating if a vehicle has a metallic paint.
           type: boolean
@@ -407,6 +413,12 @@ components:
           type: string
           minLength: 1
           maxLength: 64
+          example: a6
+        modelName:
+          description: Name of the model.
+          type: string
+          minLength: 1
+          maxLength: 255
           example: a6
         price:
           description: Price of the vehicle.

@@ -396,7 +396,7 @@ components:
           type: string
           minLength: 1
           maxLength: 255
-          example: audi
+          example: AUDI
         metallic:
           description: Flag indicating if a vehicle has a metallic paint.
           type: boolean
@@ -419,7 +419,7 @@ components:
           type: string
           minLength: 1
           maxLength: 255
-          example: a6
+          example: A6
         price:
           description: Price of the vehicle.
           type: number

@@ -911,7 +911,7 @@ components:
       required: true
       schema:
         type: string
-      example: audi
+      example: AUDI
     modelKeyQueryParam:
       in: query
       name: modelKey

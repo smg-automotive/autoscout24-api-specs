@@ -267,15 +267,15 @@ paths:
           description: Filter by created date from.
           required: false
           schema:
-              type: string
-              format: date-time
+            type: string
+            format: date-time
         - name: createdDateTo
           in: query
           description: Filter by created date to.
           required: false
           schema:
-              type: string
-              format: date-time
+            type: string
+            format: date-time
         - name: sort
           in: query
           description: Sorting criteria in the format (id|createdDate,asc|desc).
@@ -1871,13 +1871,13 @@ components:
         - m
       description: A list of possible vehicle license categories based on the driver's license type.
     ListingStatus:
-        type: string
-        enum:
-          - activated
-          - deactivated
-          - removed
-          - draft
-        description: The status of the listing.
+      type: string
+      enum:
+        - activated
+        - deactivated
+        - removed
+        - draft
+      description: The status of the listing.
     ListingBaseResponse:
       type: object
       properties:
@@ -1893,11 +1893,23 @@ components:
           example: demonstration
         consumption:
           $ref: "#/components/schemas/Consumption"
+        co2Emission:
+          description: CO2 emission in g/km.
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 9999
+          example: 42
         driveType:
           description: Drive type of the vehicle.
           allOf:
             - $ref: "#/components/schemas/DriveType"
           example: all
+        energyLabel:
+          description: Energy label of the vehicle.
+          allOf:
+            - $ref: "#/components/schemas/EnergyLabel"
+          example: a
         features:
           description: Listing features.
           type: array
@@ -1970,6 +1982,10 @@ components:
           example: 650
         seller:
           $ref: "#/components/schemas/ListingBaseResponse_Seller"
+        sellerVehicleId:
+          description: Unique identifier of the seller's vehicle.
+          type: string
+          example: SVID_123
         teaser:
           description: Short description of the listing.
           type: string
@@ -1992,6 +2008,10 @@ components:
     ListingBaseResponse_Seller:
       type: object
       properties:
+        address:
+          description: The address of the seller.
+          type: string
+          example: "Bahnhofstrasse 123b"
         city:
           description: The city where the seller is located.
           type: string
@@ -3090,13 +3110,13 @@ components:
           type: boolean
           example: true
         interestedInInsurance:
-            description: Indicates if the lead is interested in insurance options.
-            type: boolean
-            example: false
+          description: Indicates if the lead is interested in insurance options.
+          type: boolean
+          example: false
         interestedInLeasing:
-            description: Indicates if the lead is interested in leasing options.
-            type: boolean
-            example: true
+          description: Indicates if the lead is interested in leasing options.
+          type: boolean
+          example: true
         language:
           $ref: '#/components/schemas/Language'
         listing:
@@ -4031,10 +4051,10 @@ components:
           format: date
           example: '2020-12-15'
         lastModifiedDate:
-            type: string
-            format: date-time
-            description: The date and time when the listing was last modified.
-            example: '2024-01-01T12:00:00Z'
+          type: string
+          format: date-time
+          description: The date and time when the listing was last modified.
+          example: '2024-01-01T12:00:00Z'
         length:
           description: Length of the vehicle in mm.
           type: integer
@@ -4157,10 +4177,10 @@ components:
           description: Number of sleeping berths in the vehicle.
           example: 4
         status:
-            description: Status of the listing.
-            allOf:
-                - $ref: "#/components/schemas/ListingStatus"
-            example: activated
+          description: Status of the listing.
+          allOf:
+            - $ref: "#/components/schemas/ListingStatus"
+          example: activated
         statusLastModifiedDate:
           type: string
           format: date-time
@@ -4217,10 +4237,10 @@ components:
           format: int64
           example: 100201
         versionIdentificationMethod:
-            description: Method used to identify the version of the vehicle.
-            allOf:
-                - $ref: "#/components/schemas/VersionIdentificationMethod"
-            example: vehicle-identification-number
+          description: Method used to identify the version of the vehicle.
+          allOf:
+            - $ref: "#/components/schemas/VersionIdentificationMethod"
+          example: vehicle-identification-number
         warrantyDetails:
           type: string
           maxLength: 1999
@@ -4441,14 +4461,14 @@ components:
           format: int64
           example: 100201
     TestDrive:
-        description: Represents a test drive interest for a vehicle.
-        type: object
-        properties:
-          date:
-            type: string
-            format: date-time
-            description: The date and time of the requested test drive.
-            example: '2024-01-01T10:00:00Z'
+      description: Represents a test drive interest for a vehicle.
+      type: object
+      properties:
+        date:
+          type: string
+          format: date-time
+          description: The date and time of the requested test drive.
+          example: '2024-01-01T10:00:00Z'
     SellerListingPage:
       description: Represents a page of Listing entities.
       allOf:

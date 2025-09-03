@@ -1555,6 +1555,7 @@ components:
         - equipmentSearchAttributes
         - equipmentSearchAttributeGroups
         - fuelTypes
+        - hasAdditionalSetOfTiresOnly
         - hadNoAccidentOnly
         - hasWarrantyOnly
         - inspectedOnly
@@ -1563,6 +1564,7 @@ components:
         - makeKeys
         - modelGroupKeys
         - modelKeys
+        - qualiLogoIds
         - transmissionTypes
         - vehicleCategories
       description: A list of possible facet categories used for filtering or sorting listings.
@@ -2861,6 +2863,10 @@ components:
           example: [ "electric", "petrol" ]
         geoLocation:
           $ref: '#/components/schemas/ListingQuery_GeoLocation'
+        hasAdditionalSetOfTiresOnly:
+          type: boolean
+          description: Flag indicating if the vehicle includes an additional set of tires.
+          example: true
         hadNoAccidentOnly:
           description: Flag indicating if the listing had no accident.
           type: boolean
@@ -2934,6 +2940,14 @@ components:
           type: number
           format: double
           example: 50000
+        qualiLogoIds:
+          description: Filter listings by Quali Logo IDs.
+          uniqueItems: true
+          type: array
+          items:
+            type: integer
+            format: int64
+          example: [ 601, 602 ]
         rangeFrom:
           description: Filter listings by minimum range in km.
           type: integer

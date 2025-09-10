@@ -966,12 +966,12 @@ components:
         format: int16
       example: 2025
     providerPathParam:
-        in: path
-        name: provider
-        description: The catalogue provider.
-        required: true
-        schema:
-          $ref: '#/components/schemas/CatalogueProvider'
+      in: path
+      name: provider
+      description: The catalogue provider.
+      required: true
+      schema:
+        $ref: '#/components/schemas/CatalogueProvider'
     sellerIdPathParam:
       in: path
       name: sellerId
@@ -1205,12 +1205,12 @@ components:
         - wood-transporter
       example: "car"
     CatalogueProvider:
-        type: string
-        description: The catalogue provider.
-        enum:
-            - auto-i
-            - eurotax
-        example: "auto-i"
+      type: string
+      description: The catalogue provider.
+      enum:
+        - auto-i
+        - eurotax
+      example: "auto-i"
     ChargingPlugType:
       type: string
       description: The type of charging plug supported by the vehicle for electric vehicles.
@@ -3545,7 +3545,7 @@ components:
       properties:
         value:
           type: string
-          description: Enum value (e.g., BodyType, FuelType, TransmissionType, etc.)
+          description: Enum value (BodyType, ChargingPlugType, CylinderArrangement, DriveSystem, DriveType, EmissionStandard, FastChargingPlugType, FuelType, TransmissionType)
           example: "suv"
         providerLookupValue:
           type: string

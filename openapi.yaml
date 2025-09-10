@@ -674,6 +674,21 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Translation"
+  /public/v1/configurator/{provider}/provider-lookups:
+    get:
+      operationId: GetProviderLookupsByProvider
+      description: Returns provider lookups information for the provided provider.
+      tags:
+        - Configurator
+      parameters:
+        - $ref: '#/components/parameters/providerPathParam'
+      responses:
+        "200":
+          description: Provider lookups successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProviderLookupResponse'
   /public/v1/configurator/eurotax/sellers/{sellerId}/versions/vehicle-identification-number/{vehicleIdentificationNumber}:
     get:
       operationId: GetVersionByVehicleIdentificationNumber
@@ -950,6 +965,13 @@ components:
         type: integer
         format: int16
       example: 2025
+    providerPathParam:
+      in: path
+      name: provider
+      description: The catalogue provider.
+      required: true
+      schema:
+        $ref: '#/components/schemas/CatalogueProvider'
     sellerIdPathParam:
       in: path
       name: sellerId
@@ -1182,6 +1204,13 @@ components:
         - uploader
         - wood-transporter
       example: "car"
+    CatalogueProvider:
+      type: string
+      description: The catalogue provider.
+      enum:
+        - auto-i
+        - eurotax
+      example: "auto-i"
     ChargingPlugType:
       type: string
       description: The type of charging plug supported by the vehicle for electric vehicles.
@@ -3471,6 +3500,59 @@ components:
               description: Flag indicating if the provided warranty duration is a minimum value rather than an exact duration.
               type: boolean
               example: true
+    ProviderLookupResponse:
+      description: Represents the reference data for vehicle attributes.
+      type: object
+      properties:
+        bodyTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProviderLookup'
+        chargingPlugTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProviderLookup'
+        cylinderArrangements:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProviderLookup'
+        driveSystems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProviderLookup'
+        driveTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProviderLookup'
+        emissionStandards:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProviderLookup'
+        fastChargingPlugTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProviderLookup'
+        fuelTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProviderLookup'
+        transmissionTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProviderLookup'
+    ProviderLookup:
+      type: object
+      properties:
+        value:
+          type: string
+          description: Enum value (BodyType, ChargingPlugType, CylinderArrangement, DriveSystem, DriveType, EmissionStandard, FastChargingPlugType, FuelType, TransmissionType)
+          example: "suv"
+        providerLookupValue:
+          type: string
+          description: Provider-specific lookup code
+          example: "12"
+        vehicleCategory:
+          $ref: '#/components/schemas/VehicleCategory'
     ReferenceDataResponse:
       description: Represents the reference data for vehicle attributes.
       type: object

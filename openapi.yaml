@@ -3546,9 +3546,11 @@ components:
         value:
           type: string
           description: Enum value (e.g., BodyType, FuelType, TransmissionType, etc.)
+          example: "suv"
         providerLookupValue:
           type: string
           description: Provider-specific lookup code
+          example: "12"
         vehicleCategory:
           $ref: '#/components/schemas/VehicleCategory'
     ReferenceDataResponse:

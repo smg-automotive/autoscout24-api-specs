@@ -684,7 +684,7 @@ paths:
         - $ref: '#/components/parameters/providerPathParam'
       responses:
         "200":
-          description: Version successfully returned.
+          description: Provider lookups successfully returned.
           content:
             application/json:
               schema:

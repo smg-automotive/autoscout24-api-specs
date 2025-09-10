@@ -3508,49 +3508,83 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ProviderLookup'
+          example:
+            - value: "suv"
+              providerLookupValue: "1"
+              vehicleCategory: "car"
         chargingPlugTypes:
           type: array
           items:
             $ref: '#/components/schemas/ProviderLookup'
+          example:
+            - value: "type-1"
+              providerLookupValue: "Type 1"
+              vehicleCategory: "car"
         cylinderArrangements:
           type: array
           items:
             $ref: '#/components/schemas/ProviderLookup'
+          example:
+            - value: "flat"
+              providerLookupValue: "15"
+              vehicleCategory: "car"
         driveSystems:
           type: array
           items:
             $ref: '#/components/schemas/ProviderLookup'
+          example:
+            - value: "chain"
+              providerLookupValue: "4"
+              vehicleCategory: "car"
         driveTypes:
           type: array
           items:
             $ref: '#/components/schemas/ProviderLookup'
+          example:
+            - value: "rear"
+              providerLookupValue: "1"
+              vehicleCategory: "utility"
         emissionStandards:
           type: array
           items:
             $ref: '#/components/schemas/ProviderLookup'
+          example:
+            - value: "euro-5"
+              providerLookupValue: "1"
+              vehicleCategory: "utility"
         fastChargingPlugTypes:
           type: array
           items:
             $ref: '#/components/schemas/ProviderLookup'
+          example:
+            - value: "chademo"
+              providerLookupValue: "CHAdeMO"
+              vehicleCategory: "utility"
         fuelTypes:
           type: array
           items:
             $ref: '#/components/schemas/ProviderLookup'
+          example:
+            - value: "petrol"
+              providerLookupValue: "1"
+              vehicleCategory: "car"
         transmissionTypes:
           type: array
           items:
             $ref: '#/components/schemas/ProviderLookup'
+          example:
+            - value: "manual"
+              providerLookupValue: "1"
+              vehicleCategory: "car"
     ProviderLookup:
       type: object
       properties:
         value:
           type: string
           description: Enum value (BodyType, ChargingPlugType, CylinderArrangement, DriveSystem, DriveType, EmissionStandard, FastChargingPlugType, FuelType, TransmissionType)
-          example: "suv"
         providerLookupValue:
           type: string
           description: Provider-specific lookup code
-          example: "12"
         vehicleCategory:
           $ref: '#/components/schemas/VehicleCategory'
     ReferenceDataResponse:

@@ -3557,8 +3557,8 @@ components:
           items:
             $ref: '#/components/schemas/ProviderLookup'
           example:
-            - value: "css"
-              providerLookupValue: "CSS"
+            - value: "chademo"
+              providerLookupValue: "CHAdeMO"
               vehicleCategory: "utility"
         fuelTypes:
           type: array

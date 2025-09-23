@@ -2026,6 +2026,11 @@ components:
           allOf:
             - $ref: "#/components/schemas/TransmissionType"
           example: automatic
+        transmissionTypeGroup:
+          description: Transmission type group of the vehicle.
+          allOf:
+            - $ref: "#/components/schemas/TransmissionTypeGroup"
+          example: automatic
         vehicleCategory:
           description: Category of the vehicle.
           allOf:

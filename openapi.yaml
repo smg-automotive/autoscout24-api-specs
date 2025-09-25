@@ -1595,6 +1595,7 @@ components:
         - modelKeys
         - qualiLogoIds
         - transmissionTypes
+        - transmissionTypeGroups
         - vehicleCategories
       description: A list of possible facet categories used for filtering or sorting listings.
     FacetsResponse:
@@ -3027,6 +3028,13 @@ components:
           items:
             $ref: '#/components/schemas/TransmissionType'
           example: [ "manual", "automatic-stepless" ]
+        transmissionTypeGroups:
+          description: Filter listings by transmission type groups.
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/TransmissionTypeGroup'
+          example: [ "automatic" ]
         vehicleCategories:
           description: Filter listings by vehicle categories.
           uniqueItems: true

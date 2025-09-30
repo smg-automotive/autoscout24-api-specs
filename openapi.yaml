@@ -1488,6 +1488,12 @@ components:
           description: Optional Eurotax options.
           items:
             $ref: '#/components/schemas/EurotaxAutoscoutOption'
+        searchAttributes:
+          type: array
+          description: Equipment search attributes.
+          allOf:
+            - $ref: "#/components/schemas/EquipmentSearchAttribute"
+          example: [ "abs", "air-condition", "adaptive-cruise-control" ]
     EurotaxEquipment:
       description: Eurotax equipment.
       type: object
@@ -1532,6 +1538,12 @@ components:
           description: List of equipment items provided in Eurotax format.
           items:
             $ref: '#/components/schemas/EurotaxEquipment'
+        searchAttributes:
+            type: array
+            description: Equipment search attributes.
+            allOf:
+              - $ref: "#/components/schemas/EquipmentSearchAttribute"
+            example: [ "abs", "air-condition", "adaptive-cruise-control" ]
       required:
         - eurotaxEquipments
     EurotaxAutoscoutOption:

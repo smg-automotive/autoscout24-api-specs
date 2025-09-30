@@ -1492,7 +1492,7 @@ components:
           type: array
           description: Equipment search attributes.
           items:
-            - $ref: "#/components/schemas/EquipmentSearchAttribute"
+            $ref: "#/components/schemas/EquipmentSearchAttribute"
           example: [ "abs", "air-condition", "adaptive-cruise-control" ]
     EurotaxEquipment:
       description: Eurotax equipment.
@@ -1542,7 +1542,7 @@ components:
             type: array
             description: Equipment search attributes.
             items:
-              - $ref: "#/components/schemas/EquipmentSearchAttribute"
+              $ref: "#/components/schemas/EquipmentSearchAttribute"
             example: [ "abs", "air-condition", "adaptive-cruise-control" ]
       required:
         - eurotaxEquipments

@@ -1064,10 +1064,9 @@ components:
           $ref: "#/components/schemas/Label"
         packageItems:
           type: array
-          description: Autoi package items labels included in the option.
+          description: Autoi package items labels included in the option. Empty list should be provided if there are no package items.
           items:
             $ref: "#/components/schemas/Label"
-          nullable: true
       example:
         {
           "label": {

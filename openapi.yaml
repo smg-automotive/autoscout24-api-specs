@@ -6229,9 +6229,7 @@ components:
       description: Request to create a new seller listing.
       required:
         - makeKey
-        - modelKey
         - vehicleCategory
-        - versionIdentificationMethod
       properties:
         makeKey:
           type: string

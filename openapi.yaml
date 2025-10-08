@@ -3800,15 +3800,15 @@ components:
           type: integer
           format: int64
           example: 1923
+        name:
+          description: Name of the seller.
+          type: string
+          example: "John Seller LLC"
         notificationRecipients:
           description: A list of recipients who will receive notifications such as leads or expressions of interest.
           type: array
           items:
             $ref: "#/components/schemas/NotificationRecipient"
-        name:
-          description: Name of the seller.
-          type: string
-          example: "John Seller LLC"
         phoneNumber:
           description: Primary phone number of the seller.
           type: string

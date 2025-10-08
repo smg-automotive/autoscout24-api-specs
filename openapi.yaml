@@ -3268,6 +3268,13 @@ components:
           description: Display name of the model group.
           type: string
           example: "A Series"
+    NotificationRecipient:
+      description: A recipient designated to receive notifications such as leads or other interests.
+      properties:
+        email:
+          description: The recipient’s email address.
+          type: string
+          example: johndoe@autoscout24.ch
     ObtainClientAccessToken:
       description: Represents the request structure for obtaining a client access token.
       required:
@@ -3793,6 +3800,11 @@ components:
           type: integer
           format: int64
           example: 1923
+        notificationRecipients:
+          description: A list of recipients who will receive notifications such as leads or expressions of interest.
+          type: array
+          items:
+            $ref: "#/components/schemas/NotificationRecipient"
         name:
           description: Name of the seller.
           type: string

@@ -55,7 +55,7 @@ paths:
         - in: query
           name: all
           required: false
-          description: Recalculates leasing all listings.
+          description: Recalculates leasing for all listings.
           schema:
             type: boolean
             default: false

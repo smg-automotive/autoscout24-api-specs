@@ -45,6 +45,42 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/FinanceScout24Seller"
+  /fs24/v1/listings/recalculate-leasing:
+    post:
+      operationId: FinanceScout24RecalculateLeasing
+      description: Recalculates listings leasing asynchronously based on provided query parameters.
+      tags:
+        - Listing
+      parameters:
+        - in: query
+          name: all
+          required: false
+          description: Recalculates leasing for all listings.
+          schema:
+            type: boolean
+            default: false
+        - in: query
+          name: providerIds
+          required: false
+          description: Recalculates leasing for listings with specified provider IDs.
+          style: form
+          explode: true
+          schema:
+            type: array
+            uniqueItems: true
+            items:
+              type: integer
+              format: int64
+        - in: query
+          name: hasNoLeasingOnly
+          required: false
+          description: Recalculates leasing for listings without leasing only.
+          schema:
+            type: boolean
+            default: false
+      responses:
+        "202":
+          description: Listings leasing recalculation process started.
 components:
   parameters:
     listingIdPathParam:

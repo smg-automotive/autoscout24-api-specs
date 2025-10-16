@@ -50,6 +50,8 @@ paths:
       description: Returns listings based on the specified query parameters.
       tags:
         - Listing Search & Exploration
+      parameters:
+        - $ref: "#/components/parameters/languageParam"
       requestBody:
         content:
           application/json:

@@ -889,7 +889,7 @@ paths:
   /public/v1/sellers/{sellerId}/free-slots:
     get:
       operationId: GetSellerFreeSlots
-      description: Returns the number of free slots for given seller id.
+      description: Returns the number of free slots for the given seller id.
       tags:
         - Inventory
       parameters:

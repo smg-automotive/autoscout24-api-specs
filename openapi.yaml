@@ -852,7 +852,7 @@ paths:
           description: Seller listing Eurotax equipment set successfully.
   /public/v1/autoi/sellers/{sellerId}/listings/{listingId}/equipment:
     put:
-      operationId: SetEquipmentWithAutoIFormat
+      operationId: SetEquipmentWithAutoiFormat
       description: Sets equipment provided in Autoi format for the specified seller ID and listing ID.
       tags:
         - Inventory Management
@@ -881,13 +881,37 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/AutoIAutoscoutEquipmentSetRequest"
+              $ref: "#/components/schemas/AutoiAutoscoutEquipmentSetRequest"
         required: true
       responses:
         "204":
           description: Seller listing Autoi equipment set successfully.
+  /public/v1/sellers/{sellerId}free-slots:
+    get:
+      operationId: GetSellerFreeSlots
+      description: Returns number of free slots for given seller id.
+      tags:
+        - Inventory
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: "#/components/parameters/brandQueryParam"
+      responses:
+        "200":
+          description: Number of free slots successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FreeSlotsResponse'
 components:
   parameters:
+    brandQueryParam:
+      in: query
+      name: brand
+      description: The brand.
+      required: false
+      schema:
+        $ref: '#/components/schemas/Brand'
+      example: autoscout24
     certificationNumberPathParam:
       in: path
       name: certificationNumber
@@ -1038,7 +1062,7 @@ components:
         format: int64
       example: 1923
   schemas:
-    AutoIAutoscoutEquipmentSetRequest:
+    AutoiAutoscoutEquipmentSetRequest:
       type: object
       description: Represents the Autoi request structure in Autoscout format for setting the seller listing equipment.
       properties:
@@ -1046,19 +1070,19 @@ components:
           type: array
           description: Standard Autoi option.
           items:
-            $ref: '#/components/schemas/AutoIOption'
+            $ref: '#/components/schemas/AutoiOption'
         optional:
           type: array
           description: Optional Autoi option.
           items:
-            $ref: '#/components/schemas/AutoIOption'
+            $ref: '#/components/schemas/AutoiOption'
         searchAttributes:
           type: array
           description: Equipment search attributes. Empty list should be provided if there are no equipment search attributes.
           allOf:
             - $ref: "#/components/schemas/EquipmentSearchAttribute"
           example: [ "abs", "air-condition", "adaptive-cruise-control" ]
-    AutoIOption:
+    AutoiOption:
       type: object
       description: Autoi equipment option.
       properties:
@@ -1206,6 +1230,11 @@ components:
         - uploader
         - wood-transporter
       example: "car"
+    Brand:
+      type: string
+      enum:
+        - autoscout24
+        - motoscout24
     CatalogueProvider:
       type: string
       description: The catalogue provider.
@@ -1810,6 +1839,14 @@ components:
         - phev-petrol
         - two-stroke-mixture
       description: A list of possible fuel types that a vehicle can use.
+    FreeSlotsResponse:
+      type: object
+      properties:
+        numberOfFreeSlots:
+          type: integer
+          format: int32
+          example: 25
+      description: The response containing the number of free slots.
     GeoLocation:
       description: Geo location.
       type: object

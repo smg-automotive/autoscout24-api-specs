@@ -907,7 +907,7 @@ components:
     brandQueryParam:
       in: query
       name: brand
-      description: The brand.
+      description: The brand, (defaults to autoscout24).
       required: false
       schema:
         $ref: '#/components/schemas/Brand'

@@ -823,6 +823,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/sellerIdPathParam'
         - $ref: '#/components/parameters/listingIdPathParam'
+        - $ref: '#/components/parameters/versionIdQueryParam'
+        - $ref: '#/components/parameters/productionDateQueryParam'
       requestBody:
         content:
           application/json:
@@ -841,6 +843,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/sellerIdPathParam'
         - $ref: '#/components/parameters/listingIdPathParam'
+        - $ref: '#/components/parameters/versionIdQueryParam'
+        - $ref: '#/components/parameters/productionDateQueryParam'
       requestBody:
         content:
           application/json:
@@ -891,7 +895,7 @@ paths:
       operationId: GetSellerFreeSlots
       description: Returns the total number of free slots for the given seller id.
       tags:
-        - Inventory
+        - Inventory Management
       parameters:
         - $ref: '#/components/parameters/sellerIdPathParam'
         - $ref: "#/components/parameters/brandQueryParam"
@@ -973,6 +977,15 @@ components:
         maximum: 999999
         default: 0
       example: 0
+    productionDateQueryParam:
+      in: query
+      name: productionDate
+      description: The date of the production.
+      required: false
+      schema:
+        type: integer
+        format: date
+      example: 2023-06-01
     productionMonthQueryParam:
       in: query
       name: productionMonth
@@ -1057,6 +1070,15 @@ components:
       name: versionId
       description: The ID of the version.
       required: true
+      schema:
+        type: integer
+        format: int64
+      example: 1923
+    versionIdQueryParam:
+      in: query
+      name: versionId
+      description: The ID of the version.
+      required: false
       schema:
         type: integer
         format: int64

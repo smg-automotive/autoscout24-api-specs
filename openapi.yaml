@@ -886,7 +886,7 @@ paths:
       responses:
         "204":
           description: Seller listing Autoi equipment set successfully.
-  /public/v1/sellers/{sellerId}/listings/total-free-slots:
+  /public/v1/sellers/{sellerId}/features/list/free-slots:
     get:
       operationId: GetSellerFreeSlots
       description: Returns the total number of free slots for the given seller id.

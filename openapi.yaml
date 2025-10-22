@@ -983,7 +983,7 @@ components:
       description: The date of the production.
       required: false
       schema:
-        type: integer
+        type: string
         format: date
       example: 2023-06-01
     productionMonthQueryParam:

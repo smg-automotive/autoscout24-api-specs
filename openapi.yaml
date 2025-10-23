@@ -824,6 +824,7 @@ paths:
         - $ref: '#/components/parameters/sellerIdPathParam'
         - $ref: '#/components/parameters/listingIdPathParam'
         - $ref: '#/components/parameters/versionIdQueryParam'
+        - $ref: '#/components/parameters/externalVersionIdQueryParam'
         - $ref: '#/components/parameters/productionDateQueryParam'
       requestBody:
         content:
@@ -844,6 +845,7 @@ paths:
         - $ref: '#/components/parameters/sellerIdPathParam'
         - $ref: '#/components/parameters/listingIdPathParam'
         - $ref: '#/components/parameters/versionIdQueryParam'
+        - $ref: '#/components/parameters/externalVersionIdQueryParam'
         - $ref: '#/components/parameters/productionDateQueryParam'
       requestBody:
         content:
@@ -933,6 +935,15 @@ components:
       schema:
         type: string
       example: EID_12345
+    externalVersionIdQueryParam:
+      in: query
+      name: externalVersionId
+      description: The external ID of the version.
+      required: false
+      schema:
+        type: integer
+        format: int64
+      example: 102215859
     languageParam:
       in: query
       name: language

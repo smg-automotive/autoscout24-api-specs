@@ -327,6 +327,27 @@ paths:
       responses:
         "201":
           description: Seller listing successfully created.
+  /public/v1/sellers/{sellerId}/listings/aggregate:
+    post:
+      operationId: GetListingsAggregations
+      description: Get listing aggregation.
+      tags:
+        - Inventory Management
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SellerListingAggregateRequest"
+        required: true
+      responses:
+        "200":
+          description: Listing aggregations successfully returned.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/SellerListingAggregateResponse"
   /public/v1/sellers/{sellerId}/listings/{listingId}:
     get:
       operationId: GetSellerListing
@@ -6380,6 +6401,42 @@ components:
       allOf:
         - $ref: '#/components/schemas/SellerListingSharedRequest'
       description: Request to update an existing seller listing.
+    SellerListingAggregateRequest:
+      description: Represents the request structure for getting the seller listing aggregations.
+      type: object
+      properties:
+        aggregations:
+          type: array
+          description: Aggregation types.
+          items:
+            type: object
+            properties:
+              name:
+                description: Name of the aggregation type
+                allOf:
+                  - $ref: "#/components/schemas/ListingAggregationType"
+                example: statusCount
+      example: { "aggregations": [ { "name": "statusCount" } ] }
+    ListingAggregationType:
+      description: Represents an aggregation type.
+      type: string
+      enum:
+        - statusCount
+      example: statusCount
+    SellerListingAggregateResponse:
+      type: object
+      properties:
+        aggregations:
+          description: Retrieved aggregations.
+          type: object
+          additionalProperties:
+            description: Aggregation name.
+            type: object
+            additionalProperties:
+              description: Aggregation value.
+              type: object
+      example: { "aggregations": { "statusCount": { "value": { "activated": 1, "deactivated": 2, "removed": 3, "draft": 4 } } } }
+      description: The response containing the aggregations retrieved, with each aggregation represented by its name and associated values.
   securitySchemes:
     BearerAuth:
       bearerFormat: auth-scheme

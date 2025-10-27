@@ -846,6 +846,7 @@ paths:
         - $ref: '#/components/parameters/listingIdPathParam'
         - $ref: '#/components/parameters/versionIdQueryParam'
         - $ref: '#/components/parameters/externalVersionIdQueryParam'
+        - $ref: '#/components/parameters/overrideStandardQueryParam'
         - $ref: '#/components/parameters/productionDateQueryParam'
       requestBody:
         content:
@@ -867,6 +868,7 @@ paths:
         - $ref: '#/components/parameters/listingIdPathParam'
         - $ref: '#/components/parameters/versionIdQueryParam'
         - $ref: '#/components/parameters/externalVersionIdQueryParam'
+        - $ref: '#/components/parameters/overrideStandardQueryParam'
         - $ref: '#/components/parameters/productionDateQueryParam'
       requestBody:
         content:
@@ -997,6 +999,14 @@ components:
       schema:
         type: string
       example: a6
+    overrideStandardQueryParam:
+      in: query
+      name: overrideStandard
+      description: The flag to indicate whether standard equipment should be overridden by version equipment.
+      required: false
+      schema:
+        type: boolean
+      example: true
     pageQueryParam:
       in: query
       name: page

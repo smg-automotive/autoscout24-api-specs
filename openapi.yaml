@@ -931,6 +931,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TotalFreeSlotsResponse'
+  /public/v1/sellers/{sellerId}/features/top-list/free-slots:
+    get:
+      operationId: GetSellerTopListFreeSlots
+      description: Returns the total number of free slots for the top list feature, seller ID and brand.
+      tags:
+        - Inventory Management
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: "#/components/parameters/brandQueryParam"
+      responses:
+        "200":
+          description: Total number of free slots for the top list feature successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TotalTopListFreeSlotsResponse'
 components:
   parameters:
     brandQueryParam:
@@ -4766,6 +4782,14 @@ components:
           format: int32
           example: 25
       description: The response containing the number of free slots.
+    TotalTopListFreeSlotsResponse:
+      type: object
+      properties:
+        numberOfFreeSlots:
+          type: integer
+          format: int32
+          example: 20
+      description: The response containing the total number of free slots for the top list feature.
     Translation:
       description: Represents the response structure for translations.
       type: object

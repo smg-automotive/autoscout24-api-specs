@@ -4941,6 +4941,11 @@ components:
           type: string
           description: Localized display name of the equipment option.
           example: Pack Assistenz Tour
+        price:
+          type: number
+          description: Price of the option.
+          format: double
+          example: 123.55
         packageItems:
           type: array
           nullable: true

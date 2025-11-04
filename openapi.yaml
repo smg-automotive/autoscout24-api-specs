@@ -949,7 +949,7 @@ paths:
                 $ref: '#/components/schemas/TotalTopListFreeSlotsResponse'
   /public/v1/sellers/{sellerId}/listings/{listingId}/features/top-list/book:
     post:
-      operationId: BookSellerTopListFeature
+      operationId: BookSellerListingTopList
       description: Books the top list feature for the specified seller ID and listing ID.
       tags:
           - Inventory Management

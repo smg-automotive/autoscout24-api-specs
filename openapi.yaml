@@ -947,6 +947,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TotalTopListFreeSlotsResponse'
+  /public/v1/sellers/{sellerId}/listings/{listingId}/features/top-list:
+    get:
+      operationId: GetSellerListingTopList
+      description: Returns the top list booked information for the specified seller ID and listing ID.
+      tags:
+        - Inventory Management
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/listingIdPathParam'
+      responses:
+        "200":
+          description: Top list booked information successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SellerListingTopListResponse'
 components:
   parameters:
     brandQueryParam:
@@ -4790,6 +4806,30 @@ components:
           format: int32
           example: 25
       description: The response containing the total number of free slots for the top list feature.
+    SellerListingTopListResponse:
+      type: object
+      description: Represents the response structure for returning seller listing top list feature.
+      properties:
+        booked:
+          type: boolean
+          description: Indicates if the listing has an top list feature.
+        price:
+          description: The price for booking the top list feature.
+          type: number
+          format: double
+          example: 123.55
+        startDate:
+          description: The start date of the top list feature.
+          type: string
+          format: date-time
+          example: '2023-10-01T12:00:00Z'
+          nullable: true
+        endDate:
+          description: The end date of the top list feature.
+          type: string
+          format: date-time
+          example: '2023-10-08T12:00:00Z'
+          nullable: true
     Translation:
       description: Represents the response structure for translations.
       type: object

@@ -4812,20 +4812,20 @@ components:
       properties:
         booked:
           type: boolean
-          description: Indicates if the listing has an top list feature.
+          description: Indicates whether the top list feature is currently booked.
         price:
-          description: The price for booking the top list feature.
+          description: The price for booking the top list feature, representing either the current active booking price or the available price if not yet booked.
           type: number
           format: double
           example: 123.55
         startDate:
-          description: The start date of the top list feature.
+          description: The date when the top list booking starts.
           type: string
           format: date-time
           example: '2023-10-01T12:00:00Z'
           nullable: true
         endDate:
-          description: The end date of the top list feature.
+          description: The date when the top list booking ends.
           type: string
           format: date-time
           example: '2023-10-08T12:00:00Z'

@@ -947,6 +947,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TotalTopListFreeSlotsResponse'
+  /public/v1/sellers/{sellerId}/listings/{listingId}/features/top-list/book:
+    post:
+      operationId: BookSellerListingTopList
+      description: Books the top list feature for the specified seller ID and listing ID.
+      tags:
+          - Inventory Management
+      parameters:
+          - $ref: '#/components/parameters/sellerIdPathParam'
+          - $ref: '#/components/parameters/listingIdPathParam'
+      responses:
+          "204":
+            description: Top list feature successfully booked for the seller's listing.
 components:
   parameters:
     brandQueryParam:

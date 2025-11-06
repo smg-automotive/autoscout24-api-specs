@@ -322,6 +322,20 @@ components:
       type: object
       description: Represents the object of a live listing.
       properties:
+        batteryCapacity:
+          description: Battery capacity in kWh.
+          type: number
+          format: double
+          minimum: 1.0
+          maximum: 999.0
+          example: 150.55
+        batteryHealthPercentage:
+          type: number
+          format: double
+          minimum: 0.0
+          maximum: 100.0
+          description: Battery health percentage.
+          example: 90.0
         bodyColor:
           description: Color of the vehicle body.
           allOf:
@@ -332,6 +346,13 @@ components:
           allOf:
             - $ref: "#/components/schemas/BodyType"
           example: coupe
+        certificationNumber:
+          description: Registration document number; in Swiss market known as Typenscheinnummer.
+          type: string
+          minLength: 6
+          maxLength: 6
+          pattern: '^\w{6}$'
+          example: 1AE899
         co2Emission:
           description: CO2 emission in g/km.
           type: integer
@@ -477,6 +498,13 @@ components:
           description: Model key of the vehicle.
           type: string
           example: a5
+        powerConsumption:
+          description: Power consumption of the vehicle in kWh.
+          type: number
+          format: double
+          minimum: 1.0
+          maximum: 199.0
+          example: 27.55
         price:
           description: Vehicle price in currency units.
           type: number
@@ -492,6 +520,18 @@ components:
           description: ID of the vehicle assigned by the seller.
           type: string
           example: 3675D10093774
+        serialNumber:
+          type: string
+          pattern: '^\d{3}\.\d{3}\.\d{3}$'
+          description: Serial number of the vehicle; in Swiss market known as Stammnummer.
+          example: 123.456.789
+        range:
+          description: Range of the vehicle in km.
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 9999
+          example: 650
         teaser:
           description: Short teaser text for the listing.
           type: string

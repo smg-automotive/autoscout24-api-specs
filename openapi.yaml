@@ -846,6 +846,7 @@ paths:
         - $ref: '#/components/parameters/listingIdPathParam'
         - $ref: '#/components/parameters/versionIdQueryParam'
         - $ref: '#/components/parameters/externalVersionIdQueryParam'
+        - $ref: '#/components/parameters/overridePackageItemsQueryParam'
         - $ref: '#/components/parameters/overrideStandardQueryParam'
         - $ref: '#/components/parameters/productionDateQueryParam'
       requestBody:
@@ -868,6 +869,7 @@ paths:
         - $ref: '#/components/parameters/listingIdPathParam'
         - $ref: '#/components/parameters/versionIdQueryParam'
         - $ref: '#/components/parameters/externalVersionIdQueryParam'
+        - $ref: '#/components/parameters/overridePackageItemsQueryParam'
         - $ref: '#/components/parameters/overrideStandardQueryParam'
         - $ref: '#/components/parameters/productionDateQueryParam'
       requestBody:
@@ -1043,6 +1045,14 @@ components:
       schema:
         type: string
       example: a6
+    overridePackageItemsQueryParam:
+      in: query
+      name: overridePackageItems
+      description: The flag to indicate whether package items should be imported from version options.
+      required: false
+      schema:
+        type: boolean
+      example: true
     overrideStandardQueryParam:
       in: query
       name: overrideStandard

@@ -627,10 +627,11 @@ components:
         - other
       example: "blue"
     Language:
-      description: The language used by the seller. Valid options are German (de), French (fr), or Italian (it).
+      description: The language used by the seller. Valid options are German (de), English (en), French (fr), or Italian (it).
       type: string
       enum:
         - de
+        - en
         - fr
         - it
       example: de

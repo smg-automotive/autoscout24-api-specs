@@ -3207,6 +3207,13 @@ components:
           description: Unique identifier assigned by the seller to the vehicle (Wagen-Nr.).
           type: string
           example: SVID_123
+        statuses:
+          description: Filter listings by their status.
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ListingStatus'
+          example: [ "activated", "deactivated" ]
         transmissionTypes:
           description: Filter listings by transmission types.
           uniqueItems: true

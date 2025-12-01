@@ -6453,7 +6453,7 @@ components:
         modelKey:
           type: string
           maxLength: 255
-          description: Vehicle model key.
+          description: Vehicle model key (if provided, it must not be blank).
           example: a6
         vehicleCategory:
           description: Category of the vehicle.

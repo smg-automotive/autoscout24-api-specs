@@ -921,7 +921,7 @@ paths:
   /public/v1/sellers/{sellerId}/versions/search:
     post:
       operationId: searchVersions
-      description: Returns versiopns based on the specified query parameters.
+      description: Returns versions based on the specified query parameters.
       tags:
         - Inventory Management
       parameters:
@@ -5839,7 +5839,7 @@ components:
         - auto-i
       example: eurotax
     VersionSearch:
-      description: Represents the request structure for searching listings.
+      description: Represents the request structure for searching versions.
       type: object
       properties:
         query:

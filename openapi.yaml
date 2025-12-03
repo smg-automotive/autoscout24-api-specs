@@ -920,7 +920,7 @@ paths:
           description: Seller listing Autoi equipment set successfully.
   /public/v1/sellers/{sellerId}/versions/search:
     post:
-      operationId: searchVersions
+      operationId: SearchVersions
       description: Returns versions based on the specified query parameters.
       tags:
         - Inventory Management

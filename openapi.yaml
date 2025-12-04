@@ -302,6 +302,8 @@ paths:
         - Inventory Management
       parameters:
         - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: "#/components/parameters/externalIdQueryParam"
+        - $ref: "#/components/parameters/sellerVehicleIdQueryParam"
         - $ref: "#/components/parameters/pageQueryParam"
         - $ref: "#/components/parameters/sizeQueryParam"
       responses:
@@ -1026,6 +1028,14 @@ components:
       schema:
         type: string
       example: EID_12345
+    externalIdQueryParam:
+      in: query
+      name: externalId
+      description: The external ID.
+      required: false
+      schema:
+        type: string
+      example: EID_12345
     externalVersionIdQueryParam:
       in: query
       name: externalVersionId
@@ -1145,6 +1155,14 @@ components:
       name: sellerVehicleId
       description: The ID of the seller vehicle.
       required: true
+      schema:
+        type: string
+      example: A123XYZ
+    sellerVehicleIdQueryParam:
+      in: query
+      name: sellerVehicleId
+      description: The ID of the seller vehicle.
+      required: false
       schema:
         type: string
       example: A123XYZ

@@ -47,7 +47,7 @@ paths:
   /public/v1/listings/search:
     post:
       operationId: SearchListings
-      description: Returns listings based on the specified query parameters.
+      description: Returns live listings based on the specified query parameters.
       tags:
         - Listing Search & Exploration
       parameters:
@@ -68,7 +68,7 @@ paths:
   /public/v1/listings/count:
     post:
       operationId: CountListings
-      description: Returns the number of listings based on the specified query parameters.
+      description: Returns the number of live listings based on the specified query parameters.
       tags:
         - Listing Search & Exploration
       requestBody:
@@ -106,7 +106,7 @@ paths:
   /public/v1/listings/{listingId}:
     get:
       operationId: GetListing
-      description: Returns a localized listing for the specified listing ID.
+      description: Returns a localized live listing for the specified listing ID.
       tags:
         - Listing Search & Exploration
       parameters:
@@ -127,7 +127,7 @@ paths:
   /public/v1/listings/{listingId}/equipment:
     get:
       operationId: GetListingEquipment
-      description: Returns localized equipment details for the specified listing ID.
+      description: Returns localized equipment details for the specified live listing ID.
       tags:
         - Listing Search & Exploration
       parameters:
@@ -302,8 +302,6 @@ paths:
         - Inventory Management
       parameters:
         - $ref: '#/components/parameters/sellerIdPathParam'
-        - $ref: "#/components/parameters/externalIdQueryParam"
-        - $ref: "#/components/parameters/sellerVehicleIdQueryParam"
         - $ref: "#/components/parameters/pageQueryParam"
         - $ref: "#/components/parameters/sizeQueryParam"
       responses:
@@ -920,27 +918,6 @@ paths:
       responses:
         "204":
           description: Seller listing Autoi equipment set successfully.
-  /public/v1/sellers/{sellerId}/versions/search:
-    post:
-      operationId: SearchVersions
-      description: Returns versions based on the specified query parameters.
-      tags:
-        - Inventory Management
-      parameters:
-        - $ref: '#/components/parameters/sellerIdPathParam'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/VersionSearchRequest"
-        required: true
-      responses:
-        "200":
-          description: Versions successfully returned.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/VersionSearchResponse"
   /public/v1/sellers/{sellerId}/features/list/free-slots:
     get:
       operationId: GetSellerListFreeSlots
@@ -1025,14 +1002,6 @@ components:
       name: externalId
       description: The external ID.
       required: true
-      schema:
-        type: string
-      example: EID_12345
-    externalIdQueryParam:
-      in: query
-      name: externalId
-      description: The external ID.
-      required: false
       schema:
         type: string
       example: EID_12345
@@ -1122,8 +1091,6 @@ components:
       schema:
         type: integer
         format: int16
-        minimum: 1
-        maximum: 12
       example: 5
     productionYearQueryParam:
       in: query
@@ -1155,14 +1122,6 @@ components:
       name: sellerVehicleId
       description: The ID of the seller vehicle.
       required: true
-      schema:
-        type: string
-      example: A123XYZ
-    sellerVehicleIdQueryParam:
-      in: query
-      name: sellerVehicleId
-      description: The ID of the seller vehicle.
-      required: false
       schema:
         type: string
       example: A123XYZ
@@ -3089,10 +3048,6 @@ components:
           items:
             $ref: '#/components/schemas/EquipmentSearchAttribute'
           example: [ "abs", "air-condition", "adaptive-cruise-control" ]
-        externalId:
-          description: Listing's external ID.
-          type: string
-          example: EID_123
         firstRegistrationYearFrom:
           description: Filter listings by the earliest first registration year.
           type: integer
@@ -3244,10 +3199,6 @@ components:
             type: integer
             format: int64
           example: [ 701 ]
-        sellerVehicleId:
-          description: Unique identifier assigned by the seller to the vehicle (Wagen-Nr.).
-          type: string
-          example: SVID_123
         statuses:
           description: Filter listings by their status.
           uniqueItems: true
@@ -5858,143 +5809,6 @@ components:
         - eurotax
         - auto-i
       example: eurotax
-    VersionSearchRequest:
-      description: Represents the request structure for searching versions.
-      type: object
-      properties:
-        query:
-          $ref: '#/components/schemas/VersionQuery'
-        pagination:
-          $ref: "#/components/schemas/Pageable"
-    VersionSearchResponse:
-      description: Represents the response structure for a version search query, including pagination and result metadata.
-      type: object
-      properties:
-        content:
-          type: array
-          items:
-            $ref: "#/components/schemas/VersionBaseResponse"
-        empty:
-          description: Flag indicating if the search result contains no items.
-          type: boolean
-          example: false
-        numberOfElements:
-          description: Number of elements in the current page of search results.
-          type: integer
-          format: int32
-          example: 15
-        size:
-          description: Total number of elements requested for the search query.
-          type: integer
-          format: int32
-          example: 20
-        totalElements:
-          description: Total number of elements that match the provided search criteria across all pages.
-          type: integer
-          format: int64
-          example: 15
-        first:
-          description: Flag indicating if the current page is the first page of the search results.
-          type: boolean
-          example: true
-        last:
-          description: Flag indicating if the current page is the last page of the search results.
-          type: boolean
-          example: true
-        number:
-          description: Current page number in the search result.
-          type: integer
-          format: int32
-          example: 0
-        totalPages:
-          description: Total number of pages available for the given search criteria.
-          type: integer
-          format: int32
-          example: 1
-    VersionQuery:
-      description: Represents the query parameters for filtering versions.
-      type: object
-      properties:
-        fuelTypes:
-          description: Filter versions by fuel types.
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/FuelType'
-          example: [ "electric", "petrol" ]
-        makeKey:
-          type: string
-          maxLength: 255
-          description: Filter versions by make key.
-          example: audi
-        modelKey:
-          type: string
-          maxLength: 255
-          description: Filter versions by model key.
-          example: a6
-        productionYear:
-          description: Filter versions by year the vehicle was produced.
-          type: integer
-          format: int16
-          example: 2020
-        productionMonth:
-          description: Filter versions by month the vehicle was produced.
-          type: integer
-          format: int16
-          example: 10
-        transmissionTypes:
-          description: Filter versions by transmission types.
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/TransmissionType'
-          example: [ "manual", "automatic-stepless" ]
-        vehicleCategory:
-          description: Filter versions by category of the vehicle.
-          allOf:
-            - $ref: "#/components/schemas/VehicleCategory"
-          example: car
-    VersionBaseResponse:
-      type: object
-      properties:
-        bodyType:
-          description: Shape of the vehicle body.
-          allOf:
-            - $ref: "#/components/schemas/BodyType"
-          example: coupe
-        doors:
-          type: integer
-          format: int16
-          minimum: 1
-          maximum: 9
-          description: Number of doors on the vehicle.
-          example: 4
-        fullName:
-          description: The full name of the vehicle’s version, including model and specifications.
-          type: string
-          example: A6 3.0 55 TFSI quattro S-Tronic
-        horsePower:
-          description: Horsepower of the vehicle.
-          type: integer
-          format: int16
-          minimum: 1
-          maximum: 9999
-          example: 199
-        id:
-          description: Version's ID.
-          type: integer
-          format: int64
-          example: 1620023
-        productionStartDate:
-          type: string
-          format: date
-          description: Start date of production.
-          example: 2020-03-01
-        productionEndDate:
-          type: string
-          format: date
-          example: 2022-06-01
-          description: End date of production.
     WarrantyType:
       description: Type of warranty.
       type: string

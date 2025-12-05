@@ -47,7 +47,7 @@ paths:
   /public/v1/listings/search:
     post:
       operationId: SearchListings
-      description: Returns listings based on the specified query parameters.
+      description: Returns live listings based on the specified query parameters.
       tags:
         - Listing Search & Exploration
       parameters:
@@ -68,7 +68,7 @@ paths:
   /public/v1/listings/count:
     post:
       operationId: CountListings
-      description: Returns the number of listings based on the specified query parameters.
+      description: Returns the number of live listings based on the specified query parameters.
       tags:
         - Listing Search & Exploration
       requestBody:
@@ -106,7 +106,7 @@ paths:
   /public/v1/listings/{listingId}:
     get:
       operationId: GetListing
-      description: Returns a localized listing for the specified listing ID.
+      description: Returns a localized live listing for the specified listing ID.
       tags:
         - Listing Search & Exploration
       parameters:
@@ -127,7 +127,7 @@ paths:
   /public/v1/listings/{listingId}/equipment:
     get:
       operationId: GetListingEquipment
-      description: Returns localized equipment details for the specified listing ID.
+      description: Returns localized equipment details for the specified live listing ID.
       tags:
         - Listing Search & Exploration
       parameters:
@@ -994,13 +994,13 @@ paths:
       operationId: BookSellerListingTopList
       description: Books the top list feature for the specified seller ID and listing ID.
       tags:
-          - Inventory Management
+        - Inventory Management
       parameters:
-          - $ref: '#/components/parameters/sellerIdPathParam'
-          - $ref: '#/components/parameters/listingIdPathParam'
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/listingIdPathParam'
       responses:
-          "204":
-            description: Top list feature successfully booked for the seller's listing.
+        "204":
+          description: Top list feature successfully booked for the seller's listing.
 components:
   parameters:
     brandQueryParam:
@@ -3089,10 +3089,6 @@ components:
           items:
             $ref: '#/components/schemas/EquipmentSearchAttribute'
           example: [ "abs", "air-condition", "adaptive-cruise-control" ]
-        externalId:
-          description: Listing's external ID.
-          type: string
-          example: EID_123
         firstRegistrationYearFrom:
           description: Filter listings by the earliest first registration year.
           type: integer
@@ -3244,17 +3240,6 @@ components:
             type: integer
             format: int64
           example: [ 701 ]
-        sellerVehicleId:
-          description: Unique identifier assigned by the seller to the vehicle (Wagen-Nr.).
-          type: string
-          example: SVID_123
-        statuses:
-          description: Filter listings by their status.
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/ListingStatus'
-          example: [ "activated", "deactivated" ]
         transmissionTypes:
           description: Filter listings by transmission types.
           uniqueItems: true

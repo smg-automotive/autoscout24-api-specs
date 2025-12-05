@@ -302,6 +302,8 @@ paths:
         - Inventory Management
       parameters:
         - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: "#/components/parameters/externalIdQueryParam"
+        - $ref: "#/components/parameters/sellerVehicleIdQueryParam"
         - $ref: "#/components/parameters/pageQueryParam"
         - $ref: "#/components/parameters/sizeQueryParam"
       responses:
@@ -992,13 +994,13 @@ paths:
       operationId: BookSellerListingTopList
       description: Books the top list feature for the specified seller ID and listing ID.
       tags:
-          - Inventory Management
+        - Inventory Management
       parameters:
-          - $ref: '#/components/parameters/sellerIdPathParam'
-          - $ref: '#/components/parameters/listingIdPathParam'
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/listingIdPathParam'
       responses:
-          "204":
-            description: Top list feature successfully booked for the seller's listing.
+        "204":
+          description: Top list feature successfully booked for the seller's listing.
 components:
   parameters:
     brandQueryParam:
@@ -1023,6 +1025,14 @@ components:
       name: externalId
       description: The external ID.
       required: true
+      schema:
+        type: string
+      example: EID_12345
+    externalIdQueryParam:
+      in: query
+      name: externalId
+      description: The external ID.
+      required: false
       schema:
         type: string
       example: EID_12345
@@ -1143,6 +1153,14 @@ components:
       name: sellerVehicleId
       description: The ID of the seller vehicle.
       required: true
+      schema:
+        type: string
+      example: A123XYZ
+    sellerVehicleIdQueryParam:
+      in: query
+      name: sellerVehicleId
+      description: The ID of the seller vehicle.
+      required: false
       schema:
         type: string
       example: A123XYZ

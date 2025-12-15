@@ -41,7 +41,7 @@ paths:
       tags:
         - Listing
       parameters:
-        - $ref: "#/components/parameters/modifiedSinceQueryParam"
+        - $ref: "#/components/parameters/liveModifiedSinceQueryParam"
         - $ref: "#/components/parameters/vehicleCategoryQueryParam"
         - $ref: "#/components/parameters/pageQueryParam"
         - $ref: "#/components/parameters/sizeQueryParam"
@@ -83,10 +83,18 @@ components:
       schema:
         $ref: "#/components/schemas/Language"
       example: de
-    modifiedSinceQueryParam:
+    liveModifiedSinceQueryParam:
       in: query
       name: modifiedSince
       description: The date and time when the listing's liveness was modified.
+      schema:
+        type: string
+        format: date-time
+        example: '2025-01-01T12:00:00Z'
+    modifiedSinceQueryParam:
+      in: query
+      name: modifiedSince
+      description: The date and time when the listing's was modified.
       schema:
         type: string
         format: date-time

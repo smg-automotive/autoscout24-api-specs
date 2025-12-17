@@ -920,14 +920,12 @@ paths:
       responses:
         "204":
           description: Seller listing Autoi equipment set successfully.
-  /public/v1/sellers/{sellerId}/versions/search:
+  /public/v1/versions/search:
     post:
       operationId: SearchVersions
       description: Returns versions based on the specified query parameters.
       tags:
         - Inventory Management
-      parameters:
-        - $ref: '#/components/parameters/sellerIdPathParam'
       requestBody:
         content:
           application/json:

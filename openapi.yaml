@@ -2102,7 +2102,7 @@ components:
         providerName:
           description: Leasing provider's name.
           type: string
-          example: MultiLease
+          example: FinanceScout24
         monthlyRate:
           description: Leasing monthly rate.
           type: number

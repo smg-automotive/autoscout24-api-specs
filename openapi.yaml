@@ -2090,6 +2090,31 @@ components:
         - it
       example: de
       description: The language used by the user, which can be German (de), French (fr), or Italian (it).
+    Leasing:
+      description: Leasing information.
+      type: object
+      properties:
+        providerId:
+          description: Leasing provider's ID.
+          type: integer
+          format: int64
+          example: 14
+        providerName:
+          description: Leasing provider's name.
+          type: string
+          example: FinanceScout24
+        monthlyRate:
+          description: Leasing monthly rate.
+          type: number
+          format: double
+          minimum: 0.0
+          maximum: 9999999.0
+          example: 370.8
+        url:
+          description: URL to the leasing provider's page.
+          type: string
+          format: uri
+          example: "https://financing-offers.financescout24.ch/de/123"
     LicenseCategory:
       type: string
       enum:
@@ -2187,6 +2212,8 @@ components:
           minimum: 1
           maximum: 9999
           example: 250
+        leasing:
+          $ref: "#/components/schemas/Leasing"
         listPrice:
           description: List price of the vehicle.
           type: number
@@ -2635,6 +2662,8 @@ components:
           type: string
           format: date
           example: '2020-12-15'
+        leasing:
+          $ref: "#/components/schemas/Leasing"
         length:
           description: Length of the vehicle in mm.
           type: integer

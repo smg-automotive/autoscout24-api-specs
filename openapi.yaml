@@ -3267,6 +3267,14 @@ components:
             type: integer
             format: int64
           example: [ 701 ]
+        sellerVehicleIds:
+          description: Filter listings by unique identifier assigned by seller (Wagen-Nr.).
+          uniqueItems: true
+          maxItems: 256
+          type: array
+          items:
+            type: string
+          example: [ "A123XYZ", "B456CDE" ]
         transmissionTypes:
           description: Filter listings by transmission types.
           uniqueItems: true

@@ -15,17 +15,17 @@ security:
   - BearerAuth: [ ]
 
 paths:
-  /swiftcourt/v1/listings/{listingId{:
+  /swiftcourt/v1/listings/{listingId}:
     get:
-      operationId: GetSwiftcourtListings
-      description: Returns a list of swiftcourt listings.
+      operationId: GetSwiftcourtListingByListingId
+      description: Returns a swiftcourt listings.
       tags:
           - Listing
       parameters:
         - $ref: '#/components/parameters/listingIdPathParam'
       responses:
           "200":
-            description: Swiftcourt listings returned.
+            description: Swiftcourt listing returned.
             content:
                 application/json:
                   schema:

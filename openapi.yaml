@@ -2389,6 +2389,27 @@ components:
           type: string
           description: Name of the document
           example: equipment-details.pdf
+    ListingImage:
+      type: object
+      required:
+        - id
+        - key
+        - url
+      description: Image associated with a seller's listing.
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Image's ID.
+          example: 1201
+        key:
+          type: string
+          description: Image storage key or reference.
+          example: key1.jpg
+        url:
+          type: string
+          description: Absolute URL of the image
+          example: https://images.autoscout24.local/public/listing/key1.jpg
     ListingImageKey:
       type: object
       description: Image key used to associate an image with the listing.

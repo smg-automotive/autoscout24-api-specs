@@ -595,6 +595,12 @@ paths:
       parameters:
         - $ref: '#/components/parameters/sellerIdPathParam'
         - $ref: '#/components/parameters/listingIdPathParam'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SellerListingBatteryCertificateUploadRequest'
       responses:
         "200":
           description: Seller listing battery certificate successfully uploaded
@@ -6048,6 +6054,16 @@ components:
         - from-first-registration
         - none
       example: from-date
+    SellerListingBatteryCertificateUploadRequest:
+      description: Represents the request structure for the single battery certificate upload.
+      type: object
+      required:
+        - file
+      properties:
+        file:
+          type: string
+          format: binary
+          description: Battery certificate file to be uploaded (pdf).
     SellerListingImageUploadRequest:
       description: Represents the request structure for the single image upload.
       type: object

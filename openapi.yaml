@@ -636,7 +636,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SellerListingImagesSetRequest"
+              $ref: "#/components/schemas/SellerListingDocumentsSetRequest"
         required: true
       responses:
         "204":

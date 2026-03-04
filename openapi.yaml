@@ -586,6 +586,36 @@ paths:
       responses:
         "204":
           description: Seller listing successfully removed
+  /public/v1/sellers/{sellerId}/listings/{listingId}/battery-certificate/upload:
+    post:
+      operationId: UploadSellerListingBatteryCertificate
+      description: Upload battery certificate for the specified seller ID and listing ID.
+      tags:
+        - Inventory Management
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/listingIdPathParam'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SellerListingBatteryCertificateUploadRequest'
+      responses:
+        "200":
+          description: Seller listing battery certificate successfully uploaded
+  /public/v1/sellers/{sellerId}/listings/{listingId}/battery-certificate:
+    delete:
+      operationId: DeleteSellerListingBatteryCertificate
+      description: Delete battery certificate for the specified seller ID and listing ID.
+      tags:
+        - Inventory Management
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/listingIdPathParam'
+      responses:
+        "204":
+          description: Seller listing battery certificate successfully deleted
   /public/v1/sellers/{sellerId}/listings/{listingId}/documents/upload:
     post:
       operationId: UploadSellerListingDocument
@@ -2373,7 +2403,7 @@ components:
       required:
         - key
       example:
-        key: listings/101/1101/2289456.pdf 
+        key: listings/101/1101/2289456.pdf
     ListingDocument:
       type: object
       required:
@@ -6105,6 +6135,16 @@ components:
         - from-first-registration
         - none
       example: from-date
+    SellerListingBatteryCertificateUploadRequest:
+      description: Represents the request structure for the single battery certificate upload.
+      type: object
+      required:
+        - file
+      properties:
+        file:
+          type: string
+          format: binary
+          description: Battery certificate file to be uploaded (pdf).
     SellerListingDocumentUploadRequest:
       description: Represents the request structure for the single document upload.
       type: object

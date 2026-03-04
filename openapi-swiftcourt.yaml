@@ -1,0 +1,225 @@
+openapi: 3.0.3
+info:
+  contact:
+    email: info@autoscout24.ch
+    name: AutoScout24 Engineering Team
+    url: https://developers.autoscout24.ch
+  description: Explore the versatile AutoScout24 REST API for seamless integration.
+  title: AutoScout24 API for listing distribution
+  version: 1.0.1
+
+servers:
+  - url: "https://api.autoscout24.ch"
+
+security:
+  - BearerAuth: [ ]
+
+paths:
+  /swiftcourt/v1/listings/{listingId}:
+    get:
+      operationId: GetSwiftcourtListingByListingId
+      description: Returns a swiftcourt listings.
+      tags:
+          - Listing
+      parameters:
+        - $ref: '#/components/parameters/listingIdPathParam'
+      responses:
+          "200":
+            description: Swiftcourt listing returned.
+            content:
+                application/json:
+                  schema:
+                      "$ref": "#/components/schemas/SwiftcourtListingsResponse"
+components:
+  parameters:
+    listingIdPathParam:
+      in: path
+      name: listingId
+      description: The ID of the listing.
+      required: true
+      schema:
+        type: integer
+        format: int64
+      example: 1620023
+  schemas:
+    BodyType:
+      type: string
+      description: Defines the body type of the vehicle, indicating the general structure and form.
+      enum:
+        - alcove
+        - atv-quad
+        - boat-trailer
+        - box
+        - box-double-cab
+        - box-glazed
+        - bridge
+        - bridge-double-cab
+        - bus
+        - cab-over
+        - cabin
+        - cabriolet
+        - car
+        - caravan
+        - car-trailer
+        - car-transporter
+        - chassis-cab
+        - chopper
+        - construction-trailer
+        - coupe
+        - custom-bike
+        - e-bike
+        - estate
+        - horse-trailer
+        - integrated
+        - livestock-trailer
+        - low-bed-trailer
+        - minivan
+        - moped
+        - motocross-bike
+        - motorcycle-trailer
+        - motorhome
+        - naked-bike
+        - off-road-bike
+        - other
+        - pickup
+        - platform
+        - reefer
+        - sales-trailer
+        - saloon
+        - sanitary-trailer
+        - scooter
+        - semi-integrated
+        - semi-trailer
+        - sidecar
+        - small-car
+        - snowmobile
+        - special-vehicles-trailer
+        - street-bike
+        - suitcase
+        - supermoto
+        - suv
+        - tank-body
+        - tipper
+        - touring
+        - trailer
+        - trike
+        - uploader
+        - wood-transporter
+      example: "car"
+    Color:
+      type: string
+      description: The color of the vehicle or its components.
+      enum:
+        - anthracite
+        - beige
+        - black
+        - blue
+        - bordeaux
+        - brown
+        - gray
+        - gold
+        - green
+        - multicolored
+        - orange
+        - pink
+        - red
+        - silver
+        - turquoise
+        - violet
+        - white
+        - yellow
+        - other
+      example: "blue"
+    SwiftcourtListingsResponse:
+      description: Represents a swiftcourt listing entity.
+      type: object
+      properties:
+        bodyColor:
+          description: Color of the vehicle body.
+          allOf:
+            - $ref: '#/components/schemas/Color'
+          example: blue
+        bodyType:
+          description: Body type of the vehicle.
+          allOf:
+            - $ref: "#/components/schemas/BodyType"
+          example: coupe
+        certificationNumber:
+          description: Registration document number; in Swiss market known as Typenscheinnummer.
+          type: string
+          minLength: 6
+          maxLength: 6
+          pattern: '^\w{6}$'
+          example: 1AE899
+        combustionEngineHorsePower:
+          description: Horsepower of the combustion engine.
+          type: integer
+          format: int16
+          minimum: 0
+          maximum: 9999
+          example: 150
+        cubicCapacity:
+          description: Engine cubic capacity in cc.
+          type: integer
+          example: 2000
+        description:
+          description: Full description of the listing.
+          type: string
+          example: Awesome car!
+        electricMotorHorsePower:
+          description: Horsepower of the electric motor.
+          type: integer
+          format: int16
+          minimum: 0
+          maximum: 9999
+          example: 49
+        hadAccident:
+          description: Indicates if the vehicle had an accident.
+          type: boolean
+          example: true
+        horsePower:
+          description: Horsepower of the vehicle.
+          type: integer
+          example: 199
+        lastInspectionDate:
+          description: Last inspection date of the vehicle (vehicle technical inspection required by law - MFK).
+          type: string
+          format: date
+          example: "2022-11-01"
+        makeKey:
+          description: Make key of the vehicle.
+          type: string
+          example: audi
+        mileage:
+          description: Vehicle mileage in km.
+          type: integer
+          example: 15000
+        modelKey:
+          description: Model key of the vehicle.
+          type: string
+          example: a5
+        price:
+          description: Vehicle price in currency units.
+          type: number
+          format: double
+          example: 37500.55
+        transmissionType:
+          description: Transmission type.
+          allOf:
+            - $ref: "#/components/schemas/TransmissionType"
+          example: automatic
+    TransmissionType:
+      type: string
+      description: Type of transmission in the vehicle.
+      enum:
+        - automatic
+        - automatic-stepless
+        - semi-automatic
+        - manual
+      example: automatic
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: auth-scheme
+      description: "Bearer HTTP authentication (Authorization: Bearer <access_token>)"
+      scheme: bearer
+      type: http

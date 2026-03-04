@@ -637,7 +637,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListingDocumentKey'
+                $ref: '#/components/schemas/ListingDocumentKeyResponse'
   /public/v1/sellers/{sellerId}/listings/{listingId}/documents:
     get:
       operationId: GetSellerListingDocuments
@@ -2393,7 +2393,7 @@ components:
       properties:
         query:
           $ref: '#/components/schemas/ListingQuery'
-    ListingDocumentKey:
+    ListingDocumentKeyResponse:
       type: object
       description: Document key used to associate a document with the listing.
       properties:
@@ -2413,11 +2413,11 @@ components:
       properties:
         key:
           type: string
-          description: Document storage key or reference.
+          description: Document storage key.
           example: listings/101/1101/2289456.pdf
         name:
           type: string
-          description: Name of the document
+          description: Name of the document.
           example: equipment-details.pdf
     ListingImage:
       type: object
@@ -6161,6 +6161,7 @@ components:
       items:
         $ref: '#/components/schemas/ListingDocument'
     SellerListingDocumentsSetRequest:
+      description: Represents the request structure for setting seller listing documents.
       type: array
       items:
         $ref: '#/components/schemas/ListingDocument'

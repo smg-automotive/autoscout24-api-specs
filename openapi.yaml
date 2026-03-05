@@ -616,6 +616,61 @@ paths:
       responses:
         "204":
           description: Seller listing battery certificate successfully deleted
+  /public/v1/sellers/{sellerId}/listings/{listingId}/documents/upload:
+    post:
+      operationId: UploadSellerListingDocument
+      description: Upload document for the specified seller ID and listing ID.
+      tags:
+        - Inventory Management
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/listingIdPathParam'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SellerListingDocumentUploadRequest'
+      responses:
+        "200":
+          description: Seller listing document successfully uploaded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListingDocumentKeyResponse'
+  /public/v1/sellers/{sellerId}/listings/{listingId}/documents:
+    get:
+      operationId: GetSellerListingDocuments
+      description: Returns documents for the specified seller ID and listing ID.
+      tags:
+        - Inventory Management
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/listingIdPathParam'
+      responses:
+        "200":
+          description: Listing documents successfully returned.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/SellerListingDocumentsGetResponse"
+    put:
+      operationId: SetSellerListingDocuments
+      description: Sets documents for the specified seller ID and listing ID.
+      tags:
+        - Inventory Management
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/listingIdPathParam'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SellerListingDocumentsSetRequest"
+        required: true
+      responses:
+        "204":
+          description: Seller listing documents successfully set.
   /public/v1/makes:
     get:
       operationId: GetMakes
@@ -2338,6 +2393,32 @@ components:
       properties:
         query:
           $ref: '#/components/schemas/ListingQuery'
+    ListingDocumentKeyResponse:
+      type: object
+      description: Document key used to associate a document with the listing.
+      properties:
+        key:
+          type: string
+          description: Document storage key.
+      required:
+        - key
+      example:
+        key: listings/101/1101/2289456.pdf
+    ListingDocument:
+      type: object
+      required:
+        - key
+        - name
+      description: Document associated with a seller's listing.
+      properties:
+        key:
+          type: string
+          description: Document storage key.
+          example: listings/101/1101/2289456.pdf
+        name:
+          type: string
+          description: Name of the document.
+          example: equipment-details.pdf
     ListingImage:
       type: object
       required:
@@ -6064,6 +6145,26 @@ components:
           type: string
           format: binary
           description: Battery certificate file to be uploaded (pdf).
+    SellerListingDocumentUploadRequest:
+      description: Represents the request structure for the single document upload.
+      type: object
+      required:
+        - file
+      properties:
+        file:
+          type: string
+          format: binary
+          description: Document file to be uploaded (pdf).
+    SellerListingDocumentsGetResponse:
+      description: Represents the response structure for retrieving seller listing documents.
+      type: array
+      items:
+        $ref: '#/components/schemas/ListingDocument'
+    SellerListingDocumentsSetRequest:
+      description: Represents the request structure for setting seller listing documents.
+      type: array
+      items:
+        $ref: '#/components/schemas/ListingDocument'
     SellerListingImageUploadRequest:
       description: Represents the request structure for the single image upload.
       type: object

@@ -1556,6 +1556,17 @@ components:
         - monobloc
         - w
       example: "v"
+    Document:
+      properties:
+        url:
+          description: URL of the document.
+          type: string
+          format: uri
+          example: https://document.autoscout24.ch/listings/853/11878853/12345.jpg
+        name:
+          description: Name of the document.
+          type: string
+          example: equipment-details.pdf
     DriveSystem:
       type: string
       description: The type of system used to transmit power from the engine to the wheels or other moving parts.
@@ -4205,6 +4216,11 @@ components:
           maximum: 999.0
           description: Battery capacity in kWh.
           example: 75.0
+        batteryCertificateUrl:
+          type: string
+          format: uri
+          description: Url of the battery certificate.
+          example: https://documents.autoscout24.ch/listings/853/11878853/12345.jpg
         batteryHealthPercentage:
           type: number
           format: double
@@ -4373,6 +4389,11 @@ components:
           maximum: 9
           description: Number of doors on the vehicle.
           example: 4
+        documents:
+          description: Listing documents.
+          type: array
+          items:
+            $ref: "#/components/schemas/Document"
         driveSystem:
           description: Drive system of the vehicle.
           allOf:

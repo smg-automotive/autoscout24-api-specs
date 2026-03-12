@@ -1562,7 +1562,7 @@ components:
           description: URL of the document.
           type: string
           format: uri
-          example: https://document.autoscout24.ch/listings/853/11878853/12345.pdf
+          example: https://documents.autoscout24.ch/listings/853/11878853/12345.pdf
         name:
           description: Name of the document.
           type: string

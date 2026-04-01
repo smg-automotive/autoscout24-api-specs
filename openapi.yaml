@@ -949,7 +949,7 @@ paths:
   /public/v1/eurotax-autoscout/sellers/{sellerId}/listings/{listingId}/equipment:
     put:
       operationId: SetEurotaxEquipmentWithAutoscoutFormat
-      description: Sets Eurotax equipment provided in Autoscout format for the specified seller ID and listing ID.
+      description: Sets Eurotax equipment provided in Autoscout format for the specified seller ID and listing ID. External version ID or version ID must be provided or version should be set on the listing.
       tags:
         - Inventory Management
       parameters:

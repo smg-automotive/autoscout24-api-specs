@@ -530,7 +530,7 @@ components:
           example: 3675D10093774
         serialNumber:
           type: string
-          pattern: '\d{3}\.\d{3}\.\d{3}(\.\d{3})?$'
+          pattern: '^\d{3}\.\d{3}\.\d{3}(\.\d{3})?$'
           description: Serial number of the vehicle; in Swiss market known as Stammnummer.
           example: 123.456.789
         range:

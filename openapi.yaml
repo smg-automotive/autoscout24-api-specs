@@ -1256,7 +1256,7 @@ components:
       required: true
       schema:
         type: string
-        pattern: '^\d{3}\.\d{3}\.\d{3}$'
+        pattern: '^\d{3}\.\d{3}\.\d{3}(\.\d{3})?$'
       example: 123.456.789
     sizeQueryParam:
       in: query
@@ -4707,7 +4707,7 @@ components:
           example: A123XYZ
         serialNumber:
           type: string
-          pattern: '^\d{3}\.\d{3}\.\d{3}$'
+          pattern: '^\d{3}\.\d{3}\.\d{3}(\.\d{3})?$'
           description: Serial number of the vehicle; in Swiss market known as Stammnummer.
           example: 123.456.789
         sleepingBerths:
@@ -5628,7 +5628,7 @@ components:
           example: automatic
         serialNumber:
           type: string
-          pattern: '^\d{3}\.\d{3}\.\d{3}$'
+          pattern: '^\d{3}\.\d{3}\.\d{3}(\.\d{3})?$'
           description: Serial number of the vehicle; in Swiss market known as Stammnummer.
           example: 123.456.789
     VehicleEnergyEfficiencyResponse:
@@ -6685,7 +6685,7 @@ components:
           example: A123XYZ
         serialNumber:
           type: string
-          pattern: '^\d{3}\.\d{3}\.\d{3}$'
+          pattern: '^\d{3}\.\d{3}\.\d{3}(\.\d{3})?$'
           description: Serial number of the vehicle; in Swiss market known as Stammnummer.
           example: 123.456.789
         sleepingBerths:

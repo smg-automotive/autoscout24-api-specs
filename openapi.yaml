@@ -803,7 +803,7 @@ paths:
   /public/v1/configurator/eurotax/sellers/{sellerId}/versions/vehicle-identification-number/{vehicleIdentificationNumber}:
     get:
       operationId: GetVersionByVehicleIdentificationNumber
-      description: Returns version information for the provided vehicle identification number.
+      description: Returns version information for the provided vehicle identification number. **There will be a fee to obtain vehicle information using the VIN. Once this endpoint is used, use /public/v1/configurator/eurotax/sellers/{sellerId}/versions/vehicle-identification-number/{vehicleIdentificationNumber}/equipment to obtain equipment.**
       tags:
         - Configurator
       parameters:
@@ -819,7 +819,7 @@ paths:
   /public/v1/configurator/eurotax/sellers/{sellerId}/versions/vehicle-identification-number/{vehicleIdentificationNumber}/equipment:
     get:
       operationId: GetVersionEquipmentByVehicleIdentificationNumber
-      description: Returns version equipment information for the provided vehicle identification number. **There will be a fee to obtain equipment by VIN.**
+      description: Returns version equipment information for the provided vehicle identification number. **Equipment can be obtained only after using the /public/v1/configurator/eurotax/sellers/{sellerId}/versions/vehicle-identification-number/{vehicleIdentificationNumber} endpoint to retrieve version information.**
       tags:
         - Configurator
       parameters:

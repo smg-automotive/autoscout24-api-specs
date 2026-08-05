@@ -5315,6 +5315,8 @@ components:
         batteryCapacity:
           type: number
           format: double
+          minimum: 0.1
+          maximum: 999.0
           description: Battery capacity in kWh.
           example: 52.0
         bodyType:
@@ -5369,6 +5371,8 @@ components:
         consumptionCombined:
           type: number
           format: double
+          minimum: 0.1
+          maximum: 999.0
           description: Combined fuel consumption in L/100km.
           example: 5.5
         consumptionExtraUrban:
@@ -5570,6 +5574,8 @@ components:
         powerConsumption:
           type: number
           format: double
+          minimum: 0.1
+          maximum: 199.0
           description: Electric power consumption in kWh/100km.
           example: 14.7
         productionEndDate:
@@ -5642,6 +5648,8 @@ components:
         width:
           type: integer
           format: int16
+          minimum: 1
+          maximum: 29999
           description: Width of the vehicle in mm.
           example: 1790
     VersionEnrichedResponse:
@@ -5669,6 +5677,8 @@ components:
         batteryCapacity:
           type: number
           format: double
+          minimum: 0.1
+          maximum: 999.0
           description: Battery capacity in kWh.
           example: 52.0
         bodyType:
@@ -5716,6 +5726,8 @@ components:
         consumptionCombined:
           type: number
           format: double
+          minimum: 0.1
+          maximum: 999.0
           description: Combined fuel consumption in L/100km.
           example: 5.5
         consumptionExtraUrban:
@@ -5915,6 +5927,8 @@ components:
         powerConsumption:
           type: number
           format: double
+          minimum: 0.1
+          maximum: 199.0
           description: Electric power consumption in kWh/100km.
           example: 14.7
         productionEndDate:
@@ -5997,6 +6011,8 @@ components:
         width:
           type: integer
           format: int16
+          minimum: 1
+          maximum: 29999
           description: Width of the vehicle in mm.
           example: 1790
     VehicleEnergyEfficiencyRequest:

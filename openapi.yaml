@@ -671,6 +671,35 @@ paths:
       responses:
         "204":
           description: Seller listing documents successfully set.
+  /public/v1/sellers/{sellerId}/listings/{listingId}/video:
+    put:
+      operationId: SetSellerListingVideo
+      description: Sets a video for the specified seller ID and listing ID.
+      tags:
+        - Inventory Management
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/listingIdPathParam'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SellerListingVideoSetRequest"
+        required: true
+      responses:
+        "204":
+          description: Seller listing video successfully set.
+    delete:
+      operationId: DeleteSellerListingVideo
+      description: Deletes the video for the specified seller ID and listing ID.
+      tags:
+        - Inventory Management
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/listingIdPathParam'
+      responses:
+        "204":
+          description: Seller listing video successfully deleted.
   /public/v1/makes:
     get:
       operationId: GetMakes
@@ -6588,6 +6617,17 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/ListingDocument'
+    SellerListingVideoSetRequest:
+      description: Represents the request structure for setting a seller listing video.
+      type: object
+      required:
+        - url
+      properties:
+        url:
+          description: The YouTube video URL.
+          type: string
+          format: uri
+          example: https://www.youtube.com/watch?v=Zx7KpLq9Rt2
     SellerListingImageUploadRequest:
       description: Represents the request structure for the single image upload.
       type: object

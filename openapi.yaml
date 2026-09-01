@@ -672,6 +672,21 @@ paths:
         "204":
           description: Seller listing documents successfully set.
   /public/v1/sellers/{sellerId}/listings/{listingId}/video:
+    get:
+      operationId: GetSellerListingVideo
+      description: Returns video information for the specified seller ID and listing ID.
+      tags:
+        - Inventory Management
+      parameters:
+        - $ref: '#/components/parameters/sellerIdPathParam'
+        - $ref: '#/components/parameters/listingIdPathParam'
+      responses:
+        "200":
+          description: Seller listing video successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SellerListingVideoGetResponse"
     put:
       operationId: SetSellerListingVideo
       description: Sets a video for the specified seller ID and listing ID.
@@ -6617,6 +6632,28 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/ListingDocument'
+    SellerListingVideoGetResponse:
+      description: Represents the response structure for retrieving a seller listing video.
+      type: object
+      properties:
+        video:
+          $ref: '#/components/schemas/SellerListingVideo'
+    SellerListingVideo:
+      description: Represents a seller listing video.
+      type: object
+      required:
+        - externalId
+        - url
+      properties:
+        externalId:
+          description: The external ID of the YouTube video.
+          type: string
+          example: Zx7KpLq9Rt2
+        url:
+          description: The YouTube video URL.
+          type: string
+          format: uri
+          example: https://www.youtube.com/watch?v=Zx7KpLq9Rt2
     SellerListingVideoSetRequest:
       description: Represents the request structure for setting a seller listing video.
       type: object

@@ -6632,39 +6632,6 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/ListingDocument'
-    SellerListingVideoGetResponse:
-      description: Represents the response structure for retrieving a seller listing video.
-      type: object
-      properties:
-        video:
-          $ref: '#/components/schemas/SellerListingVideo'
-    SellerListingVideo:
-      description: Represents a seller listing video.
-      type: object
-      required:
-        - externalId
-        - url
-      properties:
-        externalId:
-          description: The external ID of the YouTube video.
-          type: string
-          example: Zx7KpLq9Rt2
-        url:
-          description: The YouTube video URL.
-          type: string
-          format: uri
-          example: https://www.youtube.com/watch?v=Zx7KpLq9Rt2
-    SellerListingVideoSetRequest:
-      description: Represents the request structure for setting a seller listing video.
-      type: object
-      required:
-        - url
-      properties:
-        url:
-          description: The YouTube video URL.
-          type: string
-          format: uri
-          example: https://www.youtube.com/watch?v=Zx7KpLq9Rt2
     SellerListingImageUploadRequest:
       description: Represents the request structure for the single image upload.
       type: object
@@ -7276,6 +7243,39 @@ components:
           minimum: 1
           maximum: 29999
           example: 180
+    SellerListingVideo:
+      description: Represents a seller listing video.
+      type: object
+      required:
+        - externalId
+        - url
+      properties:
+        externalId:
+          description: The external ID of the YouTube video.
+          type: string
+          example: Zx7KpLq9Rt2
+        url:
+          description: The YouTube video URL.
+          type: string
+          format: uri
+          example: https://www.youtube.com/watch?v=Zx7KpLq9Rt2
+    SellerListingVideoGetResponse:
+      description: Represents the response structure for retrieving a seller listing video.
+      type: object
+      properties:
+        video:
+          $ref: '#/components/schemas/SellerListingVideo'
+    SellerListingVideoSetRequest:
+      description: Represents the request structure for setting a seller listing video.
+      type: object
+      required:
+        - url
+      properties:
+        url:
+          description: An HTTP(S) URL for a YouTube video hosted on youtu.be, youtube.com, www.youtube.com, or m.youtube.com.
+          type: string
+          format: uri
+          example: https://www.youtube.com/watch?v=Zx7KpLq9Rt2
     SellerListingCreateRequest:
       allOf:
         - $ref: '#/components/schemas/SellerListingSharedRequest'
